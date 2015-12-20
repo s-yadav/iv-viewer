@@ -1,12 +1,11 @@
 /*
-    ImageViewer v 1.0.0-beta
+    ImageViewer v 1.0.0
     Author: Sudhanshu Yadav
     Copyright (c) 2015 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
 */
 
-/*** picture view plugin ****/
-;(function ($, window, document, undefined) {
+(function ($, window, document, undefined) {
     "use strict";
 
     //an empty function
@@ -443,16 +442,18 @@
                 showSnapView();
             });
 
-            viewer.snapView.on({
-                'mouseenter': function () {
-                    snapViewVisible = false;
-                    showSnapView(true);
-                },
-                'mouseleave': function () {
-                    snapViewVisible = false;
-                    showSnapView();
-                }
-            })
+            var snapEventsCallback = {};
+            snapEventsCallback['mouseenter' + eventSuffix + ' touchstart' + eventSuffix] = function () {
+                snapViewVisible = false;
+                showSnapView(true);
+            };
+
+            snapEventsCallback['mouseleave' + eventSuffix + ' touchend' + eventSuffix] = function () {
+                snapViewVisible = false;
+                showSnapView();
+            };
+
+            viewer.snapView.on(snapEventsCallback);
 
 
             //calculate elments size on window resize
@@ -565,13 +566,9 @@
             //set the image dimension
             var imgWidth, imgHeight, ratio = imageWidth / imageHeight;
 
-            if (imageHeight == imageWidth) {
-                imgWidth = imgHeight = Math.min(contWidth, contHeight);
-            } else {
-                imgWidth = imageWidth > imageHeight && !(contWidth > contHeight) ? contWidth : ratio * contHeight;
+            imgWidth = (imageWidth > imageHeight && contHeight >= contWidth) || ratio * contHeight > contWidth ? contWidth : ratio * contHeight;
 
-                imgHeight = imgWidth / ratio;
-            }
+            imgHeight = imgWidth / ratio;
 
             self.imageDim = {
                 w: imgWidth,
@@ -723,9 +720,9 @@
             hiResImg = imgElm.attr('high-res-src') || imgElm.attr('data-high-res-src');
             container = imgElm.wrap('<div class="iv-container" style="display:inline-block; overflow:hidden"></div>').parent();
             imgElm.css({
-                opacity : 0,
-                position : 'relative',
-                zIndex : -1
+                opacity: 0,
+                position: 'relative',
+                zIndex: -1
             });
         } else {
             imgSrc = container.attr('src') || container.attr('data-src');
