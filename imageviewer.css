@@ -1,5 +1,5 @@
 /*
-    ImageViewer v 1.0.0
+    ImageViewer v 1.0.1
     Author: Sudhanshu Yadav
     Copyright (c) 2015 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
@@ -30,20 +30,37 @@
   cursor: pointer;
   text-align: center;
   overflow: hidden;
-  color: #FFF;
   text-shadow: 0px 0px 3px #6d6d6d;
   -webkit-transition: all ease 200ms;
   -moz-transition: all ease 200ms;
   -o-transition: all ease 200ms;
   transition: all ease 200ms;
 }
-
-.iv-close:after {
-  content: "\00D7";
-  font-size: 52px;
-  line-height: 32px;
+.iv-close:after,
+.iv-close:before {
+  content: "";
+  height: 4px;
+  width: 32px;
+  background: #FFF;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -2px;
 }
-
+.iv-close:before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.iv-close:after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
 .iv-close:hover {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
@@ -51,7 +68,6 @@
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-
 /***** snap view css *****/
 .iv-snap-view {
   width: 150px;
