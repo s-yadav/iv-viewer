@@ -1,5 +1,5 @@
 /*
-    ImageViewer v 1.0.1
+    ImageViewer v 1.1.0
     Author: Sudhanshu Yadav
     Copyright (c) 2015 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
@@ -15,6 +15,10 @@
         $window,
         $document;
 
+    //constants
+    var ZOOM_CONSTANT = 15; //increase or decrease value for zoom on mouse wheel
+    var MOUSE_WHEEL_COUNT = 5; //A mouse delta after which it should stop preventing default behaviour of mouse wheel
+    
     //ease out method
     /*
         t : current time,
@@ -171,6 +175,7 @@
         constructor: ImageViewer,
         _init: function () {
             var viewer = this,
+                options = viewer.options,
                 zooming = false, // tell weather we are zooming trough touch
                 container = this.container;
 
@@ -301,21 +306,37 @@
 
 
             /*Add zoom interation in mouse wheel*/
+            var changedDelta = 0;
             imageWrap.on("mousewheel" + eventSuffix + " DOMMouseScroll" + eventSuffix, function (e) {
+                if(!options.zoomOnMouseWheel) return;
+                
                 if (!viewer.loaded) return;
-
-                e.preventDefault();
+                
 
                 //clear all animation frame and interval
                 viewer._clearFrames();
 
                 // cross-browser wheel delta
                 var delta = Math.max(-1, Math.min(1, (e.originalEvent.wheelDelta || -e.originalEvent.detail))),
-                    zoomValue = viewer.zoomValue * (100 + delta * 15) / 100,
-                    contOffset = container.offset(),
+                    zoomValue = viewer.zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
+                
+                if(!(zoomValue >= 100 && zoomValue <= options.maxZoom)){
+                    changedDelta += Math.abs(delta);
+                }
+                else{
+                    changedDelta = 0;
+                }
+                
+                if(changedDelta > MOUSE_WHEEL_COUNT) return;
+                
+                e.preventDefault();
+                
+                var contOffset = container.offset(),
                     x = e.pageX - contOffset.left,
                     y = e.pageY - contOffset.top;
 
+                
+                
                 viewer.zoom(zoomValue, {
                     x: x,
                     y: y
@@ -383,7 +404,7 @@
                     };
                 } else {
                     if ((Date.now() - touchtime) < 500 && Math.abs(e.pageX - point.x) < 50 && Math.abs(e.pageY - point.y) < 50) {
-                        if (viewer.zoomValue == viewer.options.zoomValue) {
+                        if (viewer.zoomValue == options.zoomValue) {
                             viewer.zoom(200)
                         } else {
                             viewer.resetZoom()
@@ -414,7 +435,7 @@
                     newLeft = Math.max(0, newLeft);
                     newLeft = Math.min(viewer._zoomSliderLength, newLeft);
 
-                    var zoomValue = 100 + (viewer.options.maxZoom - 100) * newLeft / viewer._zoomSliderLength;
+                    var zoomValue = 100 + (options.maxZoom - 100) * newLeft / viewer._zoomSliderLength;
 
                     viewer.zoom(zoomValue);
                 }
@@ -457,7 +478,7 @@
 
 
             //calculate elments size on window resize
-            if (viewer.options.refreshOnResize) $window.on('resize' + eventSuffix, function () {
+            if (options.refreshOnResize) $window.on('resize' + eventSuffix, function () {
                 viewer.refresh()
             });
 
@@ -702,7 +723,8 @@
         zoomValue: 100,
         snapView: true,
         maxZoom: 500,
-        refreshOnResize: true
+        refreshOnResize: true,
+        zoomOnMouseWheel : true
     }
 
     window.ImageViewer = function (container, options) {
