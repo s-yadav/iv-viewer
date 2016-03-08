@@ -1,10 +1,11 @@
 /*
-    ImageViewer v 1.1.0
+    ImageViewer v 1.1.1
     Author: Sudhanshu Yadav
-    Copyright (c) 2015 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
+    Copyright (c) 2015-2016 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
 */
 
+/*** picture view plugin ****/
 (function ($, window, document, undefined) {
     "use strict";
 
@@ -18,7 +19,7 @@
     //constants
     var ZOOM_CONSTANT = 15; //increase or decrease value for zoom on mouse wheel
     var MOUSE_WHEEL_COUNT = 5; //A mouse delta after which it should stop preventing default behaviour of mouse wheel
-    
+
     //ease out method
     /*
         t : current time,
@@ -96,7 +97,7 @@
 
         //assign event on snap image wrap
         this.container.on('touchstart' + eventSuffix + ' mousedown' + eventSuffix, function (estart) {
-
+          estart.preventDefault();
             var touchMove = (estart.type == "touchstart" ? "touchmove" : "mousemove") + eventSuffix,
                 touchEnd = (estart.type == "touchstart" ? "touchend" : "mouseup") + eventSuffix,
                 eOrginal = estart.originalEvent,
@@ -309,9 +310,9 @@
             var changedDelta = 0;
             imageWrap.on("mousewheel" + eventSuffix + " DOMMouseScroll" + eventSuffix, function (e) {
                 if(!options.zoomOnMouseWheel) return;
-                
+
                 if (!viewer.loaded) return;
-                
+
 
                 //clear all animation frame and interval
                 viewer._clearFrames();
@@ -319,24 +320,24 @@
                 // cross-browser wheel delta
                 var delta = Math.max(-1, Math.min(1, (e.originalEvent.wheelDelta || -e.originalEvent.detail))),
                     zoomValue = viewer.zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
-                
+
                 if(!(zoomValue >= 100 && zoomValue <= options.maxZoom)){
                     changedDelta += Math.abs(delta);
                 }
                 else{
                     changedDelta = 0;
                 }
-                
-                if(changedDelta > MOUSE_WHEEL_COUNT) return;
-                
-                e.preventDefault();
-                
-                var contOffset = container.offset(),
-                    x = e.pageX - contOffset.left,
-                    y = e.pageY - contOffset.top;
 
-                
-                
+                if(changedDelta > MOUSE_WHEEL_COUNT) return;
+
+                e.preventDefault();
+
+                var contOffset = container.offset(),
+                    x = (e.pageX || e.originalEvent.pageX) - contOffset.left,
+                    y = (e.pageY || e.originalEvent.pageY) - contOffset.top;
+
+
+
                 viewer.zoom(zoomValue, {
                     x: x,
                     y: y
@@ -446,6 +447,7 @@
             var snapViewTimeout, snapViewVisible;
 
             function showSnapView(noTimeout) {
+                if(!options.snapView) return;
 
                 if (snapViewVisible || viewer.zoomValue <= 100 || !viewer.loaded) return;
                 clearTimeout(snapViewTimeout);
@@ -750,6 +752,7 @@
             imgSrc = container.attr('src') || container.attr('data-src');
             hiResImg = container.attr('high-res-src') || container.attr('data-high-res-src');
         }
+
 
         var viewer = new ImageViewer(container, options);
         viewer._init();

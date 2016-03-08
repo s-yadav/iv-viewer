@@ -220,6 +220,7 @@
 
 @media screen and (max-width: 767px) {
   .iv-snap-view {
-    display: none;
+    z-index: -1;
+    visibility: hidden;
   }
 }
