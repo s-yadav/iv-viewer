@@ -1,5 +1,5 @@
 /*
-    ImageViewer v 1.1.1
+    ImageViewer v 1.1.2
     Author: Sudhanshu Yadav
     Copyright (c) 2015-2016 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
@@ -518,6 +518,14 @@
             self._clearFrames();
 
             var step = 0;
+            
+            //calculate base top,left,bottom,right
+            var containerDim = self.containerDim,
+                imageDim = self.imageDim;
+            var baseLeft = (containerDim.w - imageDim.w) / 2,
+                baseTop = (containerDim.h - imageDim.h) / 2,
+                baseRight = containerDim.w - baseLeft,
+                baseBottom = containerDim.h - baseTop;
 
             function zoom() {
                 step++;
@@ -534,12 +542,20 @@
                     imgHeight = self.imageDim.h * tickZoom / 100,
                     newLeft = -((point.x - curLeft) * ratio - point.x),
                     newTop = -((point.y - curTop) * ratio - point.y);
-
-
-                if (perc < 120) {
-                    newLeft = (containerDim.w - imgWidth) / 2;
-                    newTop = (containerDim.h - imgHeight) / 2;
+                
+                //fix for left and top
+                newLeft = Math.min(newLeft, baseLeft);
+                newTop = Math.min(newTop, baseTop);
+                
+                //fix for right and bottom
+                if((newLeft + imgWidth) < baseRight){
+                    newLeft = baseRight - imgWidth; //newLeft - (newLeft + imgWidth - baseRight)
                 }
+                
+                if((newTop + imgHeight) < baseBottom){            
+                    newTop =  baseBottom - imgHeight; //newTop + (newTop + imgHeight - baseBottom)
+                }
+                
 
                 curImg.css({
                     height: imgHeight + 'px',
