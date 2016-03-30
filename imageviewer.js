@@ -518,15 +518,39 @@
             self._clearFrames();
 
             var step = 0;
-            
-            //calculate base top,left,bottom,right
-            var containerDim = self.containerDim,
-                imageDim = self.imageDim;
-            var baseLeft = (containerDim.w - imageDim.w) / 2,
-                baseTop = (containerDim.h - imageDim.h) / 2,
-                baseRight = containerDim.w - baseLeft,
-                baseBottom = containerDim.h - baseTop;
 
+            function calculateNewTop(imgHeight, top) {
+                if ( imgHeight <= containerDim.h ) {
+                    return (containerDim.h - imgHeight) / 2;
+                }
+
+                if ( top > 0) {
+                    return 0;
+                }
+
+                if ( containerDim.h - imgHeight > top ) {
+                    return containerDim.h - imgHeight;
+                }
+
+                return top;
+            }
+
+            function calculateNewLeft(imgWidth, left) {
+                if ( imgWidth <= containerDim.w ) {
+                    return (containerDim.w - imgWidth) / 2;
+                }
+
+                if ( left > 0 ) {
+                    return 0;
+                }
+
+                if ( containerDim.w - imgWidth > left ) {
+                    return containerDim.w - imgWidth;
+                }
+
+                return left;
+            }
+            
             function zoom() {
                 step++;
 
@@ -542,19 +566,9 @@
                     imgHeight = self.imageDim.h * tickZoom / 100,
                     newLeft = -((point.x - curLeft) * ratio - point.x),
                     newTop = -((point.y - curTop) * ratio - point.y);
-                
-                //fix for left and top
-                newLeft = Math.min(newLeft, baseLeft);
-                newTop = Math.min(newTop, baseTop);
-                
-                //fix for right and bottom
-                if((newLeft + imgWidth) < baseRight){
-                    newLeft = baseRight - imgWidth; //newLeft - (newLeft + imgWidth - baseRight)
-                }
-                
-                if((newTop + imgHeight) < baseBottom){            
-                    newTop =  baseBottom - imgHeight; //newTop + (newTop + imgHeight - baseBottom)
-                }
+
+                newTop = calculateNewTop(imgHeight, newTop);
+                newLeft = calculateNewLeft(imgWidth, newLeft);
                 
 
                 curImg.css({
