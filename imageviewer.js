@@ -1,5 +1,5 @@
 /*
-    ImageViewer v 1.1.2
+    ImageViewer v 1.1.3
     Author: Sudhanshu Yadav
     Copyright (c) 2015-2016 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
@@ -12,9 +12,10 @@
     //an empty function
     var noop = function () {};
 
-    var $body,
-        $window,
-        $document;
+    var $body = $('body'),
+        $window = $(window),
+        $document = $(document);
+
 
     //constants
     var ZOOM_CONSTANT = 15; //increase or decrease value for zoom on mouse wheel
@@ -75,10 +76,7 @@
 
     //add a full screen view
     $(function () {
-        $body = $('body');
-        $window = $(window);
-        $document = $(document);
-
+        if(!$body.length) $body = $('body');
         $body.append('<div id="iv-container">' + imageViewHtml + '<div class="iv-close"></div><div>');
     });
 
