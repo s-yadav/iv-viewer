@@ -69,7 +69,7 @@
 
     //function to check if image is loaded
     function imageLoaded(img) {
-        return img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0);
+        return img && img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0);
     }
 
     var imageViewHtml = '<div class="iv-loader"></div> <div class="iv-snap-view">' + '<div class="iv-snap-image-wrap">' + '<div class="iv-snap-handle"></div>' + '</div>' + '<div class="iv-zoom-slider"><div class="iv-zoom-handle"></div></div></div>' + '<div class="iv-image-view" ><div class="iv-image-wrap" ></div></div>';
