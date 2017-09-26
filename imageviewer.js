@@ -153,7 +153,7 @@
 
         self.zoomValue = 100;
 
-        if (!container.find('.snap-view').length) {
+        if (!container.find('.iv-snap-view').length) {
             container.prepend(imageViewHtml);
         }
 
@@ -516,7 +516,7 @@
             self._clearFrames();
 
             var step = 0;
-            
+
             //calculate base top,left,bottom,right
             var containerDim = self.containerDim,
                 imageDim = self.imageDim;
@@ -540,20 +540,20 @@
                     imgHeight = self.imageDim.h * tickZoom / 100,
                     newLeft = -((point.x - curLeft) * ratio - point.x),
                     newTop = -((point.y - curTop) * ratio - point.y);
-                
+
                 //fix for left and top
                 newLeft = Math.min(newLeft, baseLeft);
                 newTop = Math.min(newTop, baseTop);
-                
+
                 //fix for right and bottom
                 if((newLeft + imgWidth) < baseRight){
                     newLeft = baseRight - imgWidth; //newLeft - (newLeft + imgWidth - baseRight)
                 }
-                
-                if((newTop + imgHeight) < baseBottom){            
+
+                if((newTop + imgHeight) < baseBottom){
                     newTop =  baseBottom - imgHeight; //newTop + (newTop + imgHeight - baseBottom)
                 }
-                
+
 
                 curImg.css({
                     height: imgHeight + 'px',
