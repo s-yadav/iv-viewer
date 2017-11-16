@@ -1,7 +1,12 @@
+# jQuery requirement removal
+jQuery requirement removed, make sure to pass in standard elements. To get them from jQuery elements just add [0]
+
+ex: $('#my_element')<b>[0]</b>
+
 # ImageViewer
 A zooming and panning plugin inspired by google photos for your web images.
 
-##Features
+## Features
 <ul>
     <li>Smooth dragging and panning images.</li>
     <li>Support touch devices.</li>

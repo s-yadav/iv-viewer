@@ -20,9 +20,6 @@
     "bugs": {
         "url": "https://github.com/s-yadav/ImageViewer/issues"
     },
-    "dependencies": {
-        "jQuery": ">=1.10.0"
-    },
     "keywords": [
         "zooming",
         "panning",
