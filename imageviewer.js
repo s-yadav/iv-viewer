@@ -153,7 +153,7 @@
 
         self.zoomValue = 100;
 
-        if (!container.find('.snap-view').length) {
+        if (!container.find('.iv-snap-view').length) {
             container.prepend(imageViewHtml);
         }
 
@@ -516,7 +516,7 @@
             self._clearFrames();
 
             var step = 0;
-            
+
             //calculate base top,left,bottom,right
             var containerDim = self.containerDim,
                 imageDim = self.imageDim;
@@ -540,20 +540,20 @@
                     imgHeight = self.imageDim.h * tickZoom / 100,
                     newLeft = -((point.x - curLeft) * ratio - point.x),
                     newTop = -((point.y - curTop) * ratio - point.y);
-                
+
                 //fix for left and top
                 newLeft = Math.min(newLeft, baseLeft);
                 newTop = Math.min(newTop, baseTop);
-                
+
                 //fix for right and bottom
                 if((newLeft + imgWidth) < baseRight){
                     newLeft = baseRight - imgWidth; //newLeft - (newLeft + imgWidth - baseRight)
                 }
-                
-                if((newTop + imgHeight) < baseBottom){            
+
+                if((newTop + imgHeight) < baseBottom){
                     newTop =  baseBottom - imgHeight; //newTop + (newTop + imgHeight - baseBottom)
                 }
-                
+
 
                 curImg.css({
                     height: imgHeight + 'px',
@@ -689,49 +689,57 @@
             $window.off(eventSuffix);
             return null;
         },
-        load: function (image, hiResImg) {
+        load: function (url, fileType) {
             var self = this,
                 container = this.container;
 
-            container.find('.iv-snap-image,.iv-large-image').remove();
+            container.find('.iv-snap-image,.iv-large-image,.iv-large-image-for-pdf').remove();
             var snapImageWrap = this.container.find('.iv-snap-image-wrap');
-            snapImageWrap.prepend('<img class="iv-snap-image" src="' + image + '" />');
-            this.imageWrap.prepend('<img class="iv-large-image" src="' + image + '" />');
-
-            if (hiResImg) {
-                this.imageWrap.append('<img class="iv-large-image" src="' + hiResImg + '" />')
+            if (fileType === 'pdf') {
+                this.imageWrap.prepend('<iframe class="iv-large-image-for-pdf" src="' + url + '"></iframe>');
+            } else if (fileType === 'mp4') {
+                this.imageWrap.prepend('<iframe class="iv-large-image" webkitallowfullscreen mozallowfullscreen allowfullscreen src="' + url + '"></iframe>');
+            } else {
+                snapImageWrap.prepend('<img class="iv-snap-image" src="' + url + '" />');
+                this.imageWrap.prepend('<img class="iv-large-image" src="' + url + '" />');
             }
 
             var currentImg = this.currentImg = this.container.find('.iv-large-image');
             this.snapImg = this.container.find('.iv-snap-image');
             self.loaded = false;
 
-            //show loader
-            container.find('.iv-loader').show();
-            currentImg.hide();
-            self.snapImg.hide();
-
-            //refresh the view
-            function refreshView() {
-                self.loaded = true;
-                self.zoomValue = 100;
-
-                //reset zoom of images
-                currentImg.show();
-                self.snapImg.show();
-                self.refresh();
-                self.resetZoom();
-
-                //hide loader
-                container.find('.iv-loader').hide();
-            }
-
-            if (imageLoaded(currentImg[0])) {
-                refreshView();
+            if (currentImg.length === 0) {
+              currentImg = this.currentImg = this.container.find('.iv-large-image-for-pdf');
+              currentImg.show();
+              //hide loader
+              container.find('.iv-loader').hide();
             } else {
-                $(currentImg[0]).on('load', refreshView);
-            }
+              //show loader
+              container.find('.iv-loader').show();
+              currentImg.hide();
+              self.snapImg.hide();
 
+              //refresh the view
+              function refreshView() {
+                  self.loaded = true;
+                  self.zoomValue = 100;
+
+                  //reset zoom of images
+                  currentImg.show();
+                  self.snapImg.show();
+                  self.refresh();
+                  self.resetZoom();
+
+                  //hide loader
+                  container.find('.iv-loader').hide();
+              }
+
+              if (imageLoaded(currentImg[0])) {
+                  refreshView();
+              } else {
+                  $(currentImg[0]).on('load', refreshView);
+              }
+            }
         }
     }
 

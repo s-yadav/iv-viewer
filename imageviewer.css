@@ -168,6 +168,12 @@
   transform: translate3d(0, 0, 0);
 }
 
+.iv-large-image-for-pdf {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 /****** CSS loader by http://projects.lukehaas.me/css-loaders/ *****/
 .iv-loader {
   top: 50%;
@@ -217,10 +223,25 @@
   }
 }
 
-
 @media screen and (max-width: 767px) {
   .iv-snap-view {
     z-index: -1;
     visibility: hidden;
   }
+}
+
+.arrow-right {
+  width: 100px;
+  height: 100px;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid #ccc;
+}
+
+.arrow-left {
+  width: 100px;
+  height: 100px;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-right: 30px solid #ccc;
 }
