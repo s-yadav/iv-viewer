@@ -1,0 +1,63 @@
+</html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>image viewer</title>
+    <link href="../imageviewer.css" rel="stylesheet" type="text/css" />
+    <script src="lib/jquery-1.11.3.min.js"></script>
+    <script src="../imageviewer.js"></script>
+
+    <style>
+        body {
+            background: white;
+        }
+
+        #container {
+            border: 1px solid red;
+            position: fixed;
+            top: 0;
+            left: 16%;
+            width: 66%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Container Mode</h3>
+    <h3>Instrinsic: 2294x2563</h3>
+    <h3 id="image-size">Effective <span></span></h3>
+    <div id="container" data-src="https://i.imgur.com/IFyLfAb.jpg" data-compare-src="https://i.imgur.com/S6yTb2m.jpg">
+    </div>
+    <script>
+        $(function() {
+
+            setInterval(function() {
+                $('#image-size span').text($('.iv-large-image').get(0).width + 'x' + $('.iv-large-image').get(0).height)
+            }, 300)
+
+            var viewer = ImageViewer($('#container'), {
+                snapView: true
+            })
+
+            window.viewer = viewer;
+
+            $(window).keydown((e) => {
+                if (e.which === 16) {
+                    viewer.setCompareAlpha(1)
+                }
+            })
+            $(window).keyup((e) => {
+                if (e.which === 16) {
+                    viewer.setCompareAlpha(0)
+                }
+            })
+        });
+    </script>
+
+
+</body>
+
+</html>

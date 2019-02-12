@@ -1,12 +1,15 @@
 {
     "name": "ImageViewer",
     "description": "A zooming and panning plugin inspired by google photos for your web images.",
-    "main": "imageviewer.js",
+    "main": [
+        "imageviewer.js",
+        "imageviewer.css"
+    ],
     "author": {
         "name": "Sudhanshu Yadav",
         "email": "sudhanshuyadav2@gmail.com"
     },
-    "version": "1.1.3",
+    "version": "1.1.4",
     "repository": {
         "type": "git",
         "url": "https://github.com/s-yadav/ImageViewer"
@@ -21,7 +24,7 @@
         "url": "https://github.com/s-yadav/ImageViewer/issues"
     },
     "dependencies": {
-        "jQuery": ">=1.10.0"
+        "jquery": ">=1.10.0"
     },
     "keywords": [
         "zooming",

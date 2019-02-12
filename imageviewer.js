@@ -230,6 +230,11 @@
                         left: imgLeft,
                         top: imgTop
                     })
+
+                    viewer.compareImg.css({
+                        left: imgLeft,
+                        top: imgTop
+                    })
                 }
             }).init();
 
@@ -302,7 +307,6 @@
                     }
                 }
             }).init();
-
 
             /*Add zoom interation in mouse wheel*/
             var changedDelta = 0;
@@ -498,7 +502,6 @@
         //method to zoom images
         zoom: function (perc, point) {
             perc = Math.round(Math.max(100, perc));
-            perc = Math.min(this.options.maxZoom, perc);
 
             point = point || {
                 x: this.containerDim.w / 2,
@@ -509,14 +512,25 @@
                 maxZoom = this.options.maxZoom,
                 curPerc = this.zoomValue,
                 curImg = this.currentImg,
+                compareImg = this.compareImg,
                 containerDim = this.containerDim,
                 curLeft = parseFloat(curImg.css('left')),
                 curTop = parseFloat(curImg.css('top'));
 
+            //Implement max zoom to be pixel-to-pixel native size
+            var maxHeight = curImg.get(0).naturalHeight,
+                maxWidth = curImg.get(0).naturalWidth;
+
+            var maxPercWidth = maxWidth / this.containerDim.w * 100
+            var maxPercHeight = maxHeight / this.containerDim.h * 100
+
+            maxZoom = Math.max(maxPercWidth, maxPercHeight)
+            perc = Math.min(maxZoom, perc)
+
             self._clearFrames();
 
             var step = 0;
-            
+
             //calculate base top,left,bottom,right
             var containerDim = self.containerDim,
                 imageDim = self.imageDim;
@@ -534,28 +548,33 @@
 
                 var tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 20);
 
-
                 var ratio = tickZoom / curPerc,
                     imgWidth = self.imageDim.w * tickZoom / 100,
                     imgHeight = self.imageDim.h * tickZoom / 100,
                     newLeft = -((point.x - curLeft) * ratio - point.x),
                     newTop = -((point.y - curTop) * ratio - point.y);
-                
+
                 //fix for left and top
                 newLeft = Math.min(newLeft, baseLeft);
                 newTop = Math.min(newTop, baseTop);
-                
+
                 //fix for right and bottom
                 if((newLeft + imgWidth) < baseRight){
                     newLeft = baseRight - imgWidth; //newLeft - (newLeft + imgWidth - baseRight)
                 }
-                
-                if((newTop + imgHeight) < baseBottom){            
+
+                if((newTop + imgHeight) < baseBottom){
                     newTop =  baseBottom - imgHeight; //newTop + (newTop + imgHeight - baseBottom)
                 }
-                
 
                 curImg.css({
+                    height: imgHeight + 'px',
+                    width: imgWidth + 'px',
+                    left: newLeft + 'px',
+                    top: newTop + 'px'
+                });
+
+                compareImg.css({
                     height: imgHeight + 'px',
                     width: imgWidth + 'px',
                     left: newLeft + 'px',
@@ -585,6 +604,7 @@
             //calculate content width of image and snap image
             var self = this,
                 curImg = self.currentImg,
+                compareImg = self.compareImg,
                 container = self.container,
                 snapView = self.snapView,
                 imageWidth = curImg.width(),
@@ -613,6 +633,14 @@
             }
 
             //reset image position and zoom
+            compareImg.css({
+                width: imgWidth + 'px',
+                height: imgHeight + 'px',
+                left: (contWidth - imgWidth) / 2 + 'px',
+                top: (contHeight - imgHeight) / 2 + 'px',
+                'max-width': 'none',
+                'max-height': 'none'
+            });
             curImg.css({
                 width: imgWidth + 'px',
                 height: imgHeight + 'px',
@@ -684,12 +712,12 @@
                 container.off(eventSuffix);
                 container.find('[class^="iv"]').off(eventSuffix);
             } else {
-                this.container.remove('[class^="iv"]');
+                this.container.find('[class^="iv"]').remove();
             }
             $window.off(eventSuffix);
             return null;
         },
-        load: function (image, hiResImg) {
+        load: function (image, hiResImg, compare, hiResCompare) {
             var self = this,
                 container = this.container;
 
@@ -702,13 +730,19 @@
                 this.imageWrap.append('<img class="iv-large-image" src="' + hiResImg + '" />')
             }
 
+            if(compare) {
+                this.imageWrap.append('<img class="iv-large-compare" src="' + compare + '" />');
+            }
+
             var currentImg = this.currentImg = this.container.find('.iv-large-image');
+            var compareImg = this.compareImg = this.container.find('.iv-large-compare');
             this.snapImg = this.container.find('.iv-snap-image');
             self.loaded = false;
 
             //show loader
             container.find('.iv-loader').show();
             currentImg.hide();
+            compareImg.css('opacity', 0);
             self.snapImg.hide();
 
             //refresh the view
@@ -732,19 +766,23 @@
                 $(currentImg[0]).on('load', refreshView);
             }
 
+        },
+        setCompareAlpha: function(alpha) {
+            /*Add shift binding for image compare toggle*/
+            this.compareImg.css('opacity', alpha)
         }
     }
 
     ImageViewer.defaults = {
         zoomValue: 100,
         snapView: true,
-        maxZoom: 500,
+        maxZoom: 1000,
         refreshOnResize: true,
         zoomOnMouseWheel : true
     }
 
     window.ImageViewer = function (container, options) {
-        var imgElm, imgSrc, hiResImg;
+        var imgElm, imgSrc, compareElm, compareSrc, hiResImg, hiResCompare;
         if (!(container && (typeof container == "string" || container instanceof Element || container[0] instanceof Element))) {
             options = container;
             container = $('#iv-container');
@@ -764,6 +802,7 @@
             });
         } else {
             imgSrc = container.attr('src') || container.attr('data-src');
+            compareSrc = container.attr('compare-src') || container.attr('data-compare-src');
             hiResImg = container.attr('high-res-src') || container.attr('data-high-res-src');
         }
 
@@ -771,7 +810,7 @@
         var viewer = new ImageViewer(container, options);
         viewer._init();
 
-        if (imgSrc) viewer.load(imgSrc, hiResImg);
+        if (imgSrc) viewer.load(imgSrc, hiResImg, compareSrc, hiResCompare);
 
         return viewer;
     };
