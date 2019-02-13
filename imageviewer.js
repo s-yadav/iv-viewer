@@ -1,8 +1,10 @@
 /*
-    ImageViewer v 1.1.3
+    ImageViewer v 1.1.6
     Author: Sudhanshu Yadav
     Copyright (c) 2015-2016 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
+    Forker: idpbond
+    @license
 */
 
 /*** picture view plugin ****/
@@ -524,7 +526,7 @@
             var maxPercWidth = maxWidth / this.containerDim.w * 100
             var maxPercHeight = maxHeight / this.containerDim.h * 100
 
-            maxZoom = Math.max(maxPercWidth, maxPercHeight)
+            maxZoom = this.options.maxZoom = Math.max(maxPercWidth, maxPercHeight)
             perc = Math.min(maxZoom, perc)
 
             self._clearFrames();
