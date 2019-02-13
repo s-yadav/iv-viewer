@@ -575,7 +575,7 @@
                 });
 
                 compareImg.css({
-                    height: imgHeight + 'px',
+                    height: 'auto',
                     width: imgWidth + 'px',
                     left: newLeft + 'px',
                     top: newTop + 'px'
@@ -635,7 +635,7 @@
             //reset image position and zoom
             compareImg.css({
                 width: imgWidth + 'px',
-                height: imgHeight + 'px',
+                height: 'auto',
                 left: (contWidth - imgWidth) / 2 + 'px',
                 top: (contHeight - imgHeight) / 2 + 'px',
                 'max-width': 'none',
