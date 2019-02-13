@@ -1,5 +1,5 @@
 /*
-    ImageViewer v 1.1.6
+    ImageViewer v 1.1.7
     Author: Sudhanshu Yadav
     Copyright (c) 2015-2016 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
@@ -503,7 +503,7 @@
 
         //method to zoom images
         zoom: function (perc, point) {
-            perc = Math.round(Math.max(100, perc));
+            perc = Math.max(100, perc);
 
             point = point || {
                 x: this.containerDim.w / 2,
@@ -519,15 +519,6 @@
                 curLeft = parseFloat(curImg.css('left')),
                 curTop = parseFloat(curImg.css('top'));
 
-            //Implement max zoom to be pixel-to-pixel native size
-            var maxHeight = curImg.get(0).naturalHeight,
-                maxWidth = curImg.get(0).naturalWidth;
-
-            var maxPercWidth = maxWidth / this.containerDim.w * 100
-            var maxPercHeight = maxHeight / this.containerDim.h * 100
-
-            maxZoom = this.options.maxZoom = Math.max(maxPercWidth, maxPercHeight)
-            perc = Math.min(maxZoom, perc)
 
             self._clearFrames();
 
@@ -548,7 +539,7 @@
                     self._zoomFrame = requestAnimationFrame(zoom);
                 }
 
-                var tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 20);
+                var tickZoom = Math.min(maxZoom, easeOutQuart(step, curPerc, perc - curPerc, 20));
 
                 var ratio = tickZoom / curPerc,
                     imgWidth = self.imageDim.w * tickZoom / 100,
@@ -633,6 +624,13 @@
                 w: imgWidth,
                 h: imgHeight
             }
+
+            var maxHeight = curImg.get(0).naturalHeight,
+                maxWidth = curImg.get(0).naturalWidth;
+            var maxPercWidth = maxWidth / this.containerDim.w * 100,
+                maxPercHeight = maxHeight / this.containerDim.h * 100;
+
+            this.options.maxZoom = Math.max(maxPercWidth, maxPercHeight)
 
             //reset image position and zoom
             compareImg.css({
