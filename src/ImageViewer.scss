@@ -1,0 +1,227 @@
+.iv {
+  $close-icon-size: 24px;
+  $boundary-space: 20px;
+  $snap-view-border-color: #aaa;
+  $handle-color: white;
+
+  &-container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  &-fullscreen {
+    position: fixed;
+    background: #0d0d0d;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 1000;
+  }
+  
+  &-fullscreen-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  &-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  &-image-mode {
+    display: inline-block;
+  }
+  
+  &-fullscreen-close {
+    position: absolute;
+    width: $close-icon-size;
+    height: $close-icon-size;
+    right: $boundary-space / 2;
+    top: $boundary-space / 2;
+    padding: $boundary-space / 2;
+    cursor: pointer;
+    text-align: center;
+    overflow: hidden;
+    text-shadow: 0px 0px 3px #6d6d6d;
+    transition: all ease 200ms;
+  }
+
+  &-fullscreen-close:after,
+  &-fullscreen-close:before {
+    content: "";
+    height: 4px;
+    width: $close-icon-size;
+    background: #FFF;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &-fullscreen-close:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &-fullscreen-close:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &-fullscreen-close:hover {
+    transform: rotate(90deg);
+    transform-origin: 50% 50%;
+  }
+
+  /***** snap view css *****/
+  &-snap-view {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: $boundary-space;
+    left: $boundary-space;
+    border: 1px solid $snap-view-border-color;
+    background: black;
+    z-index: 100;
+    box-sizing: content-box;
+    transition: all ease 400ms;
+    opacity: 0;
+  }
+  
+  &-snap-image-wrap {
+    display: inline-block;
+    position: absolute;
+    max-width: 150px;
+    max-height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+  }
+  
+  &-snap-image {
+    position: relative;
+    touch-action: none;
+  }
+  
+  &-snap-handle {
+    box-sizing: border-box;
+    position: absolute;
+    border: 1px solid $handle-color;
+    transform: translate3d(0, 0, 0);
+    box-shadow: 0px 0px 0px 200px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+  
+  /*** zoom slider ***/
+  &-zoom-slider {
+    width: 100%;
+    box-sizing: content-box;
+    border: 1px solid $snap-view-border-color;
+    border-top: 0;
+    background: rgba(0, 0, 0, 0.3);
+    height: 15px;
+    position: absolute;
+    top: 150px;
+    left: -1px;
+  }
+  
+  &-zoom-handle {
+    width: 20px;
+    height: 15px;
+    background: $handle-color;
+    position: absolute;
+    cursor: pointer;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+  
+  /**** snap view css end *****/
+  &-image-view {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  &-image-wrap {
+    display: inline-block;
+  }
+  
+  &-image-wrap:active {
+    cursor: move;
+  }
+  
+  &-image {
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    touch-action: none;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  &-loader {
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    z-index: 100;
+    margin-top: -16px;
+    margin-left: -16px;
+    font-size: 5px;
+    position: absolute;
+    text-indent: -9999em;
+    border: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-left: 1.1em solid #ffffff;
+    transform: translateZ(0);
+    animation: loading-icon 1.1s infinite linear;
+  }
+  
+  &-loader:after {
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+  }
+
+
+  @-webkit-keyframes loading-icon {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loading-icon {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  
+  @media screen and (max-width: 767px) {
+    &-snap-view {
+      z-index: -1;
+      visibility: hidden;
+    }
+  }
+}
