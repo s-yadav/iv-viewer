@@ -17,11 +17,11 @@ const babelConfig = JSON.parse(fs.readFileSync('.babelrc'));
 const defaultConfig = {
   input: 'src/index.js',
   output: [{
-    file: 'dist/img-viewer.es.js',
+    file: 'dist/iv-viewer.es.js',
     format: 'esm',
     exports: 'named',
   }, {
-    file: 'dist/img-viewer.js',
+    file: 'dist/iv-viewer.js',
     format: 'umd',
     name: 'ImageViewer',
     exports: 'named',
@@ -42,7 +42,7 @@ const defaultConfig = {
 const minConfig = {
   ...defaultConfig,
   output: {
-    file: 'dist/img-viewer.min.js',
+    file: 'dist/iv-viewer.min.js',
     format: 'umd',
     name: 'ImageViewer',
     exports: 'named',

@@ -1,4 +1,4 @@
-# ImageViewer
+# iv-viewer
 A zooming and panning plugin inspired by google photos for your web images.
 
 ### Features
@@ -17,7 +17,7 @@ A zooming and panning plugin inspired by google photos for your web images.
 ### Install
 Through npm
 ```
-npm install img-viewer --save
+npm install iv-viewer --save
 ```
 
 Or get compiled development and production version (css and js) from ./dist
@@ -25,18 +25,18 @@ Or get compiled development and production version (css and js) from ./dist
 ### Usage
 Import ImageViewer and it's style.
 ```js
-import ImageViewer from 'img-viewer';
+import ImageViewer from 'iv-viewer';
 
 // Import css
-import 'img-viewer/dist/img-viewer.css';
+import 'iv-viewer/dist/iv-viewer.css';
 ```
 You can choose to import css file inside your scss/less files.
 
-You can also use the standalone UMD build by including dist/img-viewer.js and dist/img-viewer.css in your page.
+You can also use the standalone UMD build by including dist/iv-viewer.js and dist/iv-viewer.css in your page.
 ```html
-<script src="https://unpkg.com/img-viewer/dist/img-viewer.js"></script>
+<script src="https://unpkg.com/iv-viewer/dist/iv-viewer.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/img-viewer/dist/img-viewer.css">
+<link rel="stylesheet" href="https://unpkg.com/iv-viewer/dist/iv-viewer.css">
 ```
 
 ### Three different modes
@@ -44,7 +44,7 @@ You can also use the standalone UMD build by including dist/img-viewer.js and di
 #### Full-Screen Mode
 If you want to show images in full screen, with predefined styles. You can use FullScreenViewer. 
 ```js
-import { FullScreenViewer } from 'img-viewer';
+import { FullScreenViewer } from 'iv-viewer';
 
 const viewer = FullScreenViewer(options); // check options section for supported options
 
@@ -59,7 +59,7 @@ If you have your own container to show images (you might have custom layout or g
 ```
 
 ```js
-import ImageViewer from 'img-viewer';
+import ImageViewer from 'iv-viewer';
 
 const container = document.querySelector('#image-container');
 const viewer = ImageViewer(container, options); //check options section for supported options
@@ -74,7 +74,7 @@ If you just want to add zoom and pan gesture to your images in a image-viewer st
 ```
 
 ```js
-import ImageViewer from 'img-viewer';
+import ImageViewer from 'iv-viewer';
 
 const image = document.querySelector('#image');
 const viewer = ImageViewer(image, options); // check options section for supported options
@@ -95,7 +95,7 @@ const viewer = ImageViewer(image, options); // check options section for support
 Creating an instance
 
 ```js
-import ImageViewer from 'img-viewer';
+import ImageViewer from 'iv-viewer';
 
 const viewer = ImageViewer(element, options);
 ```
@@ -156,7 +156,7 @@ FullScreenViewer is extended from ImageViewer. So it shares the same ImageViewer
 Creating an instance
 
 ```js
-import { FullScreenViewer } from 'img-viewer';
+import { FullScreenViewer } from 'iv-viewer';
 
 const viewer = FullScreenViewer(options);
 ```
@@ -208,7 +208,7 @@ In all of the above example it will first try to display the first image and the
 The second image is optional, which you should pass when you feel you can improve the image loading experience by first showing low quality image and then progressively update it with high quality image.
 
 ### Like this
-[:star: this repo](https://github.com/s-yadav/img-viewer)
+[:star: this repo](https://github.com/s-yadav/iv-viewer)
 
 ### Major updates
 #### v2.0.0

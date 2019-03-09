@@ -1,8 +1,8 @@
 /**
- * img-viewer - 2.0.0-beta
+ * iv-viewer - 2.0.0-beta2
  * Author : Sudhanshu Yadav
  * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
- * git+https://github.com/s-yadav/img-viewer.git
+ * git+https://github.com/s-yadav/iv-viewer.git
  */
 
 (function (global, factory) {

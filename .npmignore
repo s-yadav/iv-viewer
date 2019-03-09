@@ -1,0 +1,21 @@
+#ignore temprory files
+.cache
+*.log
+*.swp
+.DS_Store
+.vscode
+
+#ignore gitignore
+.gitignore
+
+#ignore build files
+rollup.config.js
+build-css.js
+.babelrc
+.eslintrc
+
+#ignore development files
+node_modules/
+src/
+assets/
+example/

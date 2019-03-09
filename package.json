@@ -1,11 +1,11 @@
 {
-  "name": "img-viewer",
-  "version": "2.0.0-beta",
+  "name": "iv-viewer",
+  "version": "2.0.0-beta2",
   "description": "A zooming and panning plugin inspired by google photos for your web images.",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/s-yadav/img-viewer.git"
+    "url": "git+https://github.com/s-yadav/iv-viewer.git"
   },
   "keywords": [
     "image",
@@ -17,9 +17,9 @@
   "author": "Sudhanshu Yadav",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/s-yadav/img-viewer/issues"
+    "url": "https://github.com/s-yadav/iv-viewer/issues"
   },
-  "homepage": "https://github.com/s-yadav/img-viewer#readme",
+  "homepage": "https://github.com/s-yadav/iv-viewer#readme",
   "scripts": {
     "start": "yarn copy-assets & parcel example/index.html --out-dir temp",
     "copy-assets": "cp -R example/ temp",
