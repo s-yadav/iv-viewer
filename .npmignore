@@ -17,5 +17,6 @@ build-css.js
 #ignore development files
 node_modules/
 src/
+temp/
 assets/
 example/

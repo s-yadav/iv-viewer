@@ -216,3 +216,4 @@ The second image is optional, which you should pass when you feel you can improv
 - It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.
 - While the options and instance method are same the way you use a ImageViewer and FullScreenViewed is changed. The v1 API will no longer be supported.
 - Published on the npm. V1 was not available on npm.
+- Changed the package name to iv-viewer. image-viewer name was not available on npm. 
