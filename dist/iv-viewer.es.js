@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.0.0-beta3
+ * iv-viewer - 2.0.0-beta4
  * Author : Sudhanshu Yadav
  * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -1393,5 +1393,6 @@ function (_ImageViewer) {
   return FullScreenViewer;
 }(ImageViewer);
 
+ImageViewer.FullScreenViewer = FullScreenViewer;
+
 export default ImageViewer;
-export { ImageViewer, FullScreenViewer };

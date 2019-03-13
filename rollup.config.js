@@ -15,16 +15,16 @@ const banner = `${PACKAGE.name} - ${PACKAGE.version}
 const babelConfig = JSON.parse(fs.readFileSync('.babelrc'));
 
 const defaultConfig = {
-  input: 'src/index.js',
+  input: 'src/dist.js',
   output: [{
     file: 'dist/iv-viewer.es.js',
     format: 'esm',
-    exports: 'named',
+    exports: 'default',
   }, {
     file: 'dist/iv-viewer.js',
     format: 'umd',
     name: 'ImageViewer',
-    exports: 'named',
+    exports: 'default',
   }],
   external: ['react', 'react-dom'],
   plugins: [
@@ -45,7 +45,7 @@ const minConfig = {
     file: 'dist/iv-viewer.min.js',
     format: 'umd',
     name: 'ImageViewer',
-    exports: 'named',
+    exports: 'default',
   },
   plugins: [
     ...defaultConfig.plugins,

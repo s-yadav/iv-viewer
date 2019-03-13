@@ -1,15 +1,15 @@
 /**
- * iv-viewer - 2.0.0-beta3
+ * iv-viewer - 2.0.0-beta4
  * Author : Sudhanshu Yadav
  * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.ImageViewer = {}));
-}(this, function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = global || self, global.ImageViewer = factory());
+}(this, function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1399,10 +1399,8 @@
     return FullScreenViewer;
   }(ImageViewer);
 
-  exports.default = ImageViewer;
-  exports.ImageViewer = ImageViewer;
-  exports.FullScreenViewer = FullScreenViewer;
+  ImageViewer.FullScreenViewer = FullScreenViewer;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return ImageViewer;
 
 }));
