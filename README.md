@@ -27,6 +27,9 @@ Import ImageViewer and it's style.
 ```js
 import ImageViewer from 'iv-viewer';
 
+// or
+const ImageViewer = require('iv-viewer').default; 
+
 // Import css
 import 'iv-viewer/dist/iv-viewer.css';
 ```
