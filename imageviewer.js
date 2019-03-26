@@ -1,5 +1,5 @@
 /*
-    ImageViewer v 1.1.7
+    ImageViewer v 1.1.8
     Author: Sudhanshu Yadav
     Copyright (c) 2015-2016 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
     Demo on: http://ignitersworld.com/lab/imageViewer.html
@@ -553,11 +553,11 @@
 
                 //fix for right and bottom
                 if((newLeft + imgWidth) < baseRight){
-                    newLeft = baseRight - imgWidth; //newLeft - (newLeft + imgWidth - baseRight)
+                    newLeft = (self.containerDim.w - imgWidth) / 2; //newLeft - (newLeft + imgWidth - baseRig
                 }
 
                 if((newTop + imgHeight) < baseBottom){
-                    newTop =  baseBottom - imgHeight; //newTop + (newTop + imgHeight - baseBottom)
+                    newTop = (self.containerDim.h - imgHeight) / 2; //newLeft - (newLeft + imgWidth - baseRig
                 }
 
                 curImg.css({
