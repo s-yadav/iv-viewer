@@ -543,7 +543,7 @@ class ImageViewer {
     const ivLoader = container.querySelector('.iv-loader');
 
     // remove old images
-    remove(container.querySelectorAll('.iv-snap-image, .iv-large-image'));
+    remove(container.querySelectorAll('.iv-snap-image, .iv-image'));
 
     // add snapView image
     const snapImage = createElement({
@@ -829,7 +829,7 @@ class ImageViewer {
 
     this._state.snapViewVisible = true;
 
-    css(snapView, { opacity: 1 });
+    css(snapView, { opacity: 1, pointerEvents: 'inherit' });
 
     if (!noTimeout) {
       this._frames.snapViewTimeout = setTimeout(this.hideSnapView, 1500);
@@ -837,7 +837,7 @@ class ImageViewer {
   }
   hideSnapView = () => {
     const { snapView } = this._elements;
-    css(snapView, { opacity: 0 });
+    css(snapView, { opacity: 0, pointerEvents: 'none' });
     this._state.snapViewVisible = false;
   }
   refresh = () => {

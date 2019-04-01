@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.0.0-beta4
+ * iv-viewer - 2.0.0-beta5
  * Author : Sudhanshu Yadav
  * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -559,7 +559,8 @@ function () {
       clearTimeout(_this._frames.snapViewTimeout);
       _this._state.snapViewVisible = true;
       css(snapView, {
-        opacity: 1
+        opacity: 1,
+        pointerEvents: 'inherit'
       });
 
       if (!noTimeout) {
@@ -570,7 +571,8 @@ function () {
     _defineProperty(this, "hideSnapView", function () {
       var snapView = _this._elements.snapView;
       css(snapView, {
-        opacity: 0
+        opacity: 0,
+        pointerEvents: 'none'
       });
       _this._state.snapViewVisible = false;
     });
@@ -1087,7 +1089,7 @@ function () {
           imageWrap = _elements.imageWrap;
       var ivLoader = container.querySelector('.iv-loader'); // remove old images
 
-      remove(container.querySelectorAll('.iv-snap-image, .iv-large-image')); // add snapView image
+      remove(container.querySelectorAll('.iv-snap-image, .iv-image')); // add snapView image
 
       var snapImage = createElement({
         tagName: 'img',
