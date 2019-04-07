@@ -1,0 +1,19 @@
+body,
+html {
+  margin: 0;
+}
+
+.header {
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  padding: 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  padding: 10px;
+}
+
+nav {
+  text-align: center;
+}

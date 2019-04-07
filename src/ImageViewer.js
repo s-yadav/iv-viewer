@@ -466,7 +466,7 @@ class ImageViewer {
       this._clearFrames();
 
       // cross-browser wheel delta
-      const delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail));
+      const delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail || -e.deltaY));
 
       const newZoomValue = zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
 

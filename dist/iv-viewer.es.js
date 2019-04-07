@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.0.0-beta5
+ * iv-viewer - 2.0.0
  * Author : Sudhanshu Yadav
  * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -1006,7 +1006,7 @@ function () {
         _this7._clearFrames(); // cross-browser wheel delta
 
 
-        var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail));
+        var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail || -e.deltaY));
         var newZoomValue = zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
 
         if (!(newZoomValue >= 100 && newZoomValue <= _options.maxZoom)) {
