@@ -222,6 +222,6 @@ codesandbox link: [https://codesandbox.io/s/8ypwzryom0](https://codesandbox.io/s
 #### v2.0.0
 
 - It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.
-- While the options and instance method are same the way you use a ImageViewer and FullScreenViewed is changed. The v1 API will no longer be supported.
+- While the options and instance method are same the way you use a ImageViewer and FullScreenView is changed. The v1 API will no longer be supported.
 - Published on the npm. V1 was not available on npm.
 - Changed the package name to iv-viewer. image-viewer name was not available on npm. 
