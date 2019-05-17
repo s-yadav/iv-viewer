@@ -49,7 +49,7 @@ If you want to show images in full screen, with predefined styles. You can use F
 ```js
 import { FullScreenViewer } from 'iv-viewer';
 
-const viewer = FullScreenViewer(options); // check options section for supported options
+const viewer = new FullScreenViewer(options); // check options section for supported options
 
 viewer.show('images/low-res-img', 'images/hi-res-img'); //second option is optional. Check better image loading section
 ```
@@ -65,7 +65,7 @@ If you have your own container to show images (you might have custom layout or g
 import ImageViewer from 'iv-viewer';
 
 const container = document.querySelector('#image-container');
-const viewer = ImageViewer(container, options); //check options section for supported options
+const viewer = new ImageViewer(container, options); //check options section for supported options
 
 viewer.load('images/low-res-img', 'images/hi-res-img'); //second option is optional. Check better image loading section
 ```
@@ -80,7 +80,7 @@ If you just want to add zoom and pan gesture to your images in a image-viewer st
 import ImageViewer from 'iv-viewer';
 
 const image = document.querySelector('#image');
-const viewer = ImageViewer(image, options); // check options section for supported options
+const viewer = new ImageViewer(image, options); // check options section for supported options
 ```
 
 ### Options
@@ -100,13 +100,13 @@ Creating an instance
 ```js
 import ImageViewer from 'iv-viewer';
 
-const viewer = ImageViewer(element, options);
+const viewer = new ImageViewer(element, options);
 ```
 Here the first argument is the element, which can be container where viewer will be loaded, or it can be a image in which case viewer will be initialized in a image mode.
 
 You can also pass a selector directly instead of a DOM element.
 ```js
-const viewer = ImageViewer('#element', options);
+const viewer = new ImageViewer('#element', options);
 ```
 
 Second argument is to provide configuration options for the ImageViewer. This argument is optional.
@@ -161,7 +161,7 @@ Creating an instance
 ```js
 import { FullScreenViewer } from 'iv-viewer';
 
-const viewer = FullScreenViewer(options);
+const viewer = new FullScreenViewer(options);
 ```
 Unlike ImageViewer you don't have to pass container for the viewer as it will be initialized in pre-defined full screen container.
 
