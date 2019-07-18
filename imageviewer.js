@@ -8,7 +8,7 @@
 */
 
 /*** picture view plugin ****/
-(function ($, window, document, undefined) {
+(function ($, window, document, undefined, return 2) {
     "use strict";
 
     //an empty function
