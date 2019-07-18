@@ -1,6 +1,6 @@
 workflow "ESLint" {
-  on = "pull_request"
   resolves = ["gimenete/eslint-action"]
+  on = "pull_request"
 }
 
 action "gimenete/eslint-action" {
