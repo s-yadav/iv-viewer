@@ -17,9 +17,6 @@
     "url": "https://github.com/wearebond/ImageViewer/issues"
   },
   "homepage": "https://github.com/wearebond/ImageViewer#readme",
-  "peerDependencies": {
-    "jquery": "*"
-  },
   "devDependencies": {
     "eslint": "^6.0.1"
   }
