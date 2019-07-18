@@ -4,6 +4,7 @@
   "description": "A zooming and panning plugin inspired by google photos for your web images.",
   "main": "imageviewer.js",
   "scripts": {
+    "lint": "eslint imageviewer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +19,8 @@
   "homepage": "https://github.com/wearebond/ImageViewer#readme",
   "peerDependencies": {
     "jquery": "*"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1"
   }
 }

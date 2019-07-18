@@ -1,0 +1,13 @@
+{
+  "globals": {
+    "window": "readonly"
+  },
+  "rules": {
+    "no-undef": 1,
+    "no-unused-vars": 1,
+    "no-extra-semi": 1,
+    "semi": 0,
+    "comma-dangle": 0,
+    "function-paren-newline": 0
+  }
+}
