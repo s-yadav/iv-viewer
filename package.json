@@ -50,9 +50,7 @@
     "rollup-plugin-filesize": "^6.2.0",
     "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-uglify": "^6.0.3",
-    "sass": "^1.23.0"
-  },
-  "dependencies": {
+    "sass": "^1.23.0",
     "serialize-to-js": "^2.0.0"
   }
 }
