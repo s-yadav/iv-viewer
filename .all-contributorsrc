@@ -36,6 +36,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "10000",
+      "name": "10000",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3347256?v=4",
+      "profile": "https://github.com/10000",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7
