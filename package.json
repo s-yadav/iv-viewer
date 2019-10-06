@@ -52,5 +52,8 @@
     "rollup-plugin-uglify": "^6.0.3",
     "sass": "^1.23.0",
     "serialize-to-js": "^2.0.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.6.4"
   }
 }
