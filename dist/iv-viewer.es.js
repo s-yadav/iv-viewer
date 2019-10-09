@@ -42,20 +42,35 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function _objectSpread(target) {
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
 
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
+    if (i % 2) {
+      ownKeys(source, true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
     }
-
-    ownKeys.forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    });
   }
 
   return target;
@@ -147,6 +162,10 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -594,7 +613,7 @@ function () {
       container: container,
       domElement: domElement
     };
-    this._options = _objectSpread({}, ImageViewer.defaults, options); // container for all events
+    this._options = _objectSpread2({}, ImageViewer.defaults, {}, options); // container for all events
 
     this._events = {}; // container for all timeout and frames
 
@@ -712,7 +731,7 @@ function () {
       } // save references for later use
 
 
-      this._elements = _objectSpread({}, this._elements, {
+      this._elements = _objectSpread2({}, this._elements, {
         snapView: container.querySelector('.iv-snap-view'),
         snapImageWrap: container.querySelector('.iv-snap-image-wrap'),
         imageWrap: container.querySelector('.iv-image-wrap'),
@@ -1331,7 +1350,7 @@ function (_ImageViewer) {
     });
     var container = fullScreenElem.querySelector('.iv-fullscreen-container'); // call the ImageViewer constructor
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(FullScreenViewer).call(this, container, _objectSpread({}, options, {
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(FullScreenViewer).call(this, container, _objectSpread2({}, options, {
       refreshOnResize: false
     }))); // add fullScreenElem on element list
 
