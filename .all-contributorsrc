@@ -1,0 +1,51 @@
+{
+  "projectName": "iv-viewer",
+  "projectOwner": "s-yadav",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "ruchikabgosain",
+      "name": "Ruchika",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/30324532?v=4",
+      "profile": "http://mozillians.org/en-US/u/ruchikabgosain/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "s-yadav",
+      "name": "Sudhanshu Yadav",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3096766?v=4",
+      "profile": "https://twitter.com/_syadav",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "amritk",
+      "name": "Amrit Kahlon",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2039539?v=4",
+      "profile": "https://hockeycommunity.com",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "10000",
+      "name": "10000",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3347256?v=4",
+      "profile": "https://github.com/10000",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
