@@ -34,6 +34,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
+    "autoprefixer": "^9.6.4",
     "babel-eslint": "^10.0.3",
     "cross-env": "^6.0.3",
     "cssnano": "^4.1.10",
@@ -52,8 +53,5 @@
     "rollup-plugin-uglify": "^6.0.3",
     "sass": "^1.23.0",
     "serialize-to-js": "^2.0.0"
-  },
-  "dependencies": {
-    "autoprefixer": "^9.6.4"
   }
 }
