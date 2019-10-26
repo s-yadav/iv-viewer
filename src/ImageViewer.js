@@ -431,11 +431,15 @@ class ImageViewer {
         this.zoom(zoomValue, center);
       };
 
-      const endListener = () => {
+      const endListener = (eEnd) => {
         // unbind events
         events.pinchMove();
         events.pinchEnd();
         this._state.zooming = false;
+        // properly resume move event if one finger remains
+        if (eEnd.touches.length === 1) {
+          this._sliders.imageSlider.startHandler(eEnd);
+        }
       };
 
       // remove events if already assigned

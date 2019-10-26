@@ -20,7 +20,7 @@ class Slider {
 
     const { moveHandler, endHandler, onStart } = this;
 
-    const isTouchEvent = eStart.type === 'touchstart';
+    const isTouchEvent = eStart.type === 'touchstart' || eStart.type === 'touchend';
 
     this.touchMoveEvent = isTouchEvent ? 'touchmove' : 'mousemove';
     this.touchEndEvent = isTouchEvent ? 'touchend' : 'mouseup';
