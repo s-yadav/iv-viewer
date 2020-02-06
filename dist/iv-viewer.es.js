@@ -275,7 +275,7 @@ function wrap(element, _ref) {
   var wrapper = document.createElement(tag);
   if (className) wrapper.className = className;
   if (id) wrapper.id = id;
-  if (style) wrapper.style = style;
+  if (style) wrapper.style.cssText = style;
   element.parentNode.insertBefore(wrapper, element);
   element.parentNode.removeChild(element);
   wrapper.appendChild(element);
@@ -643,10 +643,7 @@ function () {
 
         container = wrap(domElement, {
           className: 'iv-container iv-image-mode',
-          style: {
-            display: 'inline-block',
-            overflow: 'hidden'
-          }
+          style: 'display: inline-block; overflow: hidden',
         }); // hide the image and add iv-original-img class
 
         css(domElement, {

@@ -100,7 +100,10 @@ class ImageViewer {
       hiResImageSrc = domElement.getAttribute('high-res-src') || domElement.getAttribute('data-high-res-src');
 
       // wrap the image with iv-container div
-      container = wrap(domElement, { className: 'iv-container iv-image-mode', style: { display: 'inline-block', overflow: 'hidden' } });
+      container = wrap(domElement, {
+        className: 'iv-container iv-image-mode',
+        style: 'display: inline-block; overflow: hidden',
+      });
 
       // hide the image and add iv-original-img class
       css(domElement, {
@@ -643,8 +646,8 @@ class ImageViewer {
     const { image, container, snapView, snapImage, zoomHandle } = this._elements;
 
     // calculate content width of image and snap image
-    const imageWidth = parseInt(css(image, 'width'), 10);
-    const imageHeight = parseInt(css(image, 'height'), 10);
+    const imageWidth = this._options.imageWidth ? this._options.imageWidth : parseInt(css(image, 'width'), 10);
+    const imageHeight = this._options.imageHeight ? this._options.imageHeight : parseInt(css(image, 'height'), 10);
 
     const contWidth = parseInt(css(container, 'width'), 10);
     const contHeight = parseInt(css(container, 'height'), 10);
@@ -664,9 +667,13 @@ class ImageViewer {
 
     const ratio = imageWidth / imageHeight;
 
-    imgWidth = (imageWidth > imageHeight && contHeight >= contWidth) || ratio * contHeight > contWidth
-      ? contWidth
-      : ratio * contHeight;
+    if (imageWidth > contWidth) {
+      imgWidth = (imageWidth > imageHeight && contHeight >= contWidth) || ratio * contHeight > contWidth
+        ? contWidth
+        : ratio * contHeight;
+    } else {
+      imgWidth = imageWidth;
+    }
 
     imgHeight = imgWidth / ratio;
 
