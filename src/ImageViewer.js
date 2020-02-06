@@ -829,10 +829,19 @@ class ImageViewer {
     };
   }
   showSnapView = (noTimeout) => {
-    const { snapViewVisible, zoomValue, loaded } = this._state;
+    const { snapViewVisible, zoomValue, loaded, imageDim, containerDim } = this._state;
     const { snapView } = this._elements;
 
     if (!this._options.snapView) return;
+
+    // Hide snapView if image is smaller than container, 
+    // in that case moving in the image is not necessary
+    const currImgWidth = imageDim.w * zoomValue / 100;
+    const currImgHeight = imageDim.h * zoomValue / 100;
+    if (currImgWidth <= containerDim.w && currImgHeight <= containerDim.h) {
+      this._state.snapViewVisible = false;
+      return;
+    }
 
     if (snapViewVisible || zoomValue <= 100 || !loaded) return;
 
