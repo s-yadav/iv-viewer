@@ -472,10 +472,16 @@ class ImageViewer {
       // cross-browser wheel delta
       const delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail || -e.deltaY));
 
-      const newZoomValue = zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
+      var newZoomValue = zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
 
-      if (!(newZoomValue >= 100 && newZoomValue <= _options.maxZoom)) {
+      if ((zoomValue == _options.maxZoom && delta > 0) || (zoomValue == 100 && delta <0)) {
         changedDelta += Math.abs(delta);
+      } else if ( newZoomValue > _options.maxZoom ) {
+        newZoomValue = _options.maxZoom;
+        changedDelta = 0;
+      } else if ( newZoomValue < 100 ) {
+        newZoomValue = 100;
+        changedDelta = 0;
       } else {
         changedDelta = 0;
       }
