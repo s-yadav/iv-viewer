@@ -1,7 +1,7 @@
 /**
  * iv-viewer - 2.0.1
  * Author : Sudhanshu Yadav
- * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
+ * Copyright (c) 2019, 2020 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
  */
 
@@ -292,7 +292,9 @@ function unwrap(element) {
 function remove(elements) {
   var elmArray = toArray(elements);
   elmArray.forEach(function (element) {
-    element.parentNode.removeChild(element);
+    if (element && element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
   });
 }
 function clamp(num, min, max) {
@@ -337,7 +339,7 @@ function () {
       var moveHandler = _this.moveHandler,
           endHandler = _this.endHandler,
           onStart = _this.onStart;
-      var isTouchEvent = eStart.type === 'touchstart';
+      var isTouchEvent = eStart.type === 'touchstart' || eStart.type === 'touchend';
       _this.touchMoveEvent = isTouchEvent ? 'touchmove' : 'mousemove';
       _this.touchEndEvent = isTouchEvent ? 'touchend' : 'mouseup';
       _this.sx = isTouchEvent ? eStart.touches[0].clientX : eStart.clientX;
@@ -968,11 +970,15 @@ function () {
           _this6.zoom(zoomValue, center);
         };
 
-        var endListener = function endListener() {
+        var endListener = function endListener(eEnd) {
           // unbind events
           events.pinchMove();
           events.pinchEnd();
-          _this6._state.zooming = false;
+          _this6._state.zooming = false; // properly resume move event if one finger remains
+
+          if (eEnd.touches.length === 1) {
+            _this6._sliders.imageSlider.startHandler(eEnd);
+          }
         }; // remove events if already assigned
 
 
