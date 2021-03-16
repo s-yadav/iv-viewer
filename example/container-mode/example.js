@@ -43,5 +43,13 @@ wrapper.querySelector('.prev').addEventListener('click', function (evt) {
   showImage();
 });
 
+document.querySelector('.rotateRight').addEventListener('click', function(evt) {
+  viewer.rotateRight();
+})
+
+document.querySelector('.rotateLeft').addEventListener('click', function(evt) {
+  viewer.rotateLeft();
+})
+
 // initially show image
 showImage();
