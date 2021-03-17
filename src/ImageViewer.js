@@ -693,6 +693,20 @@ class ImageViewer {
     };
 
     const rotVal = this._state.rotationValue;
+    css(image, {
+      'transition': 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s'
+    });
+    css(snapImageImg, {
+      'transition': 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s'
+    });
+    setTimeout(()=> {
+      css(image, {
+        'transition': 'none'
+      });
+      css(snapImageImg, {
+        'transition': 'none'
+      });
+    }, 200);
     switch( rotVal ) {
       case 0:
       case 180:
