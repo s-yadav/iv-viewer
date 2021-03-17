@@ -34,6 +34,9 @@ const imageViewHtml = `
 `;
 
 class ImageViewer {
+
+  _rotationPositions = [0, 90, 180, 270];
+
   constructor (element, options = {}) {
     const { container, domElement, imageSrc, hiResImageSrc } = this._findContainerAndImageSrc(element, options);
 
@@ -63,6 +66,7 @@ class ImageViewer {
     // maintain current state
     this._state = {
       zoomValue: this._options.zoomValue,
+      rotationValue: 0
     };
 
     this._images = {
@@ -551,7 +555,7 @@ class ImageViewer {
 
     // add snapView image
     const snapImage = createElement({
-      tagName: 'img',
+      tagName: 'div',
       className: 'iv-snap-image',
       src: imageSrc,
       insertBefore: snapImageWrap.firstChild,
@@ -563,7 +567,14 @@ class ImageViewer {
       tagName: 'img',
       className: 'iv-image iv-small-image',
       src: imageSrc,
-      parent: imageWrap,
+      parent: imageWrap
+    });
+
+    const snapImageImg = createElement({
+      tagName: 'img',
+      src: imageSrc,
+      parent: snapImage,
+      style: 'max-width: 150px; max-height: 150px;'
     });
 
     this._state.loaded = false;
@@ -571,6 +582,7 @@ class ImageViewer {
     // store image reference in _elements
     this._elements.image = image;
     this._elements.snapImage = snapImage;
+    this._elements.snapImageImg = snapImageImg;
 
     css(ivLoader, { display: 'block' });
 
@@ -640,11 +652,16 @@ class ImageViewer {
     }
   }
   _calculateDimensions () {
-    const { image, container, snapView, snapImage, zoomHandle } = this._elements;
+    const { image, snapImageImg, container, snapView, snapImage, zoomHandle } = this._elements;
 
     // calculate content width of image and snap image
-    const imageWidth = parseInt(css(image, 'width'), 10);
-    const imageHeight = parseInt(css(image, 'height'), 10);
+    
+    let imageWidth = parseInt(css(image, 'width'), 10);
+    let imageHeight = parseInt(css(image, 'height'), 10);
+    if( this._state.rotationValue != 0 && this._state.rotationValue != 180 ) {
+      imageHeight = parseInt(css(image, 'width'), 10);
+      imageWidth = parseInt(css(image, 'height'), 10);
+    }
 
     const contWidth = parseInt(css(container, 'width'), 10);
     const contHeight = parseInt(css(container, 'height'), 10);
@@ -674,6 +691,49 @@ class ImageViewer {
       w: imgWidth,
       h: imgHeight,
     };
+
+    const rotVal = this._state.rotationValue;
+    css(image, {
+      'transition': 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s'
+    });
+    css(snapImageImg, {
+      'transition': 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s'
+    });
+    setTimeout(()=> {
+      css(image, {
+        'transition': 'none'
+      });
+      css(snapImageImg, {
+        'transition': 'none'
+      });
+    }, 200);
+    switch( rotVal ) {
+      case 0:
+      case 180:
+        css(image, {
+          'transform': `rotate(${rotVal}deg)`
+        })
+        css(snapImageImg, {
+          'transform': `rotate(${rotVal}deg)`
+        })
+        break;
+      case 90:
+        css(image, {
+          'transform': `translate(-50%, -50%) rotate(${rotVal}deg) translate(50%, -50%)`
+        })
+        css(snapImageImg, {
+          'transform': `translate(-50%, -50%) rotate(${rotVal}deg) translate(50%, -50%)`
+        })
+        break;
+      case 270:
+        css(image, {
+          'transform': `translate(-50%, -50%) rotate(${rotVal}deg) translate(-50%, 50%) `
+        })
+        css(snapImageImg, {
+          'transform': `translate(-50%, -50%) rotate(${rotVal}deg) translate(-50%, 50%) `
+        })
+        break;       
+    }
 
     // reset image position and zoom
     css(image, {
@@ -767,12 +827,21 @@ class ImageViewer {
         newTop = baseBottom - imgHeight; // newTop + (newTop + imgHeight - baseBottom)
       }
 
-      css(image, {
-        height: `${imgHeight}px`,
-        width: `${imgWidth}px`,
-        left: `${newLeft}px`,
-        top: `${newTop}px`,
-      });
+      if( this._state.rotationValue != 0 && this._state.rotationValue != 180 ) {
+        css(image, {
+          height: `${imgWidth}px`,
+          width: `${imgHeight}px`,
+          left: `${newLeft}px`,
+          top: `${newTop}px`,
+        });        
+      } else {        
+        css(image, {
+          height: `${imgHeight}px`,
+          width: `${imgWidth}px`,
+          left: `${newLeft}px`,
+          top: `${newTop}px`,
+        });        
+      }
 
       this._state.zoomValue = tickZoom;
 
@@ -785,6 +854,36 @@ class ImageViewer {
     };
 
     zoom();
+  }
+  resetRotation = () => {
+    this._state.rotationValue = 0;
+
+    this._calculateDimensions();
+    this.resetZoom(false);
+  }
+  rotateLeft = () => {
+    const currentRotation = this._state.rotationValue;
+
+    let nextRotationIndex = this._rotationPositions.indexOf(currentRotation) - 1;
+    if( nextRotationIndex < 0 ) {
+      nextRotationIndex = this._rotationPositions.length - 1;
+    }
+    this._state.rotationValue = this._rotationPositions[nextRotationIndex];
+
+    this._calculateDimensions();
+    this.resetZoom(false);
+  }
+  rotateRight = () => {
+    const currentRotation = this._state.rotationValue;
+
+    let nextRotationIndex = this._rotationPositions.indexOf(currentRotation) + 1;
+    if( nextRotationIndex > this._rotationPositions.length - 1 ) {
+      nextRotationIndex = 0;
+    }
+    this._state.rotationValue = this._rotationPositions[nextRotationIndex];
+
+    this._calculateDimensions();
+    this.resetZoom(false);
   }
   _clearFrames = () => {
     const { slideMomentumCheck, sliderMomentumFrame, zoomFrame } = this._frames;
@@ -855,6 +954,7 @@ class ImageViewer {
     };
 
     this._loadImages();
+    this.resetRotation();
   }
   destroy () {
     const { container, domElement } = this._elements;
