@@ -8,7 +8,7 @@ const postcss = require('postcss');
 const writeFile = util.promisify(fs.writeFile);
 
 // build css
-const filePath = './src/ImageViewer.scss';
+const filePath = './src/scss/build.scss';
 const css = sass.renderSync({ file: filePath }).css.toString();
 
 async function compileCss () {

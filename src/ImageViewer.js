@@ -17,23 +17,36 @@ import {
 } from './util';
 
 import Slider from './Slider';
-
-const imageViewHtml = `
-  <div class="iv-loader"></div>
-  <div class="iv-snap-view">
-    <div class="iv-snap-image-wrap">
-      <div class="iv-snap-handle"></div>
-    </div>
-    <div class="iv-zoom-slider">
-      <div class="iv-zoom-handle"></div>
-    </div>
-  </div>
-  <div class="iv-image-view" >
-    <div class="iv-image-wrap" ></div>
-  </div>
-`;
-
 class ImageViewer {
+  get zoomInButton () {
+    return this._options.hasZoomButtons ? `<div class="iv-button-zoom--in" role="button"></div>` : '';
+  }
+
+  get zoomOutButton () {
+    return this._options.hasZoomButtons ? `<div class="iv-button-zoom--out" role="button"></div>` : '';
+  }
+
+  get imageViewHtml () {
+    return `
+    <div class="iv-loader"></div>
+    <div class="iv-snap-view">
+      <div class="iv-snap-image-wrap">
+        <div class="iv-snap-handle"></div>
+      </div>
+      <div class="iv-zoom-actions ${this._options.hasZoomButtons ? 'iv-zoom-actions--has-buttons' : ''}">
+        ${this.zoomInButton}
+        <div class="iv-zoom-slider">
+          <div class="iv-zoom-handle"></div>
+        </div>
+        ${this.zoomOutButton}
+      </div>
+    </div>
+    <div class="iv-image-view" >
+      <div class="iv-image-wrap" ></div>
+    </div>
+  `;
+  }
+
   constructor (element, options = {}) {
     const { container, domElement, imageSrc, hiResImageSrc } = this._findContainerAndImageSrc(element, options);
 
@@ -49,6 +62,8 @@ class ImageViewer {
     this._events = {
 
     };
+
+    this._listeners = this._options.listeners || {};
 
     // container for all timeout and frames
     this._frames = {
@@ -150,7 +165,7 @@ class ImageViewer {
     createElement({
       tagName: 'div',
       className: 'iv-wrap',
-      html: imageViewHtml,
+      html: this.imageViewHtml,
       parent: container,
     });
 
@@ -170,7 +185,13 @@ class ImageViewer {
       imageWrap: container.querySelector('.iv-image-wrap'),
       snapHandle: container.querySelector('.iv-snap-handle'),
       zoomHandle: container.querySelector('.iv-zoom-handle'),
+      zoomIn: container.querySelector('.iv-button-zoom--in'),
+      zoomOut: container.querySelector('.iv-button-zoom--out'),
     };
+
+    if (this._listeners.onInit) {
+      this._listeners.onInit(this._callbackData);
+    }
   }
 
   _initImageSlider () {
@@ -389,6 +410,18 @@ class ImageViewer {
       this._state.snapViewVisible = false;
       this.showSnapView();
     });
+
+    if (!this._options.hasZoomButtons) {
+      return;
+    }
+    const { zoomOut, zoomIn } = this._elements;
+    this._events.zoomInClick = assignEvent(zoomIn, ['click'], () => {
+      this.zoom(this._state.zoomValue + this._options.zoomStep || 50);
+    });
+
+    this._events.zoomOutClick = assignEvent(zoomOut, ['click'], () => {
+      this.zoom(this._state.zoomValue - this._options.zoomStep || 50);
+    });
   }
 
   _pinchAndZoom () {
@@ -598,6 +631,11 @@ class ImageViewer {
       // calculate the dimension
       this._calculateDimensions();
 
+      // dispatch image load event
+      if (this._listeners.onImageLoad) {
+        this._listeners.onImageLoaded(this._callbackData);
+      }
+
       // reset the zoom
       this.resetZoom();
     };
@@ -608,6 +646,7 @@ class ImageViewer {
       this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
     }
   }
+
   _loadHighResImage (hiResImageSrc) {
     const { imageWrap, container } = this._elements;
 
@@ -639,6 +678,7 @@ class ImageViewer {
       this._events.hiResImageLoad = assignEvent(hiResImage, 'load', onHighResImageLoad);
     }
   }
+
   _calculateDimensions () {
     const { image, container, snapView, snapImage, zoomHandle } = this._elements;
 
@@ -699,9 +739,11 @@ class ImageViewer {
       height: `${snapHeight}px`,
     });
 
+    const zoomSlider = snapView.querySelector('.iv-zoom-slider').clientWidth;
     // calculate zoom slider area
-    this._state.zoomSliderLength = snapViewWidth - zoomHandle.offsetWidth;
+    this._state.zoomSliderLength = zoomSlider - zoomHandle.offsetWidth;
   }
+
   resetZoom (animate = true) {
     const { zoomValue } = this._options;
 
@@ -711,6 +753,7 @@ class ImageViewer {
 
     this.zoom(zoomValue);
   }
+
   zoom = (perc, point) => {
     const { _options, _elements, _state } = this;
     const { zoomValue: curPerc, imageDim, containerDim, zoomSliderLength } = _state;
@@ -782,10 +825,16 @@ class ImageViewer {
       css(zoomHandle, {
         left: `${(tickZoom - 100) * zoomSliderLength / (maxZoom - 100)}px`,
       });
+
+      // dispatch zoom changed event
+      if (this._listeners.onZoomChange) {
+        this._listeners.onZoomChange(this._callbackData);
+      }
     };
 
     zoom();
   }
+
   _clearFrames = () => {
     const { slideMomentumCheck, sliderMomentumFrame, zoomFrame } = this._frames;
     clearInterval(slideMomentumCheck);
@@ -821,6 +870,7 @@ class ImageViewer {
       h: handleHeight,
     };
   }
+
   showSnapView = (noTimeout) => {
     const { snapViewVisible, zoomValue, loaded } = this._state;
     const { snapView } = this._elements;
@@ -839,15 +889,18 @@ class ImageViewer {
       this._frames.snapViewTimeout = setTimeout(this.hideSnapView, 1500);
     }
   }
+
   hideSnapView = () => {
     const { snapView } = this._elements;
     css(snapView, { opacity: 0, pointerEvents: 'none' });
     this._state.snapViewVisible = false;
   }
+
   refresh = () => {
     this._calculateDimensions();
     this.resetZoom();
   }
+
   load (imageSrc, hiResImageSrc) {
     this._images = {
       imageSrc,
@@ -856,6 +909,7 @@ class ImageViewer {
 
     this._loadImages();
   }
+
   destroy () {
     const { container, domElement } = this._elements;
     // destroy all the sliders
@@ -888,6 +942,24 @@ class ImageViewer {
 
     // remove imageViewer reference from dom element
     domElement._imageViewer = null;
+
+    if (this._listeners.onDestroy) {
+      this._listeners.onDestroy();
+    }
+  }
+
+  /**
+   * Data will be passed to the callback registered with each new instance
+   */
+  get _callbackData () {
+    return {
+      container: this._elements.container,
+      snapView: this._elements.snapView,
+      zoomValue: this._state.zoomValue,
+      reachedMin: Math.round(this._state.zoomValue) === this._options.zoomValue,
+      reachedMax: Math.round(this._state.zoomValue) === this._options.maxZoom,
+      instance: this,
+    };
   }
 }
 
@@ -897,6 +969,14 @@ ImageViewer.defaults = {
   maxZoom: 500,
   refreshOnResize: true,
   zoomOnMouseWheel: true,
+  hasZoomButtons: true,
+  zoomStep: 50,
+  listeners: {
+    onInit: null,
+    onDestroy: null,
+    onImageLoaded: null,
+    onZoomChange: null,
+  },
 };
 
 export default ImageViewer;
