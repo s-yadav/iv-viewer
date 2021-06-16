@@ -60,7 +60,7 @@
     /***** snap view css *****/
     &-snap-view {
         width: $iv-snap-view-width;
-        height: $iv-snap-view-width;
+        height: $iv-snap-view-height;
         position: absolute;
         top: $iv-boundary-space;
         border: 1px solid $iv-snap-view-border-color;
@@ -81,7 +81,7 @@
         display: inline-block;
         position: absolute;
         max-width: $iv-snap-view-width;
-        max-height: $iv-snap-view-width;
+        max-height: $iv-snap-view-height;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);

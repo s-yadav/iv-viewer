@@ -1377,7 +1377,7 @@ ImageViewer.defaults = {
   maxZoom: 500,
   refreshOnResize: true,
   zoomOnMouseWheel: true,
-  hasZoomButtons: true,
+  hasZoomButtons: false,
   zoomStep: 50,
   listeners: {
     onInit: null,

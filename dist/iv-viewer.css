@@ -65,7 +65,7 @@
   box-sizing: content-box;
   transition: opacity ease 400ms;
   opacity: 0;
-  right: 20px;
+  left: 20px;
 }
 .iv-snap-image-wrap {
   display: inline-block;
