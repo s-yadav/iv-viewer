@@ -409,9 +409,9 @@
       _defineProperty(this, "startHandler", function (eStart) {
         if (!_this.isSliderEnabled()) return;
 
-        _this.removeListeners();
+        _this.removeListeners(); // eStart.preventDefault();
 
-        eStart.preventDefault();
+
         var moveHandler = _this.moveHandler,
             endHandler = _this.endHandler,
             onStart = _this.onStart;
@@ -443,8 +443,8 @@
       });
 
       _defineProperty(this, "moveHandler", function (eMove) {
-        if (!_this.isSliderEnabled()) return;
-        eMove.preventDefault();
+        if (!_this.isSliderEnabled()) return; // eMove.preventDefault();
+
         var sx = _this.sx,
             sy = _this.sy,
             onMove = _this.onMove;
@@ -1101,9 +1101,9 @@
             changedDelta += Math.abs(delta);
           } else {
             changedDelta = 0;
-          }
+          } // e.preventDefault();
 
-          e.preventDefault();
+
           if (changedDelta > MOUSE_WHEEL_COUNT) return;
           var contOffset = container.getBoundingClientRect();
           var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
