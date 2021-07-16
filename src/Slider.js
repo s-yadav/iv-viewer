@@ -48,7 +48,7 @@ class Slider {
   moveHandler = (eMove) => {
     if (!this.isSliderEnabled()) return;
 
-    // eMove.preventDefault();
+    eMove.preventDefault();
     const { sx, sy, onMove } = this;
 
     const isTouchEvent = this.touchMoveEvent === 'touchmove';
