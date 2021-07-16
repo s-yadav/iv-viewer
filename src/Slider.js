@@ -35,14 +35,14 @@ class Slider {
     });
 
     // add listeners
-    document.addEventListener(this.touchMoveEvent, moveHandler);
-    document.addEventListener(this.touchEndEvent, endHandler);
+    document.addEventListener(this.touchMoveEvent, moveHandler, {passive: true});
+    document.addEventListener(this.touchEndEvent, endHandler, {passive: true});
     /*
       add end handler in context menu as well.
       As mouseup event is not trigger on context menu open
       https://bugs.chromium.org/p/chromium/issues/detail?id=506801
     */
-    document.addEventListener('contextmenu', endHandler);
+    document.addEventListener('contextmenu', endHandler, {passive: true});
   }
 
   moveHandler = (eMove) => {
@@ -82,7 +82,7 @@ class Slider {
 
   init () {
     ['touchstart', 'mousedown'].forEach((evt) => {
-      this.container.addEventListener(evt, this.startHandler);
+      this.container.addEventListener(evt, this.startHandler, {passive: true});
     });
   }
 
