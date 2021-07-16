@@ -16,7 +16,7 @@ class Slider {
 
     this.removeListeners();
 
-    // eStart.preventDefault();
+    eStart.preventDefault();
 
     const { moveHandler, endHandler, onStart } = this;
 
@@ -35,20 +35,20 @@ class Slider {
     });
 
     // add listeners
-    document.addEventListener(this.touchMoveEvent, moveHandler, {passive: true});
-    document.addEventListener(this.touchEndEvent, endHandler, {passive: true});
+    document.addEventListener(this.touchMoveEvent, moveHandler);
+    document.addEventListener(this.touchEndEvent, endHandler);
     /*
       add end handler in context menu as well.
       As mouseup event is not trigger on context menu open
       https://bugs.chromium.org/p/chromium/issues/detail?id=506801
     */
-    document.addEventListener('contextmenu', endHandler, {passive: true});
+    document.addEventListener('contextmenu', endHandler);
   }
 
   moveHandler = (eMove) => {
     if (!this.isSliderEnabled()) return;
 
-    // eMove.preventDefault();
+    eMove.preventDefault();
     const { sx, sy, onMove } = this;
 
     const isTouchEvent = this.touchMoveEvent === 'touchmove';

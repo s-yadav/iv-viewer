@@ -409,9 +409,9 @@
       _defineProperty(this, "startHandler", function (eStart) {
         if (!_this.isSliderEnabled()) return;
 
-        _this.removeListeners(); // eStart.preventDefault();
+        _this.removeListeners();
 
-
+        eStart.preventDefault();
         var moveHandler = _this.moveHandler,
             endHandler = _this.endHandler,
             onStart = _this.onStart;
@@ -425,26 +425,20 @@
           y: _this.sy
         }); // add listeners
 
-        document.addEventListener(_this.touchMoveEvent, moveHandler, {
-          passive: true
-        });
-        document.addEventListener(_this.touchEndEvent, endHandler, {
-          passive: true
-        });
+        document.addEventListener(_this.touchMoveEvent, moveHandler);
+        document.addEventListener(_this.touchEndEvent, endHandler);
         /*
           add end handler in context menu as well.
           As mouseup event is not trigger on context menu open
           https://bugs.chromium.org/p/chromium/issues/detail?id=506801
         */
 
-        document.addEventListener('contextmenu', endHandler, {
-          passive: true
-        });
+        document.addEventListener('contextmenu', endHandler);
       });
 
       _defineProperty(this, "moveHandler", function (eMove) {
-        if (!_this.isSliderEnabled()) return; // eMove.preventDefault();
-
+        if (!_this.isSliderEnabled()) return;
+        eMove.preventDefault();
         var sx = _this.sx,
             sy = _this.sy,
             onMove = _this.onMove;
@@ -1101,9 +1095,9 @@
             changedDelta += Math.abs(delta);
           } else {
             changedDelta = 0;
-          } // e.preventDefault();
+          }
 
-
+          e.preventDefault();
           if (changedDelta > MOUSE_WHEEL_COUNT) return;
           var contOffset = container.getBoundingClientRect();
           var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
