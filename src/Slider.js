@@ -16,7 +16,7 @@ class Slider {
 
     this.removeListeners();
 
-    // eStart.preventDefault();
+    eStart.preventDefault();
 
     const { moveHandler, endHandler, onStart } = this;
 

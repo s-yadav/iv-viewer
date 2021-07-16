@@ -480,7 +480,7 @@ class ImageViewer {
         changedDelta = 0;
       }
 
-      // e.preventDefault();
+      e.preventDefault();
 
       if (changedDelta > MOUSE_WHEEL_COUNT) return;
 

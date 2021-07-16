@@ -403,9 +403,9 @@ var Slider = /*#__PURE__*/function () {
     _defineProperty(this, "startHandler", function (eStart) {
       if (!_this.isSliderEnabled()) return;
 
-      _this.removeListeners(); // eStart.preventDefault();
+      _this.removeListeners();
 
-
+      eStart.preventDefault();
       var moveHandler = _this.moveHandler,
           endHandler = _this.endHandler,
           onStart = _this.onStart;
@@ -1095,9 +1095,9 @@ var ImageViewer = /*#__PURE__*/function () {
           changedDelta += Math.abs(delta);
         } else {
           changedDelta = 0;
-        } // e.preventDefault();
+        }
 
-
+        e.preventDefault();
         if (changedDelta > MOUSE_WHEEL_COUNT) return;
         var contOffset = container.getBoundingClientRect();
         var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
