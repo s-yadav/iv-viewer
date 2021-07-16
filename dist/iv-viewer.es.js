@@ -1,9 +1,47 @@
 /**
  * iv-viewer - 2.0.1
  * Author : Sudhanshu Yadav
- * Copyright (c)  2019 to Sudhanshu Yadav, released under the MIT license.
+ * Copyright (c) 2019, 2021 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
  */
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -42,25 +80,6 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
-    }
-
-    ownKeys.forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    });
-  }
-
-  return target;
-}
-
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
@@ -92,6 +111,19 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -106,6 +138,25 @@ function _possibleConstructorReturn(self, call) {
   }
 
   return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
 }
 
 function _superPropBase(object, property) {
@@ -139,7 +190,7 @@ function _get(target, property, receiver) {
 }
 
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function _arrayWithHoles(arr) {
@@ -147,13 +198,17 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-  var _e = undefined;
+
+  var _s, _e;
 
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -172,8 +227,25 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 // constants
@@ -301,7 +373,9 @@ function clamp(num, min, max) {
 function assignEvent(element, events, handler) {
   if (typeof events === 'string') events = [events];
   events.forEach(function (event) {
-    element.addEventListener(event, handler);
+    element.addEventListener(event, handler, {
+      passive: true
+    });
   });
   return function () {
     events.forEach(function (event) {
@@ -315,9 +389,7 @@ function getTouchPointsDistance(touches) {
   return Math.sqrt(Math.pow(touch1.pageX - touch0.pageX, 2) + Math.pow(touch1.pageY - touch0.pageY, 2));
 }
 
-var Slider =
-/*#__PURE__*/
-function () {
+var Slider = /*#__PURE__*/function () {
   function Slider(container, _ref) {
     var _this = this;
 
@@ -337,7 +409,7 @@ function () {
       var moveHandler = _this.moveHandler,
           endHandler = _this.endHandler,
           onStart = _this.onStart;
-      var isTouchEvent = eStart.type === 'touchstart';
+      var isTouchEvent = eStart.type === 'touchstart' || eStart.type === 'touchend';
       _this.touchMoveEvent = isTouchEvent ? 'touchmove' : 'mousemove';
       _this.touchEndEvent = isTouchEvent ? 'touchend' : 'mouseup';
       _this.sx = isTouchEvent ? eStart.touches[0].clientX : eStart.clientX;
@@ -347,15 +419,21 @@ function () {
         y: _this.sy
       }); // add listeners
 
-      document.addEventListener(_this.touchMoveEvent, moveHandler);
-      document.addEventListener(_this.touchEndEvent, endHandler);
+      document.addEventListener(_this.touchMoveEvent, moveHandler, {
+        passive: true
+      });
+      document.addEventListener(_this.touchEndEvent, endHandler, {
+        passive: true
+      });
       /*
         add end handler in context menu as well.
         As mouseup event is not trigger on context menu open
         https://bugs.chromium.org/p/chromium/issues/detail?id=506801
       */
 
-      document.addEventListener('contextmenu', endHandler);
+      document.addEventListener('contextmenu', endHandler, {
+        passive: true
+      });
     });
 
     _defineProperty(this, "moveHandler", function (eMove) {
@@ -393,9 +471,9 @@ function () {
 
   _createClass(Slider, [{
     key: "removeListeners",
-    // remove previous events if its not removed
+    value: // remove previous events if its not removed
     // - Case when while sliding mouse moved out of document and released there
-    value: function removeListeners() {
+    function removeListeners() {
       if (!this.touchMoveEvent) return;
       document.removeEventListener(this.touchMoveEvent, this.moveHandler);
       document.removeEventListener(this.touchEndEvent, this.endHandler);
@@ -407,7 +485,9 @@ function () {
       var _this2 = this;
 
       ['touchstart', 'mousedown'].forEach(function (evt) {
-        _this2.container.addEventListener(evt, _this2.startHandler);
+        _this2.container.addEventListener(evt, _this2.startHandler, {
+          passive: true
+        });
       });
     }
   }, {
@@ -427,9 +507,7 @@ function () {
 
 var imageViewHtml = "\n  <div class=\"iv-loader\"></div>\n  <div class=\"iv-snap-view\">\n    <div class=\"iv-snap-image-wrap\">\n      <div class=\"iv-snap-handle\"></div>\n    </div>\n    <div class=\"iv-zoom-slider\">\n      <div class=\"iv-zoom-handle\"></div>\n    </div>\n  </div>\n  <div class=\"iv-image-view\" >\n    <div class=\"iv-image-wrap\" ></div>\n  </div>\n";
 
-var ImageViewer =
-/*#__PURE__*/
-function () {
+var ImageViewer = /*#__PURE__*/function () {
   function ImageViewer(element) {
     var _this = this;
 
@@ -594,7 +672,7 @@ function () {
       container: container,
       domElement: domElement
     };
-    this._options = _objectSpread({}, ImageViewer.defaults, options); // container for all events
+    this._options = _objectSpread2(_objectSpread2({}, ImageViewer.defaults), options); // container for all events
 
     this._events = {}; // container for all timeout and frames
 
@@ -712,7 +790,7 @@ function () {
       } // save references for later use
 
 
-      this._elements = _objectSpread({}, this._elements, {
+      this._elements = _objectSpread2(_objectSpread2({}, this._elements), {}, {
         snapView: container.querySelector('.iv-snap-view'),
         snapImageWrap: container.querySelector('.iv-snap-image-wrap'),
         imageWrap: container.querySelector('.iv-image-wrap'),
@@ -968,11 +1046,15 @@ function () {
           _this6.zoom(zoomValue, center);
         };
 
-        var endListener = function endListener() {
+        var endListener = function endListener(eEnd) {
           // unbind events
           events.pinchMove();
           events.pinchEnd();
-          _this6._state.zooming = false;
+          _this6._state.zooming = false; // properly resume move event if one finger remains
+
+          if (eEnd.touches.length === 1) {
+            _this6._sliders.imageSlider.startHandler(eEnd);
+          }
         }; // remove events if already assigned
 
 
@@ -1311,10 +1393,10 @@ ImageViewer.defaults = {
 
 var fullScreenHtml = "\n  <div class=\"iv-fullscreen-container\"></div>\n  <div class=\"iv-fullscreen-close\"></div>\n";
 
-var FullScreenViewer =
-/*#__PURE__*/
-function (_ImageViewer) {
+var FullScreenViewer = /*#__PURE__*/function (_ImageViewer) {
   _inherits(FullScreenViewer, _ImageViewer);
+
+  var _super = _createSuper(FullScreenViewer);
 
   function FullScreenViewer() {
     var _this;
@@ -1331,9 +1413,9 @@ function (_ImageViewer) {
     });
     var container = fullScreenElem.querySelector('.iv-fullscreen-container'); // call the ImageViewer constructor
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(FullScreenViewer).call(this, container, _objectSpread({}, options, {
+    _this = _super.call(this, container, _objectSpread2(_objectSpread2({}, options), {}, {
       refreshOnResize: false
-    }))); // add fullScreenElem on element list
+    })); // add fullScreenElem on element list
 
     _defineProperty(_assertThisInitialized(_this), "hide", function () {
       // hide the fullscreen

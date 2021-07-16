@@ -138,7 +138,7 @@ export function assignEvent (element, events, handler) {
   if (typeof events === 'string') events = [events];
 
   events.forEach((event) => {
-    element.addEventListener(event, handler);
+    element.addEventListener(event, handler, {passive: true});
   });
 
   return () => {
