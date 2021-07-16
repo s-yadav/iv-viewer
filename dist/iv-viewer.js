@@ -443,8 +443,8 @@
       });
 
       _defineProperty(this, "moveHandler", function (eMove) {
-        if (!_this.isSliderEnabled()) return; // eMove.preventDefault();
-
+        if (!_this.isSliderEnabled()) return;
+        eMove.preventDefault();
         var sx = _this.sx,
             sy = _this.sy,
             onMove = _this.onMove;
