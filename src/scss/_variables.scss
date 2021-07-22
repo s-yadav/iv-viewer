@@ -1,0 +1,42 @@
+//=========colors=========//
+$iv-white: #fff !default;
+$iv-light-gray: #aaa !default;
+$iv-gray: #6d6d6d !default;
+$iv-dark-gray: #0d0d0d !default;
+$iv-black: black;
+
+//========variables========//
+$iv-close-icon-size: 24px !default;
+$iv-boundary-space: 20px !default;
+$iv-handle-color: $iv-white !default;
+
+//========snapview========//
+$iv-snap-view-border-color: $iv-light-gray !default;
+$iv-snap-view-width: 150px !default;
+$iv-snap-view-height: 150px !default;
+$iv-snap-view-on-left: true !default;
+
+//========zoom========//
+$iv-zoom-slider-height: 20px !default;
+$iv-zoom-handle-height: $iv-zoom-slider-height !default;
+$iv-zoom-handle-width: 20px !default;
+$iv-zoom-handle-border: 1px solid $iv-handle-color !default;
+$iv-zoom-button-width: 24px !default;
+$iv-zoom-button-icon-height: 2px !default;
+$iv-zoom-button-icon-width: 10px !default;
+$iv-zoom-button-color: $iv-white !default;
+$iv-zoom-button-spacing: 4px !default;
+
+//========fullscreen========//
+$iv-fullscreen-bg-color: $iv-dark-gray !default;
+$iv-fullscreen-close-text-shadow: 0 0 3px $iv-gray !default;
+$iv-fullscreen-close-height: 4px !default;
+
+//========imagemode========//
+$iv-image-mode-display: inline-block !default;
+
+//========loader========//
+$iv-loader-width: 32px !default;
+$iv-loader-height: 32px !default;
+$iv-loader-border-color: 1.1em solid rgba($iv-black, 0.2) !default;
+$iv-loader-active-border-color: 1.1em solid $iv-white !default;

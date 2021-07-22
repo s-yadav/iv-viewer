@@ -11,6 +11,7 @@ A zooming and panning plugin inspired by google photos for your web images.
     <li>Snap view for better panning and zooming experience.</li>
     <li>Allow quick display of loaded image then loading of high quality image progressively.</li>
     <li>Exposed API to control zoom programmatically.</li>
+    <li>Custom Events to listen for the state changes.</li>
 </ul>
 
 ![alt tag](assets/imageviewer.jpg)
@@ -92,7 +93,35 @@ const viewer = new ImageViewer(image, options); // check options section for sup
 | snapView | boolean | true | If true will show snap view. |
 | refreshOnResize | boolean | true | Defines whether to refresh the viewer on resize of window. This is available only for Container and Image mode. On FullScreen mode it will refresh on window resize by default.|
 | zoomOnMouseWheel | boolean | true | Defines weather to allow zoom with mouse scroll or not. |
+| hasZoomButtons | boolean | true | Defines weather to add zoom buttons or not |
+| zoomStep | number | 50 | The number of which the zoom should increase/decrease when the buttons are clicked |
+| listeners | object | null | multiple useful callbacks that could use in-order to get the current state of the viewer|
 
+### The Listeners
+There are multiple listeners you can register with each viewer instance
+```js
+import ImageViewer from 'iv-viewer';
+
+const viewer = new ImageViewer(element, { 
+  listeners: { 
+    onInit: callback(data), // called when the instance is initiated 
+    onDestroy: callback(), // called when the instance is destroyed
+    onImageLoaded: callback(data), // called on image load
+    onZoomChange: callback(data), // called on zoom in/out
+  } 
+});
+```
+### Callback Data
+The data passed to each callback is very useful, it contains the current instance with more info that you can use to react to the instance state
+
+| Option        | dataType |  Description |
+| ------------- |-------------|  -------- |
+| container | HTMLElement | The current container of the viewer |
+| snapView | HTMLElement  | The snap view element in the viewer |
+| zoomValue | Number | The current zoom value |
+| reachedMin | boolean | A boolean value that determine if the zoom value reached the initial zoom.|
+| reachedMax | boolean | A boolean value that determine if the zoom value reached the maximum zoom.  |
+| instance | ImageViewer | The current instance which contains all other info if needed |
 
 ### API (ImageViewer)
 
@@ -220,12 +249,15 @@ codesandbox link: [https://codesandbox.io/s/8ypwzryom0](https://codesandbox.io/s
 [:star: this repo](https://github.com/s-yadav/iv-viewer)
 
 ### Major updates
-#### v2.0.0
+#### v2.1.0
 
 - It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.
 - While the options and instance method are same the way you use a ImageViewer and FullScreenView is changed. The v1 API will no longer be supported.
 - Published on the npm. V1 was not available on npm.
 - Changed the package name to iv-viewer. image-viewer name was not available on npm. 
+- Added some listeners
+- Added zoom in/out buttons
+- Some SCSS variable for easier overrides.
 
 ## Contributors ✨
 
