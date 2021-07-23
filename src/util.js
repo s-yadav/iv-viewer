@@ -107,7 +107,7 @@ export function wrap (element, { tag = 'div', className, id, style }) {
   const wrapper = document.createElement(tag);
   if (className) wrapper.className = className;
   if (id) wrapper.id = id;
-  if (style) wrapper.style = style;
+  if (style) wrapper.style.cssText = style;
   element.parentNode.insertBefore(wrapper, element);
   element.parentNode.removeChild(element);
   wrapper.appendChild(element);
