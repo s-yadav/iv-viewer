@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.0.1
+ * iv-viewer - 2.1.1
  * Author : Sudhanshu Yadav
  * Copyright (c) 2019, 2021 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -505,9 +505,26 @@
     return Slider;
   }();
 
-  var imageViewHtml = "\n  <div class=\"iv-loader\"></div>\n  <div class=\"iv-snap-view\">\n    <div class=\"iv-snap-image-wrap\">\n      <div class=\"iv-snap-handle\"></div>\n    </div>\n    <div class=\"iv-zoom-slider\">\n      <div class=\"iv-zoom-handle\"></div>\n    </div>\n  </div>\n  <div class=\"iv-image-view\" >\n    <div class=\"iv-image-wrap\" ></div>\n  </div>\n";
+  var ImageViewer =
+  /*#__PURE__*/
+  function () {
+    _createClass(ImageViewer, [{
+      key: "zoomInButton",
+      get: function get() {
+        return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--in\" role=\"button\"></div>" : '';
+      }
+    }, {
+      key: "zoomOutButton",
+      get: function get() {
+        return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--out\" role=\"button\"></div>" : '';
+      }
+    }, {
+      key: "imageViewHtml",
+      get: function get() {
+        return "\n    <div class=\"iv-loader\"></div>\n    <div class=\"iv-snap-view\">\n      <div class=\"iv-snap-image-wrap\">\n        <div class=\"iv-snap-handle\"></div>\n      </div>\n      <div class=\"iv-zoom-actions ".concat(this._options.hasZoomButtons ? 'iv-zoom-actions--has-buttons' : '', "\">\n        ").concat(this.zoomInButton, "\n        <div class=\"iv-zoom-slider\">\n          <div class=\"iv-zoom-handle\"></div>\n        </div>\n        ").concat(this.zoomOutButton, "\n      </div>\n    </div>\n    <div class=\"iv-image-view\" >\n      <div class=\"iv-image-wrap\" ></div>\n    </div>\n  ");
+      }
+    }]);
 
-  var ImageViewer = /*#__PURE__*/function () {
     function ImageViewer(element) {
       var _this = this;
 
@@ -581,7 +598,11 @@
 
           css(zoomHandle, {
             left: "".concat((tickZoom - 100) * zoomSliderLength / (maxZoom - 100), "px")
-          });
+          }); // dispatch zoom changed event
+
+          if (_this._listeners.onZoomChange) {
+            _this._listeners.onZoomChange(_this._callbackData);
+          }
         };
 
         zoom();
@@ -674,7 +695,8 @@
       };
       this._options = _objectSpread2(_objectSpread2({}, ImageViewer.defaults), options); // container for all events
 
-      this._events = {}; // container for all timeout and frames
+      this._events = {};
+      this._listeners = this._options.listeners || {}; // container for all timeout and frames
 
       this._frames = {}; // container for all sliders
 
@@ -777,7 +799,7 @@
         createElement({
           tagName: 'div',
           className: 'iv-wrap',
-          html: imageViewHtml,
+          html: this.imageViewHtml,
           parent: container
         }); // add container class on the container
 
@@ -795,8 +817,14 @@
           snapImageWrap: container.querySelector('.iv-snap-image-wrap'),
           imageWrap: container.querySelector('.iv-image-wrap'),
           snapHandle: container.querySelector('.iv-snap-handle'),
-          zoomHandle: container.querySelector('.iv-zoom-handle')
+          zoomHandle: container.querySelector('.iv-zoom-handle'),
+          zoomIn: container.querySelector('.iv-button-zoom--in'),
+          zoomOut: container.querySelector('.iv-button-zoom--out')
         });
+
+        if (this._listeners.onInit) {
+          this._listeners.onInit(this._callbackData);
+        }
       }
     }, {
       key: "_initImageSlider",
@@ -1005,15 +1033,29 @@
 
           _this5.showSnapView();
         });
+
+        if (!this._options.hasZoomButtons) {
+          return;
+        }
+
+        var _this$_elements3 = this._elements,
+            zoomOut = _this$_elements3.zoomOut,
+            zoomIn = _this$_elements3.zoomIn;
+        this._events.zoomInClick = assignEvent(zoomIn, ['click'], function () {
+          _this5.zoom(_this5._state.zoomValue + _this5._options.zoomStep || 50);
+        });
+        this._events.zoomOutClick = assignEvent(zoomOut, ['click'], function () {
+          _this5.zoom(_this5._state.zoomValue - _this5._options.zoomStep || 50);
+        });
       }
     }, {
       key: "_pinchAndZoom",
       value: function _pinchAndZoom() {
         var _this6 = this;
 
-        var _this$_elements3 = this._elements,
-            imageWrap = _this$_elements3.imageWrap,
-            container = _this$_elements3.container; // apply pinch and zoom feature
+        var _this$_elements4 = this._elements,
+            imageWrap = _this$_elements4.imageWrap,
+            container = _this$_elements4.container; // apply pinch and zoom feature
 
         var onPinchStart = function onPinchStart(eStart) {
           var _this6$_state = _this6._state,
@@ -1074,9 +1116,9 @@
 
         /* Add zoom interaction in mouse wheel */
         var _options = this._options;
-        var _this$_elements4 = this._elements,
-            container = _this$_elements4.container,
-            imageWrap = _this$_elements4.imageWrap;
+        var _this$_elements5 = this._elements,
+            container = _this$_elements5.container,
+            imageWrap = _this$_elements5.imageWrap;
         var changedDelta = 0;
 
         var onMouseWheel = function onMouseWheel(e) {
@@ -1218,7 +1260,12 @@
 
           _this9._state.loaded = true; // calculate the dimension
 
-          _this9._calculateDimensions(); // reset the zoom
+          _this9._calculateDimensions(); // dispatch image load event
+
+
+          if (_this9._listeners.onImageLoad) {
+            _this9._listeners.onImageLoaded(_this9._callbackData);
+          } // reset the zoom
 
 
           _this9.resetZoom();
@@ -1235,9 +1282,9 @@
       value: function _loadHighResImage(hiResImageSrc) {
         var _this10 = this;
 
-        var _this$_elements5 = this._elements,
-            imageWrap = _this$_elements5.imageWrap,
-            container = _this$_elements5.container;
+        var _this$_elements6 = this._elements,
+            imageWrap = _this$_elements6.imageWrap,
+            container = _this$_elements6.container;
         var lowResImg = this._elements.image;
         var hiResImage = createElement({
           tagName: 'img',
@@ -1265,12 +1312,12 @@
     }, {
       key: "_calculateDimensions",
       value: function _calculateDimensions() {
-        var _this$_elements6 = this._elements,
-            image = _this$_elements6.image,
-            container = _this$_elements6.container,
-            snapView = _this$_elements6.snapView,
-            snapImage = _this$_elements6.snapImage,
-            zoomHandle = _this$_elements6.zoomHandle; // calculate content width of image and snap image
+        var _this$_elements7 = this._elements,
+            image = _this$_elements7.image,
+            container = _this$_elements7.container,
+            snapView = _this$_elements7.snapView,
+            snapImage = _this$_elements7.snapImage,
+            zoomHandle = _this$_elements7.zoomHandle; // calculate content width of image and snap image
 
         var imageWidth = parseInt(css(image, 'width'), 10);
         var imageHeight = parseInt(css(image, 'height'), 10);
@@ -1312,9 +1359,10 @@
         css(snapImage, {
           width: "".concat(snapWidth, "px"),
           height: "".concat(snapHeight, "px")
-        }); // calculate zoom slider area
+        });
+        var zoomSlider = snapView.querySelector('.iv-zoom-slider').clientWidth; // calculate zoom slider area
 
-        this._state.zoomSliderLength = snapViewWidth - zoomHandle.offsetWidth;
+        this._state.zoomSliderLength = zoomSlider - zoomHandle.offsetWidth;
       }
     }, {
       key: "resetZoom",
@@ -1341,9 +1389,9 @@
     }, {
       key: "destroy",
       value: function destroy() {
-        var _this$_elements7 = this._elements,
-            container = _this$_elements7.container,
-            domElement = _this$_elements7.domElement; // destroy all the sliders
+        var _this$_elements8 = this._elements,
+            container = _this$_elements8.container,
+            domElement = _this$_elements8.domElement; // destroy all the sliders
 
         Object.entries(this._sliders).forEach(function (_ref) {
           var _ref2 = _slicedToArray(_ref, 2),
@@ -1377,6 +1425,26 @@
 
 
         domElement._imageViewer = null;
+
+        if (this._listeners.onDestroy) {
+          this._listeners.onDestroy();
+        }
+      }
+      /**
+       * Data will be passed to the callback registered with each new instance
+       */
+
+    }, {
+      key: "_callbackData",
+      get: function get() {
+        return {
+          container: this._elements.container,
+          snapView: this._elements.snapView,
+          zoomValue: this._state.zoomValue,
+          reachedMin: Math.round(this._state.zoomValue) === this._options.zoomValue,
+          reachedMax: Math.round(this._state.zoomValue) === this._options.maxZoom,
+          instance: this
+        };
       }
     }]);
 
@@ -1388,7 +1456,15 @@
     snapView: true,
     maxZoom: 500,
     refreshOnResize: true,
-    zoomOnMouseWheel: true
+    zoomOnMouseWheel: true,
+    hasZoomButtons: false,
+    zoomStep: 50,
+    listeners: {
+      onInit: null,
+      onDestroy: null,
+      onImageLoaded: null,
+      onZoomChange: null
+    }
   };
 
   var fullScreenHtml = "\n  <div class=\"iv-fullscreen-container\"></div>\n  <div class=\"iv-fullscreen-close\"></div>\n";
