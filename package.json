@@ -2,7 +2,9 @@
   "name": "iv-viewer",
   "version": "2.1.1",
   "description": "A zooming and panning plugin inspired by google photos for your web images.",
-  "main": "lib/index.js",
+  "main": "dist/iv-viewer.js",
+  "module": "dist/iv-viewer.es.js",
+  "types": "iv-viewer.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/s-yadav/iv-viewer.git"

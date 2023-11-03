@@ -16,17 +16,12 @@ const babelConfig = JSON.parse(fs.readFileSync('.babelrc'));
 
 const defaultConfig = {
   input: 'src/dist.js',
-  output: [{
-    file: 'dist/iv-viewer.es.js',
-    format: 'esm',
-    exports: 'default',
-  }, {
+  output: {
     file: 'dist/iv-viewer.js',
     format: 'umd',
     name: 'ImageViewer',
     exports: 'default',
-  }],
-  external: ['react', 'react-dom'],
+  },
   plugins: [
     babel({
       babelrc: false,
@@ -42,10 +37,8 @@ const defaultConfig = {
 const minConfig = {
   ...defaultConfig,
   output: {
+    ...defaultConfig.output,
     file: 'dist/iv-viewer.min.js',
-    format: 'umd',
-    name: 'ImageViewer',
-    exports: 'default',
   },
   plugins: [
     ...defaultConfig.plugins,
@@ -53,4 +46,13 @@ const minConfig = {
   ],
 };
 
-export default [defaultConfig, minConfig];
+const moduleConfig = {
+  ...defaultConfig,
+  input: 'src/index.js',
+  output: {
+    file: 'dist/iv-viewer.es.js',
+    format: 'esm',
+  },
+};
+
+export default [defaultConfig, minConfig, moduleConfig];
