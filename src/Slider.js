@@ -71,7 +71,7 @@ class Slider {
     this.onEnd();
   }
 
-  // remove previous events if its not removed
+  // remove previous events if it's not removed
   // - Case when while sliding mouse moved out of document and released there
   removeListeners () {
     if (!this.touchMoveEvent) return;

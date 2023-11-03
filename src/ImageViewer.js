@@ -12,6 +12,7 @@ import {
   clamp,
   assignEvent,
   getTouchPointsDistance,
+  preventDefault,
   ZOOM_CONSTANT,
   MOUSE_WHEEL_COUNT,
 } from './util';
@@ -358,7 +359,7 @@ class ImageViewer {
       onStart: (eStart) => {
         const { zoomSlider: slider } = this._sliders;
 
-        leftOffset = sliderElm.getBoundingClientRect().left + document.body.scrollLeft;
+        leftOffset = sliderElm.getBoundingClientRect().left;
         handleWidth = parseInt(css(zoomHandle, 'width'), 10);
 
         // move the handle to current mouse position
@@ -368,9 +369,9 @@ class ImageViewer {
         const { maxZoom } = this._options;
         const { zoomSliderLength } = this._state;
 
-        const pageX = e.pageX !== undefined ? e.pageX : e.touches[0].pageX;
+        const clientX = e.clientX !== undefined ? e.clientX : e.touches[0].clientX;
 
-        const newLeft = clamp(pageX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
+        const newLeft = clamp(clientX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
 
         const zoomValue = 100 + ((maxZoom - 100) * newLeft / zoomSliderLength);
 
@@ -389,6 +390,7 @@ class ImageViewer {
     if (this._options.refreshOnResize) {
       this._events.onWindowResize = assignEvent(window, 'resize', this.refresh);
     }
+    this._events.onDragStart = assignEvent(this._elements.container, 'dragstart', preventDefault);
   }
 
   _snapViewEvents () {
@@ -450,8 +452,8 @@ class ImageViewer {
 
       // find the center for the zoom
       const center = {
-        x: (touch1.pageX + touch0.pageX) / 2 - (contOffset.left + document.body.scrollLeft),
-        y: (touch1.pageY + touch0.pageY) / 2 - (contOffset.top + document.body.scrollTop),
+        x: (touch1.clientX + touch0.clientX) / 2 - contOffset.left,
+        y: (touch1.clientY + touch0.clientY) / 2 - contOffset.top,
       };
 
       const moveListener = (eMove) => {
@@ -519,8 +521,8 @@ class ImageViewer {
 
       const contOffset = container.getBoundingClientRect();
 
-      const x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
-      const y = (e.pageY || e.pageY) - (contOffset.top + document.body.scrollTop);
+      const x = e.clientX - contOffset.left;
+      const y = e.clientY - contOffset.top;
 
       this.zoom(newZoomValue, {
         x,
@@ -531,7 +533,7 @@ class ImageViewer {
       this.showSnapView();
     };
 
-    this._ev = assignEvent(imageWrap, 'wheel', onMouseWheel);
+    this._events.scrollZoom = assignEvent(imageWrap, 'wheel', onMouseWheel);
   }
 
   _doubleTapToZoom () {
@@ -546,10 +548,10 @@ class ImageViewer {
       if (touchTime === 0) {
         touchTime = Date.now();
         point = {
-          x: e.pageX,
-          y: e.pageY,
+          x: e.clientX,
+          y: e.clientY,
         };
-      } else if (Date.now() - touchTime < 500 && Math.abs(e.pageX - point.x) < 50 && Math.abs(e.pageY - point.y) < 50) {
+      } else if (Date.now() - touchTime < 500 && Math.abs(e.clientX - point.x) < 50 && Math.abs(e.clientY - point.y) < 50) {
         if (this._state.zoomValue === this._options.zoomValue) {
           this.zoom(200);
         } else {
@@ -561,7 +563,7 @@ class ImageViewer {
       }
     };
 
-    assignEvent(imageWrap, 'click', onDoubleTap);
+    this._events.doubleTapToZoom = assignEvent(imageWrap, 'click', onDoubleTap);
   }
 
   _getImageCurrentDim () {
@@ -632,7 +634,7 @@ class ImageViewer {
       this._calculateDimensions();
 
       // dispatch image load event
-      if (this._listeners.onImageLoad) {
+      if (this._listeners.onImageLoaded) {
         this._listeners.onImageLoaded(this._callbackData);
       }
 
@@ -643,6 +645,9 @@ class ImageViewer {
     if (imageLoaded(image)) {
       onImageLoad();
     } else {
+      if (typeof this._events.imageLoad == 'function') {
+        this._events.imageLoad()
+      }
       this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
     }
   }
@@ -675,6 +680,9 @@ class ImageViewer {
     if (imageLoaded(hiResImage)) {
       onHighResImageLoad();
     } else {
+      if (typeof this._events.hiResImageLoad == 'function') {
+        this._events.hiResImageLoad()
+      }
       this._events.hiResImageLoad = assignEvent(hiResImage, 'load', onHighResImageLoad);
     }
   }
@@ -788,7 +796,12 @@ class ImageViewer {
         this._frames.zoomFrame = requestAnimationFrame(zoom);
       }
 
-      const tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 16);
+      let tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 16);
+      // snap in at the last percent to more often land at the exact value
+      // only do that at the target percent value to make the animation as smooth as possible
+      if (Math.abs(perc - tickZoom) < 1) {
+        tickZoom = perc
+      }
       const ratio = tickZoom / curPerc;
 
       const imgWidth = imageDim.w * tickZoom / 100;
@@ -896,9 +909,9 @@ class ImageViewer {
     this._state.snapViewVisible = false;
   }
 
-  refresh = () => {
+  refresh = (animate = true) => {
     this._calculateDimensions();
-    this.resetZoom();
+    this.resetZoom(animate);
   }
 
   load (imageSrc, hiResImageSrc) {
@@ -956,8 +969,8 @@ class ImageViewer {
       container: this._elements.container,
       snapView: this._elements.snapView,
       zoomValue: this._state.zoomValue,
-      reachedMin: Math.round(this._state.zoomValue) === this._options.zoomValue,
-      reachedMax: Math.round(this._state.zoomValue) === this._options.maxZoom,
+      reachedMin: Math.abs(this._state.zoomValue - 100) < 1,
+      reachedMax: Math.abs(this._state.zoomValue - this._options.maxZoom) < 1,
       instance: this,
     };
   }

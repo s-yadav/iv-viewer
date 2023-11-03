@@ -1,33 +1,82 @@
 /**
- * iv-viewer - 2.1.1
+ * iv-viewer - 2.2.0
  * Author : Sudhanshu Yadav
- * Copyright (c) 2019, 2021 to Sudhanshu Yadav, released under the MIT license.
+ * Copyright (c) 2019, 2023 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
  */
 
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = !0, n = r;
+    } finally {
+      try {
+        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
-
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
     var descriptor = props[i];
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
     if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
+    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
   }
 }
-
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
   return Constructor;
 }
-
 function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -38,34 +87,12 @@ function _defineProperty(obj, key, value) {
   } else {
     obj[key] = value;
   }
-
   return obj;
 }
-
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
-    }
-
-    ownKeys.forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    });
-  }
-
-  return target;
-}
-
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
   }
-
   subClass.prototype = Object.create(superClass && superClass.prototype, {
     constructor: {
       value: subClass,
@@ -73,123 +100,139 @@ function _inherits(subClass, superClass) {
       configurable: true
     }
   });
+  Object.defineProperty(subClass, "prototype", {
+    writable: false
+  });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
-
 function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
   };
   return _getPrototypeOf(o);
 }
-
 function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
   };
-
   return _setPrototypeOf(o, p);
 }
-
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
-
   return self;
 }
-
 function _possibleConstructorReturn(self, call) {
   if (call && (typeof call === "object" || typeof call === "function")) {
     return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
   }
-
   return _assertThisInitialized(self);
 }
-
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+      result;
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+    return _possibleConstructorReturn(this, result);
+  };
+}
 function _superPropBase(object, property) {
   while (!Object.prototype.hasOwnProperty.call(object, property)) {
     object = _getPrototypeOf(object);
     if (object === null) break;
   }
-
   return object;
 }
-
-function _get(target, property, receiver) {
+function _get() {
   if (typeof Reflect !== "undefined" && Reflect.get) {
-    _get = Reflect.get;
+    _get = Reflect.get.bind();
   } else {
     _get = function _get(target, property, receiver) {
       var base = _superPropBase(target, property);
-
       if (!base) return;
       var desc = Object.getOwnPropertyDescriptor(base, property);
-
       if (desc.get) {
-        return desc.get.call(receiver);
+        return desc.get.call(arguments.length < 3 ? target : receiver);
       }
-
       return desc.value;
     };
   }
-
-  return _get(target, property, receiver || target);
+  return _get.apply(this, arguments);
 }
-
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
-function _iterableToArrayLimit(arr, i) {
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  return arr2;
+}
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _toPrimitive(input, hint) {
+  if (typeof input !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if (typeof res !== "object") return res;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (hint === "string" ? String : Number)(input);
+}
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, "string");
+  return typeof key === "symbol" ? key : String(key);
 }
 
 // constants
 var ZOOM_CONSTANT = 15; // increase or decrease value for zoom on mouse wheel
-
 var MOUSE_WHEEL_COUNT = 5; // A mouse delta after which it should stop preventing default behaviour of mouse wheel
 
-function noop() {} // ease out method
+function noop() {}
+function preventDefault(e) {
+  e.preventDefault();
+}
 
+// ease out method
 /*
     t : current time,
-    b : intial value,
+    b : initial value,
     c : changed value,
     d : duration
 */
-
 function easeOutQuart(t, b, c, d) {
   t /= d;
   t -= 1;
@@ -202,20 +245,22 @@ function createElement(options) {
   if (options.className) elem.className = options.className;
   if (options.src) elem.src = options.src;
   if (options.style) elem.style.cssText = options.style;
-  if (options.child) elem.appendChild(options.child); // Insert before
+  if (options.child) elem.appendChild(options.child);
 
+  // Insert before
   if (options.insertBefore) {
-    options.parent.insertBefore(elem, options.insertBefore); // Standard append
+    options.parent.insertBefore(elem, options.insertBefore);
+
+    // Standard append
   } else {
     options.parent.appendChild(elem);
   }
-
   return elem;
-} // method to add class
+}
 
+// method to add class
 function addClass(el, className) {
   var classNameAry = className.split(' ');
-
   if (classNameAry.length > 1) {
     classNameAry.forEach(function (classItem) {
       return addClass(el, classItem);
@@ -225,11 +270,11 @@ function addClass(el, className) {
   } else {
     el.className += " ".concat(className); // eslint-disable-line no-param-reassign
   }
-} // method to remove class
+}
 
+// method to remove class
 function removeClass(el, className) {
   var classNameAry = className.split(' ');
-
   if (classNameAry.length > 1) {
     classNameAry.forEach(function (classItem) {
       return removeClass(el, classItem);
@@ -239,8 +284,9 @@ function removeClass(el, className) {
   } else {
     el.className = el.className.replace(new RegExp("(^|\\b)".concat(className.split(' ').join('|'), "(\\b|$)"), 'gi'), ' '); // eslint-disable-line no-param-reassign
   }
-} // function to check if image is loaded
+}
 
+// function to check if image is loaded
 function imageLoaded(img) {
   return img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0);
 }
@@ -250,17 +296,16 @@ function toArray(list) {
 }
 function css(elements, properties) {
   var elmArray = toArray(elements);
-
   if (typeof properties === 'string') {
     return window.getComputedStyle(elmArray[0])[properties];
   }
-
   elmArray.forEach(function (element) {
     Object.keys(properties).forEach(function (key) {
       var value = properties[key];
       element.style[key] = value; // eslint-disable-line no-param-reassign
     });
   });
+
   return undefined;
 }
 function removeCss(element, property) {
@@ -268,10 +313,10 @@ function removeCss(element, property) {
 }
 function wrap(element, _ref) {
   var _ref$tag = _ref.tag,
-      tag = _ref$tag === void 0 ? 'div' : _ref$tag,
-      className = _ref.className,
-      id = _ref.id,
-      style = _ref.style;
+    tag = _ref$tag === void 0 ? 'div' : _ref$tag,
+    className = _ref.className,
+    id = _ref.id,
+    style = _ref.style;
   var wrapper = document.createElement(tag);
   if (className) wrapper.className = className;
   if (id) wrapper.id = id;
@@ -283,7 +328,6 @@ function wrap(element, _ref) {
 }
 function unwrap(element) {
   var parent = element.parentNode;
-
   if (parent !== document.body) {
     parent.parentNode.insertBefore(element, parent);
     parent.parentNode.removeChild(parent);
@@ -315,28 +359,21 @@ function getTouchPointsDistance(touches) {
   return Math.sqrt(Math.pow(touch1.pageX - touch0.pageX, 2) + Math.pow(touch1.pageY - touch0.pageY, 2));
 }
 
-var Slider =
-/*#__PURE__*/
-function () {
+var Slider = /*#__PURE__*/function () {
   function Slider(container, _ref) {
     var _this = this;
-
     var _onStart = _ref.onStart,
-        _onMove = _ref.onMove,
-        onEnd = _ref.onEnd,
-        isSliderEnabled = _ref.isSliderEnabled;
-
+      _onMove = _ref.onMove,
+      onEnd = _ref.onEnd,
+      isSliderEnabled = _ref.isSliderEnabled;
     _classCallCheck(this, Slider);
-
     _defineProperty(this, "startHandler", function (eStart) {
       if (!_this.isSliderEnabled()) return;
-
       _this.removeListeners();
-
       eStart.preventDefault();
       var moveHandler = _this.moveHandler,
-          endHandler = _this.endHandler,
-          onStart = _this.onStart;
+        endHandler = _this.endHandler,
+        onStart = _this.onStart;
       var isTouchEvent = eStart.type === 'touchstart' || eStart.type === 'touchend';
       _this.touchMoveEvent = isTouchEvent ? 'touchmove' : 'mousemove';
       _this.touchEndEvent = isTouchEvent ? 'touchend' : 'mouseup';
@@ -345,8 +382,9 @@ function () {
       onStart(eStart, {
         x: _this.sx,
         y: _this.sy
-      }); // add listeners
+      });
 
+      // add listeners
       document.addEventListener(_this.touchMoveEvent, moveHandler);
       document.addEventListener(_this.touchEndEvent, endHandler);
       /*
@@ -354,18 +392,17 @@ function () {
         As mouseup event is not trigger on context menu open
         https://bugs.chromium.org/p/chromium/issues/detail?id=506801
       */
-
       document.addEventListener('contextmenu', endHandler);
     });
-
     _defineProperty(this, "moveHandler", function (eMove) {
       if (!_this.isSliderEnabled()) return;
       eMove.preventDefault();
       var sx = _this.sx,
-          sy = _this.sy,
-          onMove = _this.onMove;
-      var isTouchEvent = _this.touchMoveEvent === 'touchmove'; // get the coordinates
+        sy = _this.sy,
+        onMove = _this.onMove;
+      var isTouchEvent = _this.touchMoveEvent === 'touchmove';
 
+      // get the coordinates
       var mx = isTouchEvent ? eMove.touches[0].clientX : eMove.clientX;
       var my = isTouchEvent ? eMove.touches[0].clientY : eMove.clientY;
       onMove(eMove, {
@@ -375,27 +412,23 @@ function () {
         my: my
       });
     });
-
     _defineProperty(this, "endHandler", function () {
       if (!_this.isSliderEnabled()) return;
-
       _this.removeListeners();
-
       _this.onEnd();
     });
-
     this.container = container;
     this.isSliderEnabled = isSliderEnabled;
     this.onStart = _onStart || noop;
     this.onMove = _onMove || noop;
     this.onEnd = onEnd || noop;
   }
-
   _createClass(Slider, [{
     key: "removeListeners",
-    // remove previous events if its not removed
+    value:
+    // remove previous events if it's not removed
     // - Case when while sliding mouse moved out of document and released there
-    value: function removeListeners() {
+    function removeListeners() {
       if (!this.touchMoveEvent) return;
       document.removeEventListener(this.touchMoveEvent, this.moveHandler);
       document.removeEventListener(this.touchEndEvent, this.endHandler);
@@ -405,7 +438,6 @@ function () {
     key: "init",
     value: function init() {
       var _this2 = this;
-
       ['touchstart', 'mousedown'].forEach(function (evt) {
         _this2.container.addEventListener(evt, _this2.startHandler);
       });
@@ -414,54 +446,30 @@ function () {
     key: "destroy",
     value: function destroy() {
       var _this3 = this;
-
       ['touchstart', 'mousedown'].forEach(function (evt) {
         _this3.container.removeEventListener(evt, _this3.startHandler);
       });
       this.removeListeners();
     }
   }]);
-
   return Slider;
 }();
 
-var ImageViewer =
-/*#__PURE__*/
-function () {
-  _createClass(ImageViewer, [{
-    key: "zoomInButton",
-    get: function get() {
-      return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--in\" role=\"button\"></div>" : '';
-    }
-  }, {
-    key: "zoomOutButton",
-    get: function get() {
-      return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--out\" role=\"button\"></div>" : '';
-    }
-  }, {
-    key: "imageViewHtml",
-    get: function get() {
-      return "\n    <div class=\"iv-loader\"></div>\n    <div class=\"iv-snap-view\">\n      <div class=\"iv-snap-image-wrap\">\n        <div class=\"iv-snap-handle\"></div>\n      </div>\n      <div class=\"iv-zoom-actions ".concat(this._options.hasZoomButtons ? 'iv-zoom-actions--has-buttons' : '', "\">\n        ").concat(this.zoomInButton, "\n        <div class=\"iv-zoom-slider\">\n          <div class=\"iv-zoom-handle\"></div>\n        </div>\n        ").concat(this.zoomOutButton, "\n      </div>\n    </div>\n    <div class=\"iv-image-view\" >\n      <div class=\"iv-image-wrap\" ></div>\n    </div>\n  ");
-    }
-  }]);
-
+var ImageViewer = /*#__PURE__*/function () {
   function ImageViewer(element) {
     var _this = this;
-
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
     _classCallCheck(this, ImageViewer);
-
     _defineProperty(this, "zoom", function (perc, point) {
       var _options = _this._options,
-          _elements = _this._elements,
-          _state = _this._state;
+        _elements = _this._elements,
+        _state = _this._state;
       var curPerc = _state.zoomValue,
-          imageDim = _state.imageDim,
-          containerDim = _state.containerDim,
-          zoomSliderLength = _state.zoomSliderLength;
+        imageDim = _state.imageDim,
+        containerDim = _state.containerDim,
+        zoomSliderLength = _state.zoomSliderLength;
       var image = _elements.image,
-          zoomHandle = _elements.zoomHandle;
+        zoomHandle = _elements.zoomHandle;
       var maxZoom = _options.maxZoom;
       perc = Math.round(Math.max(100, perc));
       perc = Math.min(maxZoom, perc);
@@ -470,33 +478,37 @@ function () {
         y: containerDim.h / 2
       };
       var curLeft = parseFloat(css(image, 'left'));
-      var curTop = parseFloat(css(image, 'top')); // clear any panning frames
+      var curTop = parseFloat(css(image, 'top'));
 
+      // clear any panning frames
       _this._clearFrames();
-
       var step = 0;
       var baseLeft = (containerDim.w - imageDim.w) / 2;
       var baseTop = (containerDim.h - imageDim.h) / 2;
       var baseRight = containerDim.w - baseLeft;
       var baseBottom = containerDim.h - baseTop;
-
       var zoom = function zoom() {
         step++;
-
         if (step < 16) {
           _this._frames.zoomFrame = requestAnimationFrame(zoom);
         }
-
         var tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 16);
+        // snap in at the last percent to more often land at the exact value
+        // only do that at the target percent value to make the animation as smooth as possible
+        if (Math.abs(perc - tickZoom) < 1) {
+          tickZoom = perc;
+        }
         var ratio = tickZoom / curPerc;
         var imgWidth = imageDim.w * tickZoom / 100;
         var imgHeight = imageDim.h * tickZoom / 100;
         var newLeft = -((point.x - curLeft) * ratio - point.x);
-        var newTop = -((point.y - curTop) * ratio - point.y); // fix for left and top
+        var newTop = -((point.y - curTop) * ratio - point.y);
 
+        // fix for left and top
         newLeft = Math.min(newLeft, baseLeft);
-        newTop = Math.min(newTop, baseTop); // fix for right and bottom
+        newTop = Math.min(newTop, baseTop);
 
+        // fix for right and bottom
         if (newLeft + imgWidth < baseRight) {
           newLeft = baseRight - imgWidth; // newLeft - (newLeft + imgWidth - baseRight)
         }
@@ -512,41 +524,38 @@ function () {
           top: "".concat(newTop, "px")
         });
         _this._state.zoomValue = tickZoom;
+        _this._resizeSnapHandle(imgWidth, imgHeight, newLeft, newTop);
 
-        _this._resizeSnapHandle(imgWidth, imgHeight, newLeft, newTop); // update zoom handle position
-
-
+        // update zoom handle position
         css(zoomHandle, {
           left: "".concat((tickZoom - 100) * zoomSliderLength / (maxZoom - 100), "px")
-        }); // dispatch zoom changed event
+        });
 
+        // dispatch zoom changed event
         if (_this._listeners.onZoomChange) {
           _this._listeners.onZoomChange(_this._callbackData);
         }
       };
-
       zoom();
     });
-
     _defineProperty(this, "_clearFrames", function () {
       var _this$_frames = _this._frames,
-          slideMomentumCheck = _this$_frames.slideMomentumCheck,
-          sliderMomentumFrame = _this$_frames.sliderMomentumFrame,
-          zoomFrame = _this$_frames.zoomFrame;
+        slideMomentumCheck = _this$_frames.slideMomentumCheck,
+        sliderMomentumFrame = _this$_frames.sliderMomentumFrame,
+        zoomFrame = _this$_frames.zoomFrame;
       clearInterval(slideMomentumCheck);
       cancelAnimationFrame(sliderMomentumFrame);
       cancelAnimationFrame(zoomFrame);
     });
-
     _defineProperty(this, "_resizeSnapHandle", function (imgWidth, imgHeight, imgLeft, imgTop) {
       var _elements = _this._elements,
-          _state = _this._state;
+        _state = _this._state;
       var snapHandle = _elements.snapHandle,
-          image = _elements.image;
+        image = _elements.image;
       var imageDim = _state.imageDim,
-          containerDim = _state.containerDim,
-          zoomValue = _state.zoomValue,
-          snapImageDim = _state.snapImageDim;
+        containerDim = _state.containerDim,
+        zoomValue = _state.zoomValue,
+        snapImageDim = _state.snapImageDim;
       var imageWidth = imgWidth || imageDim.w * zoomValue / 100;
       var imageHeight = imgHeight || imageDim.h * zoomValue / 100;
       var imageLeft = imgLeft || parseFloat(css(image, 'left'));
@@ -566,12 +575,11 @@ function () {
         h: handleHeight
       };
     });
-
     _defineProperty(this, "showSnapView", function (noTimeout) {
       var _this$_state = _this._state,
-          snapViewVisible = _this$_state.snapViewVisible,
-          zoomValue = _this$_state.zoomValue,
-          loaded = _this$_state.loaded;
+        snapViewVisible = _this$_state.snapViewVisible,
+        zoomValue = _this$_state.zoomValue,
+        loaded = _this$_state.loaded;
       var snapView = _this._elements.snapView;
       if (!_this._options.snapView) return;
       if (snapViewVisible || zoomValue <= 100 || !loaded) return;
@@ -581,12 +589,10 @@ function () {
         opacity: 1,
         pointerEvents: 'inherit'
       });
-
       if (!noTimeout) {
         _this._frames.snapViewTimeout = setTimeout(_this.hideSnapView, 1500);
       }
     });
-
     _defineProperty(this, "hideSnapView", function () {
       var snapView = _this._elements.snapView;
       css(snapView, {
@@ -595,33 +601,35 @@ function () {
       });
       _this._state.snapViewVisible = false;
     });
-
     _defineProperty(this, "refresh", function () {
+      var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       _this._calculateDimensions();
-
-      _this.resetZoom();
+      _this.resetZoom(animate);
     });
-
     var _this$_findContainerA = this._findContainerAndImageSrc(element, options),
-        container = _this$_findContainerA.container,
-        domElement = _this$_findContainerA.domElement,
-        imageSrc = _this$_findContainerA.imageSrc,
-        hiResImageSrc = _this$_findContainerA.hiResImageSrc; // containers for elements
+      container = _this$_findContainerA.container,
+      domElement = _this$_findContainerA.domElement,
+      imageSrc = _this$_findContainerA.imageSrc,
+      hiResImageSrc = _this$_findContainerA.hiResImageSrc;
 
-
+    // containers for elements
     this._elements = {
       container: container,
       domElement: domElement
     };
-    this._options = _objectSpread({}, ImageViewer.defaults, options); // container for all events
+    this._options = _objectSpread2(_objectSpread2({}, ImageViewer.defaults), options);
 
+    // container for all events
     this._events = {};
-    this._listeners = this._options.listeners || {}; // container for all timeout and frames
+    this._listeners = this._options.listeners || {};
 
-    this._frames = {}; // container for all sliders
+    // container for all timeout and frames
+    this._frames = {};
 
-    this._sliders = {}; // maintain current state
+    // container for all sliders
+    this._sliders = {};
 
+    // maintain current state
     this._state = {
       zoomValue: this._options.zoomValue
     };
@@ -629,46 +637,57 @@ function () {
       imageSrc: imageSrc,
       hiResImageSrc: hiResImageSrc
     };
-
     this._init();
-
     if (imageSrc) {
       this._loadImages();
-    } // store reference of imageViewer in domElement
+    }
 
-
+    // store reference of imageViewer in domElement
     domElement._imageViewer = this;
   }
-
   _createClass(ImageViewer, [{
+    key: "zoomInButton",
+    get: function get() {
+      return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--in\" role=\"button\"></div>" : '';
+    }
+  }, {
+    key: "zoomOutButton",
+    get: function get() {
+      return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--out\" role=\"button\"></div>" : '';
+    }
+  }, {
+    key: "imageViewHtml",
+    get: function get() {
+      return "\n    <div class=\"iv-loader\"></div>\n    <div class=\"iv-snap-view\">\n      <div class=\"iv-snap-image-wrap\">\n        <div class=\"iv-snap-handle\"></div>\n      </div>\n      <div class=\"iv-zoom-actions ".concat(this._options.hasZoomButtons ? 'iv-zoom-actions--has-buttons' : '', "\">\n        ").concat(this.zoomInButton, "\n        <div class=\"iv-zoom-slider\">\n          <div class=\"iv-zoom-handle\"></div>\n        </div>\n        ").concat(this.zoomOutButton, "\n      </div>\n    </div>\n    <div class=\"iv-image-view\" >\n      <div class=\"iv-image-wrap\" ></div>\n    </div>\n  ");
+    }
+  }, {
     key: "_findContainerAndImageSrc",
     value: function _findContainerAndImageSrc(element) {
       var domElement = element;
       var imageSrc, hiResImageSrc;
-
       if (typeof element === 'string') {
         domElement = document.querySelector(element);
-      } // throw error if imageViewer is already assigned
+      }
 
-
+      // throw error if imageViewer is already assigned
       if (domElement._imageViewer) {
         throw new Error('An image viewer is already being initiated on the element.');
       }
-
       var container = element;
-
       if (domElement.tagName === 'IMG') {
         imageSrc = domElement.src;
-        hiResImageSrc = domElement.getAttribute('high-res-src') || domElement.getAttribute('data-high-res-src'); // wrap the image with iv-container div
+        hiResImageSrc = domElement.getAttribute('high-res-src') || domElement.getAttribute('data-high-res-src');
 
+        // wrap the image with iv-container div
         container = wrap(domElement, {
           className: 'iv-container iv-image-mode',
           style: {
             display: 'inline-block',
             overflow: 'hidden'
           }
-        }); // hide the image and add iv-original-img class
+        });
 
+        // hide the image and add iv-original-img class
         css(domElement, {
           opacity: 0,
           position: 'relative',
@@ -678,7 +697,6 @@ function () {
         imageSrc = domElement.getAttribute('src') || domElement.getAttribute('data-src');
         hiResImageSrc = domElement.getAttribute('high-res-src') || domElement.getAttribute('data-high-res-src');
       }
-
       return {
         container: container,
         domElement: domElement,
@@ -690,49 +708,50 @@ function () {
     key: "_init",
     value: function _init() {
       // initialize the dom elements
-      this._initDom(); // initialize slider
+      this._initDom();
 
-
+      // initialize slider
       this._initImageSlider();
-
       this._initSnapSlider();
+      this._initZoomSlider();
 
-      this._initZoomSlider(); // enable pinch and zoom feature for touch screens
+      // enable pinch and zoom feature for touch screens
+      this._pinchAndZoom();
 
+      // enable scroll zoom interaction
+      this._scrollZoom();
 
-      this._pinchAndZoom(); // enable scroll zoom interaction
+      // enable double tap to zoom interaction
+      this._doubleTapToZoom();
 
-
-      this._scrollZoom(); // enable double tap to zoom interaction
-
-
-      this._doubleTapToZoom(); // initialize events
-
-
+      // initialize events
       this._initEvents();
     }
   }, {
     key: "_initDom",
     value: function _initDom() {
-      var container = this._elements.container; // add image-viewer layout elements
+      var container = this._elements.container;
 
+      // add image-viewer layout elements
       createElement({
         tagName: 'div',
         className: 'iv-wrap',
         html: this.imageViewHtml,
         parent: container
-      }); // add container class on the container
+      });
 
-      addClass(container, 'iv-container'); // if the element is static position, position it relatively
+      // add container class on the container
+      addClass(container, 'iv-container');
 
+      // if the element is static position, position it relatively
       if (css(container, 'position') === 'static') {
         css(container, {
           position: 'relative'
         });
-      } // save references for later use
+      }
 
-
-      this._elements = _objectSpread({}, this._elements, {
+      // save references for later use
+      this._elements = _objectSpread2(_objectSpread2({}, this._elements), {}, {
         snapView: container.querySelector('.iv-snap-view'),
         snapImageWrap: container.querySelector('.iv-snap-image-wrap'),
         imageWrap: container.querySelector('.iv-image-wrap'),
@@ -741,7 +760,6 @@ function () {
         zoomIn: container.querySelector('.iv-button-zoom--in'),
         zoomOut: container.querySelector('.iv-button-zoom--out')
       });
-
       if (this._listeners.onInit) {
         this._listeners.onInit(this._callbackData);
       }
@@ -750,27 +768,27 @@ function () {
     key: "_initImageSlider",
     value: function _initImageSlider() {
       var _this2 = this;
-
       var _elements = this._elements;
       var imageWrap = _elements.imageWrap;
       var positions, currentPos;
-      /* Add slide interaction to image */
 
+      /* Add slide interaction to image */
       var imageSlider = new Slider(imageWrap, {
         isSliderEnabled: function isSliderEnabled() {
           var _this2$_state = _this2._state,
-              loaded = _this2$_state.loaded,
-              zooming = _this2$_state.zooming,
-              zoomValue = _this2$_state.zoomValue;
+            loaded = _this2$_state.loaded,
+            zooming = _this2$_state.zooming,
+            zoomValue = _this2$_state.zoomValue;
           return loaded && !zooming && zoomValue > 100;
         },
         onStart: function onStart(e, position) {
-          var snapSlider = _this2._sliders.snapSlider; // clear all animation frame and interval
+          var snapSlider = _this2._sliders.snapSlider;
 
+          // clear all animation frame and interval
           _this2._clearFrames();
+          snapSlider.onStart();
 
-          snapSlider.onStart(); // reset positions
-
+          // reset positions
           positions = [position, position];
           currentPos = undefined;
           _this2._frames.slideMomentumCheck = setInterval(function () {
@@ -785,9 +803,7 @@ function () {
         onMove: function onMove(e, position) {
           var snapImageDim = _this2._state.snapImageDim;
           var snapSlider = _this2._sliders.snapSlider;
-
           var imageCurrentDim = _this2._getImageCurrentDim();
-
           currentPos = position;
           snapSlider.onMove(e, {
             dx: -position.dx * snapImageDim.w / imageCurrentDim.w,
@@ -797,21 +813,17 @@ function () {
         onEnd: function onEnd() {
           var snapImageDim = _this2._state.snapImageDim;
           var snapSlider = _this2._sliders.snapSlider;
+          var imageCurrentDim = _this2._getImageCurrentDim();
 
-          var imageCurrentDim = _this2._getImageCurrentDim(); // clear all animation frame and interval
-
-
+          // clear all animation frame and interval
           _this2._clearFrames();
-
           var step, positionX, positionY;
           var xDiff = positions[1].x - positions[0].x;
           var yDiff = positions[1].y - positions[0].y;
-
           var momentum = function momentum() {
             if (step <= 60) {
               _this2._frames.sliderMomentumFrame = requestAnimationFrame(momentum);
             }
-
             positionX += easeOutQuart(step, xDiff / 3, -xDiff / 3, 60);
             positionY += easeOutQuart(step, yDiff / 3, -yDiff / 3, 60);
             snapSlider.onMove(null, {
@@ -820,7 +832,6 @@ function () {
             });
             step++;
           };
-
           if (Math.abs(xDiff) > 30 || Math.abs(yDiff) > 30) {
             step = 1;
             positionX = currentPos.dx;
@@ -836,7 +847,6 @@ function () {
     key: "_initSnapSlider",
     value: function _initSnapSlider() {
       var _this3 = this;
-
       var snapHandle = this._elements.snapHandle;
       var startHandleTop, startHandleLeft;
       var snapSlider = new Slider(snapHandle, {
@@ -845,23 +855,23 @@ function () {
         },
         onStart: function onStart() {
           var _this3$_frames = _this3._frames,
-              slideMomentumCheck = _this3$_frames.slideMomentumCheck,
-              sliderMomentumFrame = _this3$_frames.sliderMomentumFrame;
+            slideMomentumCheck = _this3$_frames.slideMomentumCheck,
+            sliderMomentumFrame = _this3$_frames.sliderMomentumFrame;
           startHandleTop = parseFloat(css(snapHandle, 'top'));
-          startHandleLeft = parseFloat(css(snapHandle, 'left')); // stop momentum on image
+          startHandleLeft = parseFloat(css(snapHandle, 'left'));
 
+          // stop momentum on image
           clearInterval(slideMomentumCheck);
           cancelAnimationFrame(sliderMomentumFrame);
         },
         onMove: function onMove(e, position) {
           var _this3$_state = _this3._state,
-              snapHandleDim = _this3$_state.snapHandleDim,
-              snapImageDim = _this3$_state.snapImageDim;
+            snapHandleDim = _this3$_state.snapHandleDim,
+            snapImageDim = _this3$_state.snapImageDim;
           var image = _this3._elements.image;
+          var imageCurrentDim = _this3._getImageCurrentDim();
 
-          var imageCurrentDim = _this3._getImageCurrentDim(); // find handle left and top and make sure they lay between the snap image
-
-
+          // find handle left and top and make sure they lay between the snap image
           var maxLeft = Math.max(snapImageDim.w - snapHandleDim.w, startHandleLeft);
           var maxTop = Math.max(snapImageDim.h - snapHandleDim.h, startHandleTop);
           var minLeft = Math.min(0, startHandleLeft);
@@ -887,32 +897,33 @@ function () {
     key: "_initZoomSlider",
     value: function _initZoomSlider() {
       var _this4 = this;
-
       var _this$_elements = this._elements,
-          snapView = _this$_elements.snapView,
-          zoomHandle = _this$_elements.zoomHandle; // zoom in zoom out using zoom handle
+        snapView = _this$_elements.snapView,
+        zoomHandle = _this$_elements.zoomHandle;
 
+      // zoom in zoom out using zoom handle
       var sliderElm = snapView.querySelector('.iv-zoom-slider');
-      var leftOffset, handleWidth; // on zoom slider we have to follow the mouse and set the handle to its position.
+      var leftOffset, handleWidth;
 
+      // on zoom slider we have to follow the mouse and set the handle to its position.
       var zoomSlider = new Slider(sliderElm, {
         isSliderEnabled: function isSliderEnabled() {
           return _this4._state.loaded;
         },
         onStart: function onStart(eStart) {
           var slider = _this4._sliders.zoomSlider;
-          leftOffset = sliderElm.getBoundingClientRect().left + document.body.scrollLeft;
-          handleWidth = parseInt(css(zoomHandle, 'width'), 10); // move the handle to current mouse position
+          leftOffset = sliderElm.getBoundingClientRect().left;
+          handleWidth = parseInt(css(zoomHandle, 'width'), 10);
 
+          // move the handle to current mouse position
           slider.onMove(eStart);
         },
         onMove: function onMove(e) {
           var maxZoom = _this4._options.maxZoom;
           var zoomSliderLength = _this4._state.zoomSliderLength;
-          var pageX = e.pageX !== undefined ? e.pageX : e.touches[0].pageX;
-          var newLeft = clamp(pageX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
+          var clientX = e.clientX !== undefined ? e.clientX : e.touches[0].clientX;
+          var newLeft = clamp(clientX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
           var zoomValue = 100 + (maxZoom - 100) * newLeft / zoomSliderLength;
-
           _this4.zoom(zoomValue);
         }
       });
@@ -922,45 +933,44 @@ function () {
   }, {
     key: "_initEvents",
     value: function _initEvents() {
-      this._snapViewEvents(); // handle window resize
+      this._snapViewEvents();
 
-
+      // handle window resize
       if (this._options.refreshOnResize) {
         this._events.onWindowResize = assignEvent(window, 'resize', this.refresh);
       }
+      this._events.onDragStart = assignEvent(this._elements.container, 'dragstart', preventDefault);
     }
   }, {
     key: "_snapViewEvents",
     value: function _snapViewEvents() {
       var _this5 = this;
-
       var _this$_elements2 = this._elements,
-          imageWrap = _this$_elements2.imageWrap,
-          snapView = _this$_elements2.snapView; // show snapView on mouse move
+        imageWrap = _this$_elements2.imageWrap,
+        snapView = _this$_elements2.snapView;
 
+      // show snapView on mouse move
       this._events.snapViewOnMouseMove = assignEvent(imageWrap, ['touchmove', 'mousemove'], function () {
-        _this5.showSnapView();
-      }); // keep showing snapView if on hover over it without any timeout
-
-      this._events.mouseEnterSnapView = assignEvent(snapView, ['mouseenter', 'touchstart'], function () {
-        _this5._state.snapViewVisible = false;
-
-        _this5.showSnapView(true);
-      }); // on mouse leave set timeout to hide snapView
-
-      this._events.mouseLeaveSnapView = assignEvent(snapView, ['mouseleave', 'touchend'], function () {
-        _this5._state.snapViewVisible = false;
-
         _this5.showSnapView();
       });
 
+      // keep showing snapView if on hover over it without any timeout
+      this._events.mouseEnterSnapView = assignEvent(snapView, ['mouseenter', 'touchstart'], function () {
+        _this5._state.snapViewVisible = false;
+        _this5.showSnapView(true);
+      });
+
+      // on mouse leave set timeout to hide snapView
+      this._events.mouseLeaveSnapView = assignEvent(snapView, ['mouseleave', 'touchend'], function () {
+        _this5._state.snapViewVisible = false;
+        _this5.showSnapView();
+      });
       if (!this._options.hasZoomButtons) {
         return;
       }
-
       var _this$_elements3 = this._elements,
-          zoomOut = _this$_elements3.zoomOut,
-          zoomIn = _this$_elements3.zoomIn;
+        zoomOut = _this$_elements3.zoomOut,
+        zoomIn = _this$_elements3.zoomIn;
       this._events.zoomInClick = assignEvent(zoomIn, ['click'], function () {
         _this5.zoom(_this5._state.zoomValue + _this5._options.zoomStep || 50);
       });
@@ -972,148 +982,138 @@ function () {
     key: "_pinchAndZoom",
     value: function _pinchAndZoom() {
       var _this6 = this;
-
       var _this$_elements4 = this._elements,
-          imageWrap = _this$_elements4.imageWrap,
-          container = _this$_elements4.container; // apply pinch and zoom feature
+        imageWrap = _this$_elements4.imageWrap,
+        container = _this$_elements4.container;
 
+      // apply pinch and zoom feature
       var onPinchStart = function onPinchStart(eStart) {
         var _this6$_state = _this6._state,
-            loaded = _this6$_state.loaded,
-            startZoomValue = _this6$_state.zoomValue;
+          loaded = _this6$_state.loaded,
+          startZoomValue = _this6$_state.zoomValue;
         var events = _this6._events;
         if (!loaded) return;
         var touch0 = eStart.touches[0];
         var touch1 = eStart.touches[1];
-
         if (!(touch0 && touch1)) {
           return;
         }
-
         _this6._state.zooming = true;
-        var contOffset = container.getBoundingClientRect(); // find distance between two touch points
+        var contOffset = container.getBoundingClientRect();
 
-        var startDist = getTouchPointsDistance(eStart.touches); // find the center for the zoom
+        // find distance between two touch points
+        var startDist = getTouchPointsDistance(eStart.touches);
 
+        // find the center for the zoom
         var center = {
-          x: (touch1.pageX + touch0.pageX) / 2 - (contOffset.left + document.body.scrollLeft),
-          y: (touch1.pageY + touch0.pageY) / 2 - (contOffset.top + document.body.scrollTop)
+          x: (touch1.clientX + touch0.clientX) / 2 - contOffset.left,
+          y: (touch1.clientY + touch0.clientY) / 2 - contOffset.top
         };
-
         var moveListener = function moveListener(eMove) {
           // eMove.preventDefault();
+
           var newDist = getTouchPointsDistance(eMove.touches);
           var zoomValue = startZoomValue + (newDist - startDist) / 2;
-
           _this6.zoom(zoomValue, center);
         };
-
         var endListener = function endListener(eEnd) {
           // unbind events
           events.pinchMove();
           events.pinchEnd();
-          _this6._state.zooming = false; // properly resume move event if one finger remains
-
+          _this6._state.zooming = false;
+          // properly resume move event if one finger remains
           if (eEnd.touches.length === 1) {
             _this6._sliders.imageSlider.startHandler(eEnd);
           }
-        }; // remove events if already assigned
+        };
 
-
+        // remove events if already assigned
         if (events.pinchMove) events.pinchMove();
-        if (events.pinchEnd) events.pinchEnd(); // assign events
+        if (events.pinchEnd) events.pinchEnd();
 
+        // assign events
         events.pinchMove = assignEvent(document, 'touchmove', moveListener);
         events.pinchEnd = assignEvent(document, 'touchend', endListener);
       };
-
       this._events.pinchStart = assignEvent(imageWrap, 'touchstart', onPinchStart);
     }
   }, {
     key: "_scrollZoom",
     value: function _scrollZoom() {
       var _this7 = this;
-
       /* Add zoom interaction in mouse wheel */
       var _options = this._options;
       var _this$_elements5 = this._elements,
-          container = _this$_elements5.container,
-          imageWrap = _this$_elements5.imageWrap;
+        container = _this$_elements5.container,
+        imageWrap = _this$_elements5.imageWrap;
       var changedDelta = 0;
-
       var onMouseWheel = function onMouseWheel(e) {
         var _this7$_state = _this7._state,
-            loaded = _this7$_state.loaded,
-            zoomValue = _this7$_state.zoomValue;
-        if (!_options.zoomOnMouseWheel || !loaded) return; // clear all animation frame and interval
+          loaded = _this7$_state.loaded,
+          zoomValue = _this7$_state.zoomValue;
+        if (!_options.zoomOnMouseWheel || !loaded) return;
 
-        _this7._clearFrames(); // cross-browser wheel delta
+        // clear all animation frame and interval
+        _this7._clearFrames();
 
-
+        // cross-browser wheel delta
         var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail || -e.deltaY));
         var newZoomValue = zoomValue * (100 + delta * ZOOM_CONSTANT) / 100;
-
         if (!(newZoomValue >= 100 && newZoomValue <= _options.maxZoom)) {
           changedDelta += Math.abs(delta);
         } else {
           changedDelta = 0;
         }
-
         e.preventDefault();
         if (changedDelta > MOUSE_WHEEL_COUNT) return;
         var contOffset = container.getBoundingClientRect();
-        var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
-        var y = (e.pageY || e.pageY) - (contOffset.top + document.body.scrollTop);
-
+        var x = e.clientX - contOffset.left;
+        var y = e.clientY - contOffset.top;
         _this7.zoom(newZoomValue, {
           x: x,
           y: y
-        }); // show the snap viewer
+        });
 
-
+        // show the snap viewer
         _this7.showSnapView();
       };
-
-      this._ev = assignEvent(imageWrap, 'wheel', onMouseWheel);
+      this._events.scrollZoom = assignEvent(imageWrap, 'wheel', onMouseWheel);
     }
   }, {
     key: "_doubleTapToZoom",
     value: function _doubleTapToZoom() {
       var _this8 = this;
-
-      var imageWrap = this._elements.imageWrap; // handle double tap for zoom in and zoom out
+      var imageWrap = this._elements.imageWrap;
+      // handle double tap for zoom in and zoom out
 
       var touchTime = 0;
       var point;
-
       var onDoubleTap = function onDoubleTap(e) {
         if (touchTime === 0) {
           touchTime = Date.now();
           point = {
-            x: e.pageX,
-            y: e.pageY
+            x: e.clientX,
+            y: e.clientY
           };
-        } else if (Date.now() - touchTime < 500 && Math.abs(e.pageX - point.x) < 50 && Math.abs(e.pageY - point.y) < 50) {
+        } else if (Date.now() - touchTime < 500 && Math.abs(e.clientX - point.x) < 50 && Math.abs(e.clientY - point.y) < 50) {
           if (_this8._state.zoomValue === _this8._options.zoomValue) {
             _this8.zoom(200);
           } else {
             _this8.resetZoom();
           }
-
           touchTime = 0;
         } else {
           touchTime = 0;
         }
       };
-
-      assignEvent(imageWrap, 'click', onDoubleTap);
+      this._events.doubleTapToZoom = assignEvent(imageWrap, 'click', onDoubleTap);
     }
   }, {
     key: "_getImageCurrentDim",
     value: function _getImageCurrentDim() {
       var _this$_state2 = this._state,
-          zoomValue = _this$_state2.zoomValue,
-          imageDim = _this$_state2.imageDim;
+        zoomValue = _this$_state2.zoomValue,
+        imageDim = _this$_state2.imageDim;
       return {
         w: imageDim.w * (zoomValue / 100),
         h: imageDim.h * (zoomValue / 100)
@@ -1123,77 +1123,86 @@ function () {
     key: "_loadImages",
     value: function _loadImages() {
       var _this9 = this;
-
       var _images = this._images,
-          _elements = this._elements;
+        _elements = this._elements;
       var imageSrc = _images.imageSrc,
-          hiResImageSrc = _images.hiResImageSrc;
+        hiResImageSrc = _images.hiResImageSrc;
       var container = _elements.container,
-          snapImageWrap = _elements.snapImageWrap,
-          imageWrap = _elements.imageWrap;
-      var ivLoader = container.querySelector('.iv-loader'); // remove old images
+        snapImageWrap = _elements.snapImageWrap,
+        imageWrap = _elements.imageWrap;
+      var ivLoader = container.querySelector('.iv-loader');
 
-      remove(container.querySelectorAll('.iv-snap-image, .iv-image')); // add snapView image
+      // remove old images
+      remove(container.querySelectorAll('.iv-snap-image, .iv-image'));
 
+      // add snapView image
       var snapImage = createElement({
         tagName: 'img',
         className: 'iv-snap-image',
         src: imageSrc,
         insertBefore: snapImageWrap.firstChild,
         parent: snapImageWrap
-      }); // add image
+      });
 
+      // add image
       var image = createElement({
         tagName: 'img',
         className: 'iv-image iv-small-image',
         src: imageSrc,
         parent: imageWrap
       });
-      this._state.loaded = false; // store image reference in _elements
+      this._state.loaded = false;
 
+      // store image reference in _elements
       this._elements.image = image;
       this._elements.snapImage = snapImage;
       css(ivLoader, {
         display: 'block'
-      }); // keep visibility hidden until image is loaded
+      });
 
+      // keep visibility hidden until image is loaded
       css(image, {
         visibility: 'hidden'
-      }); // hide snap view if open
+      });
 
+      // hide snap view if open
       this.hideSnapView();
-
       var onImageLoad = function onImageLoad() {
         // hide the iv loader
         css(ivLoader, {
           display: 'none'
-        }); // show the image
+        });
 
+        // show the image
         css(image, {
           visibility: 'visible'
-        }); // load high resolution image if provided
+        });
 
+        // load high resolution image if provided
         if (hiResImageSrc) {
           _this9._loadHighResImage(hiResImageSrc);
-        } // set loaded flag to true
+        }
 
+        // set loaded flag to true
+        _this9._state.loaded = true;
 
-        _this9._state.loaded = true; // calculate the dimension
+        // calculate the dimension
+        _this9._calculateDimensions();
 
-        _this9._calculateDimensions(); // dispatch image load event
-
-
-        if (_this9._listeners.onImageLoad) {
+        // dispatch image load event
+        if (_this9._listeners.onImageLoaded) {
           _this9._listeners.onImageLoaded(_this9._callbackData);
-        } // reset the zoom
+        }
 
-
+        // reset the zoom
         _this9.resetZoom();
       };
-
       if (imageLoaded(image)) {
         onImageLoad();
       } else {
+        if (typeof this._events.imageLoad == 'function') {
+          this._events.imageLoad();
+        }
         this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
       }
     }
@@ -1201,10 +1210,9 @@ function () {
     key: "_loadHighResImage",
     value: function _loadHighResImage(hiResImageSrc) {
       var _this10 = this;
-
       var _this$_elements6 = this._elements,
-          imageWrap = _this$_elements6.imageWrap,
-          container = _this$_elements6.container;
+        imageWrap = _this$_elements6.imageWrap,
+        container = _this$_elements6.container;
       var lowResImg = this._elements.image;
       var hiResImage = createElement({
         tagName: 'img',
@@ -1212,20 +1220,24 @@ function () {
         src: hiResImageSrc,
         parent: imageWrap,
         style: lowResImg.style.cssText
-      }); // add all the style attributes from lowResImg to highResImg
+      });
 
+      // add all the style attributes from lowResImg to highResImg
       hiResImage.style.cssText = lowResImg.style.cssText;
       this._elements.image = container.querySelectorAll('.iv-image');
-
       var onHighResImageLoad = function onHighResImageLoad() {
         // remove the low size image and set this image as default image
         remove(lowResImg);
-        _this10._elements.image = hiResImage; // this._calculateDimensions();
+        _this10._elements.image = hiResImage;
+        // this._calculateDimensions();
       };
 
       if (imageLoaded(hiResImage)) {
         onHighResImageLoad();
       } else {
+        if (typeof this._events.hiResImageLoad == 'function') {
+          this._events.hiResImageLoad();
+        }
         this._events.hiResImageLoad = assignEvent(hiResImage, 'load', onHighResImageLoad);
       }
     }
@@ -1233,24 +1245,27 @@ function () {
     key: "_calculateDimensions",
     value: function _calculateDimensions() {
       var _this$_elements7 = this._elements,
-          image = _this$_elements7.image,
-          container = _this$_elements7.container,
-          snapView = _this$_elements7.snapView,
-          snapImage = _this$_elements7.snapImage,
-          zoomHandle = _this$_elements7.zoomHandle; // calculate content width of image and snap image
+        image = _this$_elements7.image,
+        container = _this$_elements7.container,
+        snapView = _this$_elements7.snapView,
+        snapImage = _this$_elements7.snapImage,
+        zoomHandle = _this$_elements7.zoomHandle;
 
+      // calculate content width of image and snap image
       var imageWidth = parseInt(css(image, 'width'), 10);
       var imageHeight = parseInt(css(image, 'height'), 10);
       var contWidth = parseInt(css(container, 'width'), 10);
       var contHeight = parseInt(css(container, 'height'), 10);
       var snapViewWidth = snapView.clientWidth;
-      var snapViewHeight = snapView.clientHeight; // set the container dimension
+      var snapViewHeight = snapView.clientHeight;
 
+      // set the container dimension
       this._state.containerDim = {
         w: contWidth,
         h: contHeight
-      }; // set the image dimension
+      };
 
+      // set the image dimension
       var imgWidth;
       var imgHeight;
       var ratio = imageWidth / imageHeight;
@@ -1259,8 +1274,9 @@ function () {
       this._state.imageDim = {
         w: imgWidth,
         h: imgHeight
-      }; // reset image position and zoom
+      };
 
+      // reset image position and zoom
       css(image, {
         width: "".concat(imgWidth, "px"),
         height: "".concat(imgHeight, "px"),
@@ -1268,8 +1284,9 @@ function () {
         top: "".concat((contHeight - imgHeight) / 2, "px"),
         maxWidth: 'none',
         maxHeight: 'none'
-      }); // set the snap Image dimension
+      });
 
+      // set the snap Image dimension
       var snapWidth = imgWidth > imgHeight ? snapViewWidth : imgWidth * snapViewHeight / imgHeight;
       var snapHeight = imgHeight > imgWidth ? snapViewHeight : imgHeight * snapViewWidth / imgWidth;
       this._state.snapImageDim = {
@@ -1280,8 +1297,8 @@ function () {
         width: "".concat(snapWidth, "px"),
         height: "".concat(snapHeight, "px")
       });
-      var zoomSlider = snapView.querySelector('.iv-zoom-slider').clientWidth; // calculate zoom slider area
-
+      var zoomSlider = snapView.querySelector('.iv-zoom-slider').clientWidth;
+      // calculate zoom slider area
       this._state.zoomSliderLength = zoomSlider - zoomHandle.offsetWidth;
     }
   }, {
@@ -1289,11 +1306,9 @@ function () {
     value: function resetZoom() {
       var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       var zoomValue = this._options.zoomValue;
-
       if (!animate) {
         this._state.zoomValue = zoomValue;
       }
-
       this.zoom(zoomValue);
     }
   }, {
@@ -1303,57 +1318,58 @@ function () {
         imageSrc: imageSrc,
         hiResImageSrc: hiResImageSrc
       };
-
       this._loadImages();
     }
   }, {
     key: "destroy",
     value: function destroy() {
       var _this$_elements8 = this._elements,
-          container = _this$_elements8.container,
-          domElement = _this$_elements8.domElement; // destroy all the sliders
-
+        container = _this$_elements8.container,
+        domElement = _this$_elements8.domElement;
+      // destroy all the sliders
       Object.entries(this._sliders).forEach(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-            key = _ref2[0],
-            slider = _ref2[1];
-
+        var _ref2 = _slicedToArray(_ref, 2);
+          _ref2[0];
+          var slider = _ref2[1];
         slider.destroy();
-      }); // unbind all events
+      });
 
+      // unbind all events
       Object.entries(this._events).forEach(function (_ref3) {
-        var _ref4 = _slicedToArray(_ref3, 2),
-            key = _ref4[0],
-            unbindEvent = _ref4[1];
-
+        var _ref4 = _slicedToArray(_ref3, 2);
+          _ref4[0];
+          var unbindEvent = _ref4[1];
         unbindEvent();
-      }); // clear all the frames
+      });
 
-      this._clearFrames(); // remove html from the container
+      // clear all the frames
+      this._clearFrames();
 
+      // remove html from the container
+      remove(container.querySelector('.iv-wrap'));
 
-      remove(container.querySelector('.iv-wrap')); // remove iv-container class from container
+      // remove iv-container class from container
+      removeClass(container, 'iv-container');
 
-      removeClass(container, 'iv-container'); // remove added style from container
+      // remove added style from container
+      removeCss(document.querySelector('html'), 'relative');
 
-      removeCss(document.querySelector('html'), 'relative'); // if container has original image, unwrap the image and remove the class
+      // if container has original image, unwrap the image and remove the class
       // which will happen when domElement is not the container
-
       if (domElement !== container) {
         unwrap(domElement);
-      } // remove imageViewer reference from dom element
+      }
 
-
+      // remove imageViewer reference from dom element
       domElement._imageViewer = null;
-
       if (this._listeners.onDestroy) {
         this._listeners.onDestroy();
       }
     }
+
     /**
      * Data will be passed to the callback registered with each new instance
      */
-
   }, {
     key: "_callbackData",
     get: function get() {
@@ -1361,16 +1377,14 @@ function () {
         container: this._elements.container,
         snapView: this._elements.snapView,
         zoomValue: this._state.zoomValue,
-        reachedMin: Math.round(this._state.zoomValue) === this._options.zoomValue,
-        reachedMax: Math.round(this._state.zoomValue) === this._options.maxZoom,
+        reachedMin: Math.abs(this._state.zoomValue - 100) < 1,
+        reachedMax: Math.abs(this._state.zoomValue - this._options.maxZoom) < 1,
         instance: this
       };
     }
   }]);
-
   return ImageViewer;
 }();
-
 ImageViewer.defaults = {
   zoomValue: 100,
   snapView: true,
@@ -1388,55 +1402,50 @@ ImageViewer.defaults = {
 };
 
 var fullScreenHtml = "\n  <div class=\"iv-fullscreen-container\"></div>\n  <div class=\"iv-fullscreen-close\"></div>\n";
-
-var FullScreenViewer =
-/*#__PURE__*/
-function (_ImageViewer) {
+var FullScreenViewer = /*#__PURE__*/function (_ImageViewer) {
   _inherits(FullScreenViewer, _ImageViewer);
-
+  var _super = _createSuper(FullScreenViewer);
   function FullScreenViewer() {
     var _this;
-
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
     _classCallCheck(this, FullScreenViewer);
-
     var fullScreenElem = createElement({
       tagName: 'div',
       className: 'iv-fullscreen',
       html: fullScreenHtml,
       parent: document.body
     });
-    var container = fullScreenElem.querySelector('.iv-fullscreen-container'); // call the ImageViewer constructor
+    var container = fullScreenElem.querySelector('.iv-fullscreen-container');
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(FullScreenViewer).call(this, container, _objectSpread({}, options, {
+    // call the ImageViewer constructor
+    _this = _super.call(this, container, _objectSpread2(_objectSpread2({}, options), {}, {
       refreshOnResize: false
-    }))); // add fullScreenElem on element list
+    }));
 
+    // add fullScreenElem on element list
     _defineProperty(_assertThisInitialized(_this), "hide", function () {
       // hide the fullscreen
       css(_this._elements.fullScreen, {
         display: 'none'
-      }); // enable scroll
+      });
 
-      removeCss(document.querySelector('html'), 'overflow'); // remove window event
+      // enable scroll
+      removeCss(document.querySelector('html'), 'overflow');
 
+      // remove window event
       _this._events.onWindowResize();
     });
-
     _this._elements.fullScreen = fullScreenElem;
-
     _this._initFullScreenEvents();
-
     return _this;
   }
-
   _createClass(FullScreenViewer, [{
     key: "_initFullScreenEvents",
     value: function _initFullScreenEvents() {
       var fullScreen = this._elements.fullScreen;
-      var closeBtn = fullScreen.querySelector('.iv-fullscreen-close'); // add close button event
+      var closeBtn = fullScreen.querySelector('.iv-fullscreen-close');
 
+      // add close button event
       this._events.onCloseBtnClick = assignEvent(closeBtn, 'click', this.hide);
     }
   }, {
@@ -1445,15 +1454,17 @@ function (_ImageViewer) {
       // show the element
       css(this._elements.fullScreen, {
         display: 'block'
-      }); // if image source is provide load image source
+      });
 
+      // if image source is provide load image source
       if (imageSrc) {
         this.load(imageSrc, hiResImageSrc);
-      } // handle window resize
+      }
 
+      // handle window resize
+      this._events.onWindowResize = assignEvent(window, 'resize', this.refresh);
 
-      this._events.onWindowResize = assignEvent(window, 'resize', this.refresh); // disable scroll on html
-
+      // disable scroll on html
       css(document.querySelector('html'), {
         overflow: 'hidden'
       });
@@ -1461,18 +1472,16 @@ function (_ImageViewer) {
   }, {
     key: "destroy",
     value: function destroy() {
-      var fullScreen = this._elements.fullScreen; // destroy image viewer
+      var fullScreen = this._elements.fullScreen;
 
-      _get(_getPrototypeOf(FullScreenViewer.prototype), "destroy", this).call(this); // remove the element
+      // destroy image viewer
+      _get(_getPrototypeOf(FullScreenViewer.prototype), "destroy", this).call(this);
 
-
+      // remove the element
       remove(fullScreen);
     }
   }]);
-
   return FullScreenViewer;
 }(ImageViewer);
 
-ImageViewer.FullScreenViewer = FullScreenViewer;
-
-export default ImageViewer;
+export { FullScreenViewer, ImageViewer, ImageViewer as default };
