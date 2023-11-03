@@ -7,7 +7,7 @@ export function noop () {}
 // ease out method
 /*
     t : current time,
-    b : intial value,
+    b : initial value,
     c : changed value,
     d : duration
 */
