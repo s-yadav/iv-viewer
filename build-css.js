@@ -15,8 +15,8 @@ async function compileCss () {
   const unminifiedCssPromise = postcss([autoprefixer]).process(css, { from: undefined });
   const minifiedCssPromise = postcss([cssnano, autoprefixer]).process(css, { from: undefined });
   const [unminifiedCss, minifiedCss] = await Promise.all([unminifiedCssPromise, minifiedCssPromise]);
-  const distUnminified = writeFile('./dist/iv-viewer.css', unminifiedCss);
-  const distMinified = writeFile('./dist/iv-viewer.min.css', minifiedCss);
+  const distUnminified = writeFile('./dist/iv-viewer.css', unminifiedCss.toString());
+  const distMinified = writeFile('./dist/iv-viewer.min.css', minifiedCss.toString());
 
   return Promise.all([distUnminified, distMinified]);
 }
