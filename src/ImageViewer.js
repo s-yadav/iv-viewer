@@ -643,6 +643,9 @@ class ImageViewer {
     if (imageLoaded(image)) {
       onImageLoad();
     } else {
+      if (typeof this._events.imageLoad == 'function') {
+        this._events.imageLoad()
+      }
       this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
     }
   }
