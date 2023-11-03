@@ -249,6 +249,12 @@ codesandbox link: [https://codesandbox.io/s/8ypwzryom0](https://codesandbox.io/s
 [:star: this repo](https://github.com/s-yadav/iv-viewer)
 
 ### Major updates
+
+#### v2.2.0
+
+- Includes TypeScript type declarations
+- Bugfixing
+
 #### v2.1.0
 
 - It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.

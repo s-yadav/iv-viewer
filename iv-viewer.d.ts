@@ -1,17 +1,13 @@
 declare module "iv-viewer" {
-    export type Point = {
-        x: number;
-        y: number;
-    };
-    export type CallbackData = {
+    type Callback = (data: {
         container: HTMLElement;
         snapView: HTMLElement;
         zoomValue: number;
         reachedMin: number;
         reachedMax: number;
         instance: ImageViewer;
-    };
-    export type Callback = (data: CallbackData) => void | null;
+    }) => void | null;
+
     export type Config = {
         zoomValue: number;
         snapView: boolean;
@@ -22,7 +18,7 @@ declare module "iv-viewer" {
         zoomStep: number;
         listeners: {
             onInit?: Callback;
-            onDestroy?: Callback;
+            onDestroy?: () => void | null;
             onImageLoaded?: Callback;
             onZoomChange?: Callback;
         };
@@ -35,13 +31,13 @@ declare module "iv-viewer" {
 
         resetZoom(animate?: boolean): void;
 
-        zoom(percent: number, point?: Point): void;
+        zoom(percent: number, point?: { x: number, y: number }): void;
 
         showSnapView(noTimeout?: boolean): void;
 
         hideSnapView(): void;
 
-        refresh(): void;
+        refresh(animate?: boolean): void;
 
         load(imageSrc: string, hiResImageSrc?: string): void;
     }

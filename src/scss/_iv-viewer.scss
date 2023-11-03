@@ -26,9 +26,9 @@
         position: absolute;
         width: $iv-close-icon-size;
         height: $iv-close-icon-size;
-        right: $iv-boundary-space / 2;
-        top: $iv-boundary-space / 2;
-        padding: $iv-boundary-space / 2;
+        right: calc($iv-boundary-space / 2);
+        top: calc($iv-boundary-space / 2);
+        padding: calc($iv-boundary-space / 2);
         cursor: pointer;
         text-align: center;
         overflow: hidden;

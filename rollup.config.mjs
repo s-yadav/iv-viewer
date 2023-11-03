@@ -4,7 +4,7 @@ import { uglify } from 'rollup-plugin-uglify';
 import fileSize from 'rollup-plugin-filesize';
 import license from 'rollup-plugin-license';
 
-import PACKAGE from './package.json';
+import PACKAGE from './package.json' assert { type: 'json' };
 const fullYear = new Date().getFullYear();
 
 const banner = `${PACKAGE.name} - ${PACKAGE.version}
