@@ -632,7 +632,7 @@ class ImageViewer {
       this._calculateDimensions();
 
       // dispatch image load event
-      if (this._listeners.onImageLoad) {
+      if (this._listeners.onImageLoaded) {
         this._listeners.onImageLoaded(this._callbackData);
       }
 
