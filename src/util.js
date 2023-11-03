@@ -3,6 +3,9 @@ export const ZOOM_CONSTANT = 15; // increase or decrease value for zoom on mouse
 export const MOUSE_WHEEL_COUNT = 5; // A mouse delta after which it should stop preventing default behaviour of mouse wheel
 
 export function noop () {}
+export function preventDefault (e) {
+  e.preventDefault()
+}
 
 // ease out method
 /*

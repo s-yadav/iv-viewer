@@ -2,6 +2,7 @@
     &-container {
         overflow: hidden;
         position: relative;
+        user-select: none;
     }
 
     &-fullscreen {
