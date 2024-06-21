@@ -4,7 +4,7 @@ import { uglify } from 'rollup-plugin-uglify';
 import fileSize from 'rollup-plugin-filesize';
 import license from 'rollup-plugin-license';
 
-import PACKAGE from './package.json';
+import PACKAGE from '../../package.json';
 const fullYear = new Date().getFullYear();
 
 const banner = `${PACKAGE.name} - ${PACKAGE.version}
@@ -12,7 +12,7 @@ const banner = `${PACKAGE.name} - ${PACKAGE.version}
   Copyright (c) ${(fullYear !== 2019 ? '2019,' : '')} ${fullYear} to ${PACKAGE.author}, released under the ${PACKAGE.license} license.
   ${PACKAGE.repository.url}`;
 
-const babelConfig = JSON.parse(fs.readFileSync('.babelrc'));
+const babelConfig = JSON.parse(fs.readFileSync('../../babelrc'));
 
 const defaultConfig = {
   input: 'src/dist.js',

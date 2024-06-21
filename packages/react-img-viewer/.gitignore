@@ -1,0 +1,8 @@
+*.log
+.DS_Store
+node_modules
+.cache
+dist
+src/stories
+
+*storybook.log

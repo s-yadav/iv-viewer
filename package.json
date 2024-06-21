@@ -1,56 +1,13 @@
 {
-  "name": "iv-viewer",
-  "version": "2.1.1",
-  "description": "A zooming and panning plugin inspired by google photos for your web images.",
-  "main": "lib/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/s-yadav/iv-viewer.git"
-  },
-  "keywords": [
-    "image",
-    "zooming",
-    "panning",
-    "google",
-    "photos"
+  "name": "img-viewer",
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "author": "Sudhanshu Yadav",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/s-yadav/iv-viewer/issues"
-  },
-  "homepage": "https://github.com/s-yadav/iv-viewer#readme",
   "scripts": {
-    "start": "yarn copy-assets & parcel example/index.html --out-dir temp",
-    "copy-assets": "cp -R example/ temp",
-    "bundle": "cross-env yarn compile & yarn build-css & yarn bundle-dist",
-    "bundle-dist": "cross-env rollup -c rollup.config.js",
-    "build-css": "node build-css.js",
-    "compile": "cross-env NODE_ENV=production babel src --out-dir lib"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/plugin-proposal-class-properties": "^7.3.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "all-contributors-cli": "^6.9.1",
-    "babel-eslint": "^9.0.0",
-    "cross-env": "^5.2.0",
-    "cssnano": "^4.1.10",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "parcel-bundler": "^1.11.0",
-    "rollup": "^1.4.0",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-filesize": "^6.0.1",
-    "rollup-plugin-license": "^0.8.1",
-    "rollup-plugin-uglify": "^6.0.2",
-    "sass": "^1.17.0"
+    "storybook": "yarn workspace react-img-viewer storybook",
+    "build-react": "yarn workspace react-img-viewer build",
+    "build-core": "yarn workspace iv-viewer build",
+    "start-core": "yarn workspace iv-viewer start"
   }
 }
