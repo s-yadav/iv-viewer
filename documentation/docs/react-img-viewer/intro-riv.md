@@ -5,7 +5,7 @@ title: 'Introduction'
 
 # Getting Started
 
-`react-img-viewer` is a React-based library for viewing images with advanced features like zooming, high-resolution image support, and full-screen viewing. It provides an easy way to integrate image viewing functionality into your React applications.
+`react-iv-viewer` is a React-based library for viewing images with advanced features like zooming, high-resolution image support, and full-screen viewing. It provides an easy way to integrate image viewing functionality into your React applications.
 
 ### Features
 
@@ -28,26 +28,22 @@ See the many DEMO sections in the documentation.
 
 using `npm`
 ```bash
-npm install react-img-viewer
+npm install react-iv-viewer
 ```
 
 using `yarn`
 ```bash
-yarn add react-img-viewer
+yarn add react-iv-viewer
 ```
 
 #### ES6
 
-Normal Viewer
+Image Viewer
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 ```
 
 Fullscreen Viewer
 ```jsx
-import { FullScreenImageViewer } from 'react-img-viewer';
+import { FullScreenImageViewer } from 'react-iv-viewer';
 ```
-
-#### props
-- [FullScreen Viewer props](./fullScreen-mode/props.md)
-- [Normal Viewer props](./normal-viewer/props.md)

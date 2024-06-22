@@ -32,7 +32,7 @@ yarn add iv-viewer
 
 ## Usage
 ### ES6 
-Normal Viewer
+Image Viewer
 ```jsx
 import ImageViewer from 'iv-viewer';
 import 'iv-viewer/dist/iv-viewer.css';

@@ -28,9 +28,9 @@ interface FullscreenImageViewer {
 The URL of the image to display.
 
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" />;
+<ImageViewer img="https://example.com/image.jpg" />;
 ```
 
 ### hiResImg `Image URL`
@@ -39,9 +39,9 @@ import { NormalViewer } from 'react-img-viewer';
 The URL of the high-resolution image to display when zoomed in.
 
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" hiResImg="https://example.com/high-res-image.jpg" />;
+<ImageViewer img="https://example.com/image.jpg" hiResImg="https://example.com/high-res-image.jpg" />;
 ```
 
 ### width `String`
@@ -50,9 +50,9 @@ import { NormalViewer } from 'react-img-viewer';
 The width of the image viewer.
 
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" width="500px" />;
+<ImageViewer img="https://example.com/image.jpg" width="500px" />;
 ```
 ### height `String`
 **default**: `"100%"`
@@ -60,9 +60,9 @@ import { NormalViewer } from 'react-img-viewer';
 The height of the image viewer.
 
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" height="400px" />;
+<ImageViewer img="https://example.com/image.jpg" height="400px" />;
 ```
 
 ### maxZoom `Number`
@@ -71,9 +71,9 @@ import { NormalViewer } from 'react-img-viewer';
 The maximum zoom level allowed.
 
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" maxZoom={300} />;
+<ImageViewer img="https://example.com/image.jpg" maxZoom={300} />;
 ```
 
 ### defaultZoom `Number`
@@ -82,18 +82,18 @@ import { NormalViewer } from 'react-img-viewer';
 The default zoom level when the viewer is initialized.
 
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" defaultZoom={120} />;
+<ImageViewer img="https://example.com/image.jpg" defaultZoom={120} />;
 ```
 ### snapView `Boolean`
 **default**: `true`
 
 Whether to enable the snap view feature for easier navigation within the image.
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" snapView={true} />;
+<ImageViewer img="https://example.com/image.jpg" snapView={true} />;
 ```
 
 ### refreshOnResize `Boolean`
@@ -101,9 +101,9 @@ import { NormalViewer } from 'react-img-viewer';
 
 Whether to refresh the viewer when the window is resized.
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" refreshOnResize={false} />;
+<ImageViewer img="https://example.com/image.jpg" refreshOnResize={false} />;
 ```
 
 ### zoomOnMouseWheel `Boolean`
@@ -111,9 +111,9 @@ import { NormalViewer } from 'react-img-viewer';
 
 Whether to allow zooming using the mouse wheel.
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" zoomOnMouseWheel={false} />;
+<ImageViewer img="https://example.com/image.jpg" zoomOnMouseWheel={false} />;
 ```
 
 ### hasZoomButtons `Boolean`
@@ -121,9 +121,9 @@ import { NormalViewer } from 'react-img-viewer';
 
 Whether to display zoom buttons on the viewer.
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" hasZoomButtons={false} />;
+<ImageViewer img="https://example.com/image.jpg" hasZoomButtons={false} />;
 ```
 
 ### zoomStep `Number`
@@ -131,7 +131,7 @@ import { NormalViewer } from 'react-img-viewer';
 
 The increment step for zooming in or out.
 ```jsx
-import { NormalViewer } from 'react-img-viewer';
+import { ImageViewer } from 'react-iv-viewer';
 
-<NormalViewer img="https://example.com/image.jpg" zoomStep={5} />;
+<ImageViewer img="https://example.com/image.jpg" zoomStep={5} />;
 ```
