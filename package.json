@@ -1,13 +1,14 @@
 {
-  "name": "img-viewer",
+  "name": "iv-viewer",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "storybook": "yarn workspace react-img-viewer storybook",
-    "build-react": "yarn workspace react-img-viewer build",
+    "storybook": "yarn workspace react-iv-viewer storybook",
+    "build-react": "yarn workspace react-iv-viewer build",
     "build-core": "yarn workspace iv-viewer build",
-    "start-core": "yarn workspace iv-viewer start"
+    "start-core": "yarn workspace iv-viewer start",
+    "build": "yarn build-core & yarn build-react"
   }
 }
