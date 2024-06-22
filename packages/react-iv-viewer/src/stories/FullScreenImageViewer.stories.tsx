@@ -3,7 +3,6 @@ import { FullScreenViewer } from '../FullScreenViewer';
 import image1 from './assets/img.jpg';
 import image2 from './assets/hiResImg.jpg';
 
-
 const meta: Meta<typeof FullScreenViewer> = {
   title: 'Example/FullScreenViewer',
   component: FullScreenViewer,

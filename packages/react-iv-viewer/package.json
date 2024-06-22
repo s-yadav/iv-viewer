@@ -32,14 +32,15 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "format": "prettier --write ."
   },
   "peerDependencies": {
     "react": ">=16"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "yarn format & tsdx lint"
     }
   },
   "prettier": {
@@ -69,7 +70,7 @@
     "storybook": "^8.1.10",
     "tsdx": "^0.14.1",
     "tslib": "^2.6.3",
-    "typescript": "^5.4.5",
+    "typescript": "^3.7.3",
     "iv-viewer": "^2.1.1"
   }
 }

@@ -39,7 +39,7 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
       hasZoomButtons,
       zoomStep,
       listeners: {
-        onInit: (data: ViewerState) => {          
+        onInit: (data: ViewerState) => {
           if (_onLoad.current) {
             _onLoad.current(data);
           }
@@ -54,7 +54,10 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
     };
 
     if (containerRef.current) {
-      viewerRef.current = new BaseImageViewer(containerRef.current, viewerOptions);
+      viewerRef.current = new BaseImageViewer(
+        containerRef.current,
+        viewerOptions
+      );
       viewerRef.current.load(img, hiResImg);
     }
 

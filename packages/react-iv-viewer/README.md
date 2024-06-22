@@ -22,11 +22,13 @@ See the many DEMO sections in the documentation.
 ### Install
 
 using `npm`
+
 ```bash
 npm install react-iv-viewer
 ```
 
 using `yarn`
+
 ```bash
 yarn add react-iv-viewer
 ```
@@ -34,11 +36,13 @@ yarn add react-iv-viewer
 #### ES6
 
 Image Viewer
+
 ```jsx
 import { ImageViewer } from 'react-iv-viewer';
 ```
 
 Fullscreen Viewer
+
 ```jsx
 import { FullScreenImageViewer } from 'react-iv-viewer';
 ```
