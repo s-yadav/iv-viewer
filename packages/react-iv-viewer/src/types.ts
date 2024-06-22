@@ -6,7 +6,7 @@ export enum ImageViewerMode {
     fullScreen = "fullScreen",
   }
   
-  export interface ImageViewerProps extends React.HtmlHTMLAttributes<HTMLDivElement>{
+  export interface ImageViewerProps extends React.HTMLAttributes<HTMLDivElement>{
     img: string;
     hiResImg?: string;
     width?: string;
