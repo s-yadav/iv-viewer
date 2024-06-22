@@ -79,8 +79,7 @@
 }
 .iv-snap-image {
   position: relative;
-  -ms-touch-action: none;
-      touch-action: none;
+  touch-action: none;
 }
 .iv-snap-handle {
   box-sizing: border-box;
@@ -134,12 +133,9 @@
   bottom: 0;
   width: 24px;
   cursor: pointer;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 .iv-button-zoom:before, .iv-button-zoom--in:before, .iv-button-zoom--out:before, .iv-button-zoom:after, .iv-button-zoom--in:after, .iv-button-zoom--out:after {
   content: "";
@@ -177,8 +173,7 @@
   max-width: 100%;
   max-height: 100%;
   position: absolute;
-  -ms-touch-action: none;
-      touch-action: none;
+  touch-action: none;
   transform: translate3d(0, 0, 0);
 }
 .iv-loader {

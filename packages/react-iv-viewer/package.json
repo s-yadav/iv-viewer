@@ -40,7 +40,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format & tsdx lint"
+      "pre-commit": "yarn format && tsdx lint"
     }
   },
   "prettier": {
