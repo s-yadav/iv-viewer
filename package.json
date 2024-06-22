@@ -7,8 +7,8 @@
   "scripts": {
     "storybook": "yarn workspace react-iv-viewer storybook",
     "build-react": "yarn workspace react-iv-viewer build",
-    "build-core": "yarn workspace iv-viewer build",
+    "build-core": "yarn workspace iv-viewer bundle",
     "start-core": "yarn workspace iv-viewer start",
-    "build": "yarn build-core & yarn build-react"
+    "build": "yarn build-core && yarn build-react"
   }
 }

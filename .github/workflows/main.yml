@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['10.x', '12.x', '14.x']
+        node: ['18.x','20.x']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
@@ -23,7 +23,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Lint
-        run: yarn package react-iv-viewer lint
+        run: yarn workspace react-iv-viewer lint
 
       - name: Build
         run: yarn build
