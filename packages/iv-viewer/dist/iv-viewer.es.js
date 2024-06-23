@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.1.1
+ * iv-viewer - 2.2.0
  * Author : Sudhanshu Yadav
  * Copyright (c) 2019, 2024 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -175,7 +175,7 @@ function noop() {}
 // ease out method
 /*
     t : current time,
-    b : intial value,
+    b : initial value,
     c : changed value,
     d : duration
 */
@@ -251,6 +251,7 @@ function css(elements, properties) {
       element.style[key] = value; // eslint-disable-line no-param-reassign
     });
   });
+
   return undefined;
 }
 function removeCss(element, property) {
@@ -437,6 +438,11 @@ var ImageViewer = /*#__PURE__*/function () {
           _this._frames.zoomFrame = requestAnimationFrame(zoom);
         }
         var tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 16);
+        // snap in at the last percent to more often land at the exact value
+        // only do that at the target percent value to make the animation as smooth as possible
+        if (Math.abs(perc - tickZoom) < 1) {
+          tickZoom = perc;
+        }
         var ratio = tickZoom / curPerc;
         var imgWidth = imageDim.w * tickZoom / 100;
         var imgHeight = imageDim.h * tickZoom / 100;
@@ -539,6 +545,7 @@ var ImageViewer = /*#__PURE__*/function () {
       _this._state.snapViewVisible = false;
     });
     _defineProperty(this, "refresh", function () {
+      var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       _this._calculateDimensions();
       _this.resetZoom();
     });
@@ -857,8 +864,8 @@ var ImageViewer = /*#__PURE__*/function () {
         onMove: function onMove(e) {
           var maxZoom = _this4._options.maxZoom;
           var zoomSliderLength = _this4._state.zoomSliderLength;
-          var pageX = e.pageX !== undefined ? e.pageX : e.touches[0].pageX;
-          var newLeft = clamp(pageX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
+          var clientX = e.clientX !== undefined ? e.clientX : e.touches[0].clientX;
+          var newLeft = clamp(clientX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
           var zoomValue = 100 + (maxZoom - 100) * newLeft / zoomSliderLength;
           _this4.zoom(zoomValue);
         }
@@ -875,6 +882,7 @@ var ImageViewer = /*#__PURE__*/function () {
       if (this._options.refreshOnResize) {
         this._events.onWindowResize = assignEvent(window, 'resize', this.refresh);
       }
+      this._events.onDragStart = assignEvent(this._elements.container, 'dragstart', preventDefault);
     }
   }, {
     key: "_snapViewEvents",
@@ -941,8 +949,8 @@ var ImageViewer = /*#__PURE__*/function () {
 
         // find the center for the zoom
         var center = {
-          x: (touch1.pageX + touch0.pageX) / 2 - (contOffset.left + document.body.scrollLeft),
-          y: (touch1.pageY + touch0.pageY) / 2 - (contOffset.top + document.body.scrollTop)
+          x: (touch1.clientX + touch0.clientX) / 2 - contOffset.left,
+          y: (touch1.clientY + touch0.clientY) / 2 - contOffset.top
         };
         var moveListener = function moveListener(eMove) {
           // eMove.preventDefault();
@@ -1027,10 +1035,10 @@ var ImageViewer = /*#__PURE__*/function () {
         if (touchTime === 0) {
           touchTime = Date.now();
           point = {
-            x: e.pageX,
-            y: e.pageY
+            x: e.clientX,
+            y: e.clientY
           };
-        } else if (Date.now() - touchTime < 500 && Math.abs(e.pageX - point.x) < 50 && Math.abs(e.pageY - point.y) < 50) {
+        } else if (Date.now() - touchTime < 500 && Math.abs(e.clientX - point.x) < 50 && Math.abs(e.clientY - point.y) < 50) {
           if (_this8._state.zoomValue === _this8._options.zoomValue) {
             _this8.zoom(200);
           } else {
@@ -1135,6 +1143,9 @@ var ImageViewer = /*#__PURE__*/function () {
       if (imageLoaded(image)) {
         onImageLoad();
       } else {
+        if (typeof this._events.imageLoad == 'function') {
+          this._events.imageLoad();
+        }
         this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
       }
     }
@@ -1166,6 +1177,9 @@ var ImageViewer = /*#__PURE__*/function () {
       if (imageLoaded(hiResImage)) {
         onHighResImageLoad();
       } else {
+        if (typeof this._events.hiResImageLoad == 'function') {
+          this._events.hiResImageLoad();
+        }
         this._events.hiResImageLoad = assignEvent(hiResImage, 'load', onHighResImageLoad);
       }
     }
@@ -1305,8 +1319,8 @@ var ImageViewer = /*#__PURE__*/function () {
         container: this._elements.container,
         snapView: this._elements.snapView,
         zoomValue: this._state.zoomValue,
-        reachedMin: Math.round(this._state.zoomValue) === this._options.zoomValue,
-        reachedMax: Math.round(this._state.zoomValue) === this._options.maxZoom,
+        reachedMin: Math.abs(this._state.zoomValue - 100) < 1,
+        reachedMax: Math.abs(this._state.zoomValue - this._options.maxZoom) < 1,
         instance: this
       };
     }
@@ -1409,6 +1423,4 @@ var FullScreenViewer = /*#__PURE__*/function (_ImageViewer) {
   }]);
 }(ImageViewer);
 
-ImageViewer.FullScreenViewer = FullScreenViewer;
-
-export default ImageViewer;
+export { FullScreenViewer, ImageViewer, ImageViewer as default };

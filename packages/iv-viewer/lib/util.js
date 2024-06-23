@@ -29,7 +29,7 @@ function noop() {}
 // ease out method
 /*
     t : current time,
-    b : intial value,
+    b : initial value,
     c : changed value,
     d : duration
 */
@@ -116,6 +116,7 @@ function css(elements, properties) {
       element.style[key] = value; // eslint-disable-line no-param-reassign
     });
   });
+
   return undefined;
 }
 function removeCss(element, property) {
