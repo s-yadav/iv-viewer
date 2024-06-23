@@ -4,12 +4,14 @@
 *.swp
 .DS_Store
 .vscode
+.idea
+*.tgz
 
 #ignore gitignore
 .gitignore
 
 #ignore build files
-rollup.config.js
+rollup.config.mjs
 build-css.js
 .babelrc
 .eslintrc
@@ -19,3 +21,4 @@ node_modules/
 temp/
 assets/
 example/
+.parcel-cache

@@ -45,3 +45,12 @@ wrapper.querySelector('.prev').addEventListener('click', function (evt) {
 
 // initially show image
 showImage();
+
+// For hot module replacement to work
+if (module.hot) {
+  module.hot.dispose(function() {
+    viewer.destroy()
+  })
+
+  module.hot.accept()
+}
