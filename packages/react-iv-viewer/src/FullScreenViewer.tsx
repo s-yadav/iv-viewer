@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { FullScreenViewer as BaseFullScreenViewer } from 'iv-viewer';
-import { FullScreenViewerProps, ViewerState } from './types';
+import { FullScreenViewerProps } from './types';
 
 export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
   img,
@@ -32,9 +32,9 @@ export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
       hasZoomButtons,
       zoomStep,
       listeners: {
-        onInit: (data: ViewerState) => {
+        onInit: ({ instance }: { instance: BaseFullScreenViewer }) => {
           if (_onLoad.current) {
-            _onLoad.current(data);
+            _onLoad.current(instance);
           }
         },
       },

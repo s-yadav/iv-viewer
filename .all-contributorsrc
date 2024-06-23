@@ -11,15 +11,6 @@
   "commitConvention": "none",
   "contributors": [
     {
-      "login": "ruchikabgosain",
-      "name": "Ruchika",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/30324532?v=4",
-      "profile": "http://mozillians.org/en-US/u/ruchikabgosain/",
-      "contributions": [
-        "doc"
-      ]
-    },
-    {
       "login": "s-yadav",
       "name": "Sudhanshu Yadav",
       "avatar_url": "https://avatars1.githubusercontent.com/u/3096766?v=4",
@@ -42,6 +33,15 @@
       "name": "10000",
       "avatar_url": "https://avatars2.githubusercontent.com/u/3347256?v=4",
       "profile": "https://github.com/10000",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "ruchikabgosain",
+      "name": "Ruchika",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/30324532?v=4",
+      "profile": "http://mozillians.org/en-US/u/ruchikabgosain/",
       "contributions": [
         "doc"
       ]

@@ -1,4 +1,7 @@
-import { ImageViewer as BaseImageViewer } from 'iv-viewer';
+import {
+  ImageViewer as BaseImageViewer,
+  FullScreenViewer as BaseFullScreenViewer,
+} from 'iv-viewer';
 import React from 'react';
 
 export enum ImageViewerMode {
@@ -6,7 +9,8 @@ export enum ImageViewerMode {
   fullScreen = 'fullScreen',
 }
 
-export interface ImageViewerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ImageViewerProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onLoad'> {
   img: string;
   hiResImg?: string;
   width?: string;
@@ -19,11 +23,11 @@ export interface ImageViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   zoomOnMouseWheel?: boolean;
   hasZoomButtons?: boolean;
   zoomStep?: number;
-  onLoad?: (viewer: any) => void;
-  onZoomChange?: (data: any) => void;
+  onLoad?: (viewer: BaseImageViewer) => void;
+  onZoomChange?: (zoomValue: number) => void;
 }
 export interface FullScreenViewerProps
-  extends React.ImgHTMLAttributes<HTMLImageElement> {
+  extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'onLoad'> {
   img: string;
   hiResImg?: string;
   defaultZoom: number;
@@ -33,14 +37,5 @@ export interface FullScreenViewerProps
   zoomOnMouseWheel?: boolean;
   hasZoomButtons?: boolean;
   zoomStep?: number;
-  onLoad?: (viewer: any) => void;
-}
-
-export interface ViewerState {
-  container: HTMLDivElement;
-  instance: BaseImageViewer;
-  reachedMax: boolean;
-  reachedMin: boolean;
-  snapView: HTMLDivElement;
-  zoomValue: number;
+  onLoad?: (viewer: BaseFullScreenViewer) => void;
 }
