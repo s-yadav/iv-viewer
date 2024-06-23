@@ -1,0 +1,24 @@
+#ignore temprory files
+.cache
+*.log
+*.swp
+.DS_Store
+.vscode
+.idea
+*.tgz
+
+#ignore gitignore
+.gitignore
+
+#ignore build files
+rollup.config.mjs
+build-css.js
+.babelrc
+.eslintrc
+
+#ignore development files
+node_modules/
+temp/
+assets/
+example/
+.parcel-cache

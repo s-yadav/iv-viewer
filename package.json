@@ -1,61 +1,17 @@
 {
   "name": "iv-viewer",
-  "version": "2.2.0",
-  "description": "A zooming and panning plugin inspired by google photos for your web images.",
-  "main": "dist/iv-viewer.js",
-  "module": "dist/iv-viewer.es.js",
-  "types": "iv-viewer.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/s-yadav/iv-viewer.git"
-  },
-  "keywords": [
-    "image",
-    "zooming",
-    "panning",
-    "google",
-    "photos"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "author": "Sudhanshu Yadav",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/s-yadav/iv-viewer/issues"
-  },
-  "homepage": "https://github.com/s-yadav/iv-viewer#readme",
   "scripts": {
-    "start": "yarn copy-assets & parcel serve example/index.html --dist-dir temp",
-    "copy-assets": "cp -R example/ temp",
-    "bundle": "cross-env yarn compile & yarn build-css & yarn bundle-dist",
-    "bundle-dist": "cross-env rollup -c rollup.config.mjs",
-    "build-css": "node build-css.cjs",
-    "compile": "cross-env NODE_ENV=production babel src --out-dir lib"
+    "storybook": "yarn workspace react-iv-viewer storybook",
+    "build-react": "yarn workspace react-iv-viewer build",
+    "build-core": "yarn workspace iv-viewer bundle",
+    "start-core": "yarn workspace iv-viewer start",
+    "build": "yarn build-core && yarn build-react"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.0",
-    "@babel/core": "^7.23.2",
-    "@babel/eslint-parser": "^7.22.15",
-    "@babel/plugin-transform-class-properties": "^7.22.5",
-    "@babel/plugin-transform-object-rest-spread": "^7.22.15",
-    "@babel/preset-env": "^7.23.2",
-    "@parcel/transformer-sass": "2.10.2",
-    "all-contributors-cli": "^6.26.1",
-    "autoprefixer": "^10.4.16",
-    "cross-env": "^7.0.3",
-    "cssnano": "^6.0.1",
-    "eslint": "^8.52.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "parcel": "^2.10.2",
-    "postcss": "^8.4.31",
-    "rollup": "^4.2.0",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-filesize": "^10.0.0",
-    "rollup-plugin-license": "^3.2.0",
-    "rollup-plugin-uglify": "^6.0.4",
-    "sass": "^1.69.5"
-  },
-  "dependencies": {}
+    "all-contributors-cli": "^6.26.1"
+  }
 }
