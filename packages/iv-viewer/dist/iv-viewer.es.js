@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.2.0
+ * iv-viewer - 2.1.1
  * Author : Sudhanshu Yadav
  * Copyright (c) 2019, 2024 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -30,7 +30,7 @@ function _defineProperties(e, r) {
   }
 }
 function _createClass(e, r, t) {
-  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+  return r && _defineProperties(e.prototype, r), Object.defineProperty(e, "prototype", {
     writable: !1
   }), e;
 }
@@ -87,10 +87,7 @@ function _iterableToArrayLimit(r, l) {
       f = !0,
       o = !1;
     try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
     } catch (r) {
       o = !0, n = r;
     } finally {
@@ -148,11 +145,11 @@ function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
-    var i = e.call(t, r || "default");
+    var i = e.call(t, r );
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return ("string" === r ? String : Number)(t);
+  return (String )(t);
 }
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
@@ -171,6 +168,9 @@ var ZOOM_CONSTANT = 15; // increase or decrease value for zoom on mouse wheel
 var MOUSE_WHEEL_COUNT = 5; // A mouse delta after which it should stop preventing default behaviour of mouse wheel
 
 function noop() {}
+function preventDefault(e) {
+  e.preventDefault();
+}
 
 // ease out method
 /*
@@ -251,7 +251,6 @@ function css(elements, properties) {
       element.style[key] = value; // eslint-disable-line no-param-reassign
     });
   });
-
   return undefined;
 }
 function removeCss(element, property) {
@@ -372,7 +371,7 @@ var Slider = /*#__PURE__*/function () {
   return _createClass(Slider, [{
     key: "removeListeners",
     value:
-    // remove previous events if its not removed
+    // remove previous events if it's not removed
     // - Case when while sliding mouse moved out of document and released there
     function removeListeners() {
       if (!this.touchMoveEvent) return;
@@ -547,7 +546,7 @@ var ImageViewer = /*#__PURE__*/function () {
     _defineProperty(this, "refresh", function () {
       var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       _this._calculateDimensions();
-      _this.resetZoom();
+      _this.resetZoom(animate);
     });
     var _this$_findContainerA = this._findContainerAndImageSrc(element, options),
       container = _this$_findContainerA.container,
@@ -855,7 +854,7 @@ var ImageViewer = /*#__PURE__*/function () {
         },
         onStart: function onStart(eStart) {
           var slider = _this4._sliders.zoomSlider;
-          leftOffset = sliderElm.getBoundingClientRect().left + document.body.scrollLeft;
+          leftOffset = sliderElm.getBoundingClientRect().left;
           handleWidth = parseInt(css(zoomHandle, 'width'), 10);
 
           // move the handle to current mouse position
@@ -1010,8 +1009,8 @@ var ImageViewer = /*#__PURE__*/function () {
         e.preventDefault();
         if (changedDelta > MOUSE_WHEEL_COUNT) return;
         var contOffset = container.getBoundingClientRect();
-        var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
-        var y = (e.pageY || e.pageY) - (contOffset.top + document.body.scrollTop);
+        var x = e.clientX - contOffset.left;
+        var y = e.clientY - contOffset.top;
         _this7.zoom(newZoomValue, {
           x: x,
           y: y
@@ -1020,7 +1019,7 @@ var ImageViewer = /*#__PURE__*/function () {
         // show the snap viewer
         _this7.showSnapView();
       };
-      this._ev = assignEvent(imageWrap, 'wheel', onMouseWheel);
+      this._events.scrollZoom = assignEvent(imageWrap, 'wheel', onMouseWheel);
     }
   }, {
     key: "_doubleTapToZoom",
@@ -1049,7 +1048,7 @@ var ImageViewer = /*#__PURE__*/function () {
           touchTime = 0;
         }
       };
-      assignEvent(imageWrap, 'click', onDoubleTap);
+      this._events.doubleTapToZoom = assignEvent(imageWrap, 'click', onDoubleTap);
     }
   }, {
     key: "_getImageCurrentDim",
@@ -1133,7 +1132,7 @@ var ImageViewer = /*#__PURE__*/function () {
         _this9._calculateDimensions();
 
         // dispatch image load event
-        if (_this9._listeners.onImageLoad) {
+        if (_this9._listeners.onImageLoaded) {
           _this9._listeners.onImageLoaded(_this9._callbackData);
         }
 
@@ -1270,17 +1269,17 @@ var ImageViewer = /*#__PURE__*/function () {
         domElement = _this$_elements8.domElement;
       // destroy all the sliders
       Object.entries(this._sliders).forEach(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-          key = _ref2[0],
-          slider = _ref2[1];
+        var _ref2 = _slicedToArray(_ref, 2);
+          _ref2[0];
+          var slider = _ref2[1];
         slider.destroy();
       });
 
       // unbind all events
       Object.entries(this._events).forEach(function (_ref3) {
-        var _ref4 = _slicedToArray(_ref3, 2),
-          key = _ref4[0],
-          unbindEvent = _ref4[1];
+        var _ref4 = _slicedToArray(_ref3, 2);
+          _ref4[0];
+          var unbindEvent = _ref4[1];
         unbindEvent();
       });
 

@@ -169,7 +169,7 @@ var ImageViewer = /*#__PURE__*/function () {
     _defineProperty(this, "refresh", function () {
       var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       _this._calculateDimensions();
-      _this.resetZoom();
+      _this.resetZoom(animate);
     });
     var _this$_findContainerA = this._findContainerAndImageSrc(element, options),
       container = _this$_findContainerA.container,
@@ -477,7 +477,7 @@ var ImageViewer = /*#__PURE__*/function () {
         },
         onStart: function onStart(eStart) {
           var slider = _this4._sliders.zoomSlider;
-          leftOffset = sliderElm.getBoundingClientRect().left + document.body.scrollLeft;
+          leftOffset = sliderElm.getBoundingClientRect().left;
           handleWidth = parseInt((0, _util.css)(zoomHandle, 'width'), 10);
 
           // move the handle to current mouse position
@@ -632,8 +632,8 @@ var ImageViewer = /*#__PURE__*/function () {
         e.preventDefault();
         if (changedDelta > _util.MOUSE_WHEEL_COUNT) return;
         var contOffset = container.getBoundingClientRect();
-        var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
-        var y = (e.pageY || e.pageY) - (contOffset.top + document.body.scrollTop);
+        var x = e.clientX - contOffset.left;
+        var y = e.clientY - contOffset.top;
         _this7.zoom(newZoomValue, {
           x: x,
           y: y
@@ -642,7 +642,7 @@ var ImageViewer = /*#__PURE__*/function () {
         // show the snap viewer
         _this7.showSnapView();
       };
-      this._ev = (0, _util.assignEvent)(imageWrap, 'wheel', onMouseWheel);
+      this._events.scrollZoom = (0, _util.assignEvent)(imageWrap, 'wheel', onMouseWheel);
     }
   }, {
     key: "_doubleTapToZoom",
@@ -671,7 +671,7 @@ var ImageViewer = /*#__PURE__*/function () {
           touchTime = 0;
         }
       };
-      (0, _util.assignEvent)(imageWrap, 'click', onDoubleTap);
+      this._events.doubleTapToZoom = (0, _util.assignEvent)(imageWrap, 'click', onDoubleTap);
     }
   }, {
     key: "_getImageCurrentDim",
@@ -755,7 +755,7 @@ var ImageViewer = /*#__PURE__*/function () {
         _this9._calculateDimensions();
 
         // dispatch image load event
-        if (_this9._listeners.onImageLoad) {
+        if (_this9._listeners.onImageLoaded) {
           _this9._listeners.onImageLoaded(_this9._callbackData);
         }
 

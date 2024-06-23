@@ -25,7 +25,7 @@
     "copy-assets": "cp -R example/ temp",
     "bundle": "cross-env yarn compile & yarn build-css & yarn bundle-dist",
     "bundle-dist": "cross-env rollup -c rollup.config.mjs",
-    "build-css": "node build-css.mjs",
+    "build-css": "node build-css.cjs",
     "compile": "cross-env NODE_ENV=production babel src --out-dir lib"
   },
   "devDependencies": {
@@ -36,7 +36,6 @@
     "@babel/plugin-transform-object-rest-spread": "^7.22.15",
     "@babel/preset-env": "^7.23.2",
     "@parcel/transformer-sass": "2.10.2",
-    "all-contributors-cli": "^6.26.1",
     "autoprefixer": "^10.4.19",
     "cross-env": "^7.0.3",
     "cssnano": "^6.1.2",

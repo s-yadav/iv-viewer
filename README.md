@@ -97,6 +97,8 @@ const viewer = new FullScreenViewer(options);
 viewer.show('images/low-res-img', 'images/hi-res-img');
 ```
 
+[See full documentation of iv-viewer](https://github.com/s-yadav/iv-viewer/tree/master/packages/iv-viewer#readme) 
+
 ### Like this
 [:star: this repo](https://github.com/s-yadav/iv-viewer)
 
