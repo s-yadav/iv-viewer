@@ -30,14 +30,14 @@ jobs:
 
       - name: Install dependencies for documentation
         run: npm ci
-        working-directory: iv-viewer/documentation
+        working-directory: documentation
 
       - name: Build Docusaurus site
         run: npm run build
-        working-directory: iv-viewer/documentation
+        working-directory: documentation
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: iv-viewer/documentation/build
+          publish_dir: documentation/build
