@@ -27,17 +27,3 @@ jobs:
 
       - name: Build
         run: yarn build
-
-      - name: Install dependencies for documentation
-        run: npm ci
-        working-directory: documentation
-
-      - name: Build Docusaurus site
-        run: npm run build
-        working-directory: documentation
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: documentation/build
