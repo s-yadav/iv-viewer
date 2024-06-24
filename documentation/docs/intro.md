@@ -3,18 +3,25 @@ sidebar_position: 1
 title: 'Introduction'
 ---
 
-## react-iv-viewer
+# iv-viewer
 ___
+
+A zooming and panning plugin inspired by Google Photos for your web images. It comes in two different variants. First, a react-based zooming and panning component and 2nd vanilla JS-based zooming and panning library.
+
+## react-iv-viewer
 
 `react-iv-viewer` is a React-based library for viewing images with advanced features like zooming, high-resolution image support, and full-screen viewing. It provides an easy way to integrate image viewing functionality into your React applications.
 
 ### Features
 
+- Smooth dragging and panning of images
+- Support for touch devices
+- Double tap to zoom in/zoom out
+- Pinch in/out to control zoom
 - Zooming with mouse wheel or buttons
 - High-resolution image support
 - Full-screen image viewing
 - Customizable viewer dimensions
-- Event handlers for zoom and load events
 - TypeScript support
 
 ### Demos
@@ -94,6 +101,46 @@ const viewer = new FullScreenViewer(options);
 viewer.show('images/low-res-img', 'images/hi-res-img');
 ```
 
-This Markdown provides a clear and concise introduction to `iv-viewer`, its features, installation instructions, and usage examples for both normal and fullscreen viewers in an ES6 environment.
+[See full documentation of iv-viewer](https://github.com/s-yadav/iv-viewer/tree/master/packages/iv-viewer#readme) 
 
-Click [Options](./props.md) to get the list of options.
+### Like this
+[:star: this repo](https://github.com/s-yadav/iv-viewer)
+
+### Major updates
+
+#### v2.2.0
+
+- Includes TypeScript type declarations
+- Bugfixing
+
+#### v2.1.0
+
+- It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.
+- While the options and instance method are same the way you use a ImageViewer and FullScreenView is changed. The v1 API will no longer be supported.
+- Published on the npm. V1 was not available on npm.
+- Changed the package name to iv-viewer. image-viewer name was not available on npm. 
+- Added some listeners
+- Added zoom in/out buttons
+- Some SCSS variable for easier overrides.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://mozillians.org/en-US/u/ruchikabgosain/"><img src="https://avatars2.githubusercontent.com/u/30324532?v=4" width="100px;" alt="Ruchika"/><br /><sub><b>Ruchika</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=ruchikabgosain" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://twitter.com/_syadav"><img src="https://avatars1.githubusercontent.com/u/3096766?v=4" width="100px;" alt="Sudhanshu Yadav"/><br /><sub><b>Sudhanshu Yadav</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=s-yadav" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://hockeycommunity.com"><img src="https://avatars0.githubusercontent.com/u/2039539?v=4" width="100px;" alt="Amrit Kahlon"/><br /><sub><b>Amrit Kahlon</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=amritk" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/10000"><img src="https://avatars2.githubusercontent.com/u/3347256?v=4" width="100px;" alt="10000"/><br /><sub><b>10000</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=10000" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
