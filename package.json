@@ -10,5 +10,8 @@
     "build-core": "yarn workspace iv-viewer bundle",
     "start-core": "yarn workspace iv-viewer start",
     "build": "yarn build-core && yarn build-react"
+  },
+  "devDependencies": {
+    "all-contributors-cli": "^6.26.1"
   }
 }

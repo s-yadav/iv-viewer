@@ -1,5 +1,5 @@
 /**
- * iv-viewer - 2.1.1
+ * iv-viewer - 2.2.0
  * Author : Sudhanshu Yadav
  * Copyright (c) 2019, 2024 to Sudhanshu Yadav, released under the MIT license.
  * git+https://github.com/s-yadav/iv-viewer.git
@@ -30,7 +30,7 @@ function _defineProperties(e, r) {
   }
 }
 function _createClass(e, r, t) {
-  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+  return r && _defineProperties(e.prototype, r), Object.defineProperty(e, "prototype", {
     writable: !1
   }), e;
 }
@@ -87,10 +87,7 @@ function _iterableToArrayLimit(r, l) {
       f = !0,
       o = !1;
     try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
     } catch (r) {
       o = !0, n = r;
     } finally {
@@ -148,11 +145,11 @@ function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
-    var i = e.call(t, r || "default");
+    var i = e.call(t, r );
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return ("string" === r ? String : Number)(t);
+  return (String )(t);
 }
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
@@ -171,11 +168,14 @@ var ZOOM_CONSTANT = 15; // increase or decrease value for zoom on mouse wheel
 var MOUSE_WHEEL_COUNT = 5; // A mouse delta after which it should stop preventing default behaviour of mouse wheel
 
 function noop() {}
+function preventDefault(e) {
+  e.preventDefault();
+}
 
 // ease out method
 /*
     t : current time,
-    b : intial value,
+    b : initial value,
     c : changed value,
     d : duration
 */
@@ -371,7 +371,7 @@ var Slider = /*#__PURE__*/function () {
   return _createClass(Slider, [{
     key: "removeListeners",
     value:
-    // remove previous events if its not removed
+    // remove previous events if it's not removed
     // - Case when while sliding mouse moved out of document and released there
     function removeListeners() {
       if (!this.touchMoveEvent) return;
@@ -437,6 +437,11 @@ var ImageViewer = /*#__PURE__*/function () {
           _this._frames.zoomFrame = requestAnimationFrame(zoom);
         }
         var tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 16);
+        // snap in at the last percent to more often land at the exact value
+        // only do that at the target percent value to make the animation as smooth as possible
+        if (Math.abs(perc - tickZoom) < 1) {
+          tickZoom = perc;
+        }
         var ratio = tickZoom / curPerc;
         var imgWidth = imageDim.w * tickZoom / 100;
         var imgHeight = imageDim.h * tickZoom / 100;
@@ -539,8 +544,9 @@ var ImageViewer = /*#__PURE__*/function () {
       _this._state.snapViewVisible = false;
     });
     _defineProperty(this, "refresh", function () {
+      var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       _this._calculateDimensions();
-      _this.resetZoom();
+      _this.resetZoom(animate);
     });
     var _this$_findContainerA = this._findContainerAndImageSrc(element, options),
       container = _this$_findContainerA.container,
@@ -848,7 +854,7 @@ var ImageViewer = /*#__PURE__*/function () {
         },
         onStart: function onStart(eStart) {
           var slider = _this4._sliders.zoomSlider;
-          leftOffset = sliderElm.getBoundingClientRect().left + document.body.scrollLeft;
+          leftOffset = sliderElm.getBoundingClientRect().left;
           handleWidth = parseInt(css(zoomHandle, 'width'), 10);
 
           // move the handle to current mouse position
@@ -857,8 +863,8 @@ var ImageViewer = /*#__PURE__*/function () {
         onMove: function onMove(e) {
           var maxZoom = _this4._options.maxZoom;
           var zoomSliderLength = _this4._state.zoomSliderLength;
-          var pageX = e.pageX !== undefined ? e.pageX : e.touches[0].pageX;
-          var newLeft = clamp(pageX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
+          var clientX = e.clientX !== undefined ? e.clientX : e.touches[0].clientX;
+          var newLeft = clamp(clientX - leftOffset - handleWidth / 2, 0, zoomSliderLength);
           var zoomValue = 100 + (maxZoom - 100) * newLeft / zoomSliderLength;
           _this4.zoom(zoomValue);
         }
@@ -875,6 +881,7 @@ var ImageViewer = /*#__PURE__*/function () {
       if (this._options.refreshOnResize) {
         this._events.onWindowResize = assignEvent(window, 'resize', this.refresh);
       }
+      this._events.onDragStart = assignEvent(this._elements.container, 'dragstart', preventDefault);
     }
   }, {
     key: "_snapViewEvents",
@@ -941,8 +948,8 @@ var ImageViewer = /*#__PURE__*/function () {
 
         // find the center for the zoom
         var center = {
-          x: (touch1.pageX + touch0.pageX) / 2 - (contOffset.left + document.body.scrollLeft),
-          y: (touch1.pageY + touch0.pageY) / 2 - (contOffset.top + document.body.scrollTop)
+          x: (touch1.clientX + touch0.clientX) / 2 - contOffset.left,
+          y: (touch1.clientY + touch0.clientY) / 2 - contOffset.top
         };
         var moveListener = function moveListener(eMove) {
           // eMove.preventDefault();
@@ -1002,8 +1009,8 @@ var ImageViewer = /*#__PURE__*/function () {
         e.preventDefault();
         if (changedDelta > MOUSE_WHEEL_COUNT) return;
         var contOffset = container.getBoundingClientRect();
-        var x = (e.pageX || e.pageX) - (contOffset.left + document.body.scrollLeft);
-        var y = (e.pageY || e.pageY) - (contOffset.top + document.body.scrollTop);
+        var x = e.clientX - contOffset.left;
+        var y = e.clientY - contOffset.top;
         _this7.zoom(newZoomValue, {
           x: x,
           y: y
@@ -1012,7 +1019,7 @@ var ImageViewer = /*#__PURE__*/function () {
         // show the snap viewer
         _this7.showSnapView();
       };
-      this._ev = assignEvent(imageWrap, 'wheel', onMouseWheel);
+      this._events.scrollZoom = assignEvent(imageWrap, 'wheel', onMouseWheel);
     }
   }, {
     key: "_doubleTapToZoom",
@@ -1027,10 +1034,10 @@ var ImageViewer = /*#__PURE__*/function () {
         if (touchTime === 0) {
           touchTime = Date.now();
           point = {
-            x: e.pageX,
-            y: e.pageY
+            x: e.clientX,
+            y: e.clientY
           };
-        } else if (Date.now() - touchTime < 500 && Math.abs(e.pageX - point.x) < 50 && Math.abs(e.pageY - point.y) < 50) {
+        } else if (Date.now() - touchTime < 500 && Math.abs(e.clientX - point.x) < 50 && Math.abs(e.clientY - point.y) < 50) {
           if (_this8._state.zoomValue === _this8._options.zoomValue) {
             _this8.zoom(200);
           } else {
@@ -1041,7 +1048,7 @@ var ImageViewer = /*#__PURE__*/function () {
           touchTime = 0;
         }
       };
-      assignEvent(imageWrap, 'click', onDoubleTap);
+      this._events.doubleTapToZoom = assignEvent(imageWrap, 'click', onDoubleTap);
     }
   }, {
     key: "_getImageCurrentDim",
@@ -1125,7 +1132,7 @@ var ImageViewer = /*#__PURE__*/function () {
         _this9._calculateDimensions();
 
         // dispatch image load event
-        if (_this9._listeners.onImageLoad) {
+        if (_this9._listeners.onImageLoaded) {
           _this9._listeners.onImageLoaded(_this9._callbackData);
         }
 
@@ -1135,6 +1142,9 @@ var ImageViewer = /*#__PURE__*/function () {
       if (imageLoaded(image)) {
         onImageLoad();
       } else {
+        if (typeof this._events.imageLoad == 'function') {
+          this._events.imageLoad();
+        }
         this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
       }
     }
@@ -1166,6 +1176,9 @@ var ImageViewer = /*#__PURE__*/function () {
       if (imageLoaded(hiResImage)) {
         onHighResImageLoad();
       } else {
+        if (typeof this._events.hiResImageLoad == 'function') {
+          this._events.hiResImageLoad();
+        }
         this._events.hiResImageLoad = assignEvent(hiResImage, 'load', onHighResImageLoad);
       }
     }
@@ -1256,17 +1269,17 @@ var ImageViewer = /*#__PURE__*/function () {
         domElement = _this$_elements8.domElement;
       // destroy all the sliders
       Object.entries(this._sliders).forEach(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-          key = _ref2[0],
-          slider = _ref2[1];
+        var _ref2 = _slicedToArray(_ref, 2);
+          _ref2[0];
+          var slider = _ref2[1];
         slider.destroy();
       });
 
       // unbind all events
       Object.entries(this._events).forEach(function (_ref3) {
-        var _ref4 = _slicedToArray(_ref3, 2),
-          key = _ref4[0],
-          unbindEvent = _ref4[1];
+        var _ref4 = _slicedToArray(_ref3, 2);
+          _ref4[0];
+          var unbindEvent = _ref4[1];
         unbindEvent();
       });
 
@@ -1305,8 +1318,8 @@ var ImageViewer = /*#__PURE__*/function () {
         container: this._elements.container,
         snapView: this._elements.snapView,
         zoomValue: this._state.zoomValue,
-        reachedMin: Math.round(this._state.zoomValue) === this._options.zoomValue,
-        reachedMax: Math.round(this._state.zoomValue) === this._options.maxZoom,
+        reachedMin: Math.abs(this._state.zoomValue - 100) < 1,
+        reachedMax: Math.abs(this._state.zoomValue - this._options.maxZoom) < 1,
         instance: this
       };
     }
@@ -1409,6 +1422,4 @@ var FullScreenViewer = /*#__PURE__*/function (_ImageViewer) {
   }]);
 }(ImageViewer);
 
-ImageViewer.FullScreenViewer = FullScreenViewer;
-
-export default ImageViewer;
+export { FullScreenViewer, ImageViewer, ImageViewer as default };

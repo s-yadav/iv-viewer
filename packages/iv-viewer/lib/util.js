@@ -14,6 +14,7 @@ exports.easeOutQuart = easeOutQuart;
 exports.getTouchPointsDistance = getTouchPointsDistance;
 exports.imageLoaded = imageLoaded;
 exports.noop = noop;
+exports.preventDefault = preventDefault;
 exports.remove = remove;
 exports.removeClass = removeClass;
 exports.removeCss = removeCss;
@@ -25,11 +26,14 @@ var ZOOM_CONSTANT = exports.ZOOM_CONSTANT = 15; // increase or decrease value fo
 var MOUSE_WHEEL_COUNT = exports.MOUSE_WHEEL_COUNT = 5; // A mouse delta after which it should stop preventing default behaviour of mouse wheel
 
 function noop() {}
+function preventDefault(e) {
+  e.preventDefault();
+}
 
 // ease out method
 /*
     t : current time,
-    b : intial value,
+    b : initial value,
     c : changed value,
     d : duration
 */

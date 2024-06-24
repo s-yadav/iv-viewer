@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { ImageViewer as BaseImageViewer } from 'iv-viewer';
 import 'iv-viewer/dist/iv-viewer.css';
-import { ImageViewerProps, ViewerState } from './types';
+import { ImageViewerProps } from './types';
 
 export const ImageViewer: React.FC<ImageViewerProps> = ({
   img,
@@ -39,15 +39,15 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
       hasZoomButtons,
       zoomStep,
       listeners: {
-        onInit: (data: ViewerState) => {
+        onInit: ({ instance }: { instance: BaseImageViewer }) => {
           if (_onLoad.current) {
-            _onLoad.current(data);
+            _onLoad.current(instance);
           }
         },
         onDestroy: () => {},
-        onZoomChange: (data: any) => {
+        onZoomChange: ({ zoomValue }: { zoomValue: number }) => {
           if (_onZoomChange.current) {
-            _onZoomChange.current(data.zoomValue);
+            _onZoomChange.current(zoomValue);
           }
         },
       },
