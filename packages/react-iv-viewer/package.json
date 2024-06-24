@@ -70,7 +70,9 @@
     "storybook": "^8.1.10",
     "tsdx": "^0.14.1",
     "tslib": "^2.6.3",
-    "typescript": "^3.7.3",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
     "iv-viewer": "^2.1.1"
   }
 }
