@@ -9,6 +9,7 @@
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+  min-height: 300px;
 }
 .iv-fullscreen {
   position: fixed;

@@ -11,7 +11,7 @@ export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
   refreshOnResize = true,
   zoomOnMouseWheel = true,
   hasZoomButtons = true,
-  zoomStep,
+  zoomStep = 50,
   onLoad,
   alt = 'Zoomable Image',
   ...rest
