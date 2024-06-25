@@ -1,0 +1,34 @@
+name: Deploy Docusaurus site to GitHub Pages
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build-deploy:
+    if: github.event.pull_request.merged && github.event.pull_request.base.ref == 'master' && github.repository == 's-yadav/iv-viewer'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies for documentation
+        run: npm ci
+        working-directory: documentation
+
+      - name: Build Docusaurus site
+        run: npm run build
+        working-directory: documentation
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: documentation/build

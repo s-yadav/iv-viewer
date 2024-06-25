@@ -1,3 +1,8 @@
+---
+sidebar_position: 1
+title: 'Introduction'
+---
+
 # Getting Started
 
 `react-iv-viewer` is a React-based library for viewing images with advanced features like zooming, high-resolution image support, and full-screen viewing. It provides an easy way to integrate image viewing functionality into your React applications.
