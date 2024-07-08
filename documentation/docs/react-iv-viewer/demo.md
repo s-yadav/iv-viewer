@@ -7,15 +7,17 @@ titles: "Demo"
 
 the live demo for the `react-iv-viewer` is showen below.
 
+<!-- markdownlint-disable MD033 -->
 <details>
   <summary>
   Demo
   </summary>
-  <iframe src="https://stackblitz.com/edit/vitejs-vite-dbgynn?embed=1&theme=dark&view=preview"
-      className='csb'
-      title="value-demo"
+   <iframe
+      src="https://codesandbox.io/embed/cc5q8h?view=preview&module=%2Fsrc%2FApp.tsx&hidenavigation=1"
+      title="react-img-viewer"
       allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
       sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-      width="100%" height="500"
-   ></iframe>   
+      width= "100%"
+      height= '500px'
+    ></iframe>
   </details>

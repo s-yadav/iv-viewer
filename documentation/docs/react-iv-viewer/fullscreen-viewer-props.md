@@ -1,9 +1,12 @@
 ---
-sidebar_position: 1
-title: Props
+sidebar_position: 2
+title: "Fullscreen mode props"
+description: "Properties of the FullScreenImageViewer..."
 ---
 
-# Props
+# Props - FullScreenImageViewer
+
+---
 
 ```ts
 interface FullscreenImageViewer {

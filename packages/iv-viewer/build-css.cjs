@@ -18,7 +18,7 @@ async function compileCss () {
 
   const distUnminified = writeFile('./dist/iv-viewer.css', unminifiedCss.css);
   const distMinified = writeFile('./dist/iv-viewer.min.css', minifiedCss.css);
-  const libUnminified = writeFile('./lib/image-viewer.css', unminifiedCss.css);
+  const libUnminified = writeFile('./lib/iv-viewer.css', unminifiedCss.css);
 
   return Promise.all([distUnminified, distMinified, libUnminified]);
 }

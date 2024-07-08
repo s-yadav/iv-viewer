@@ -1,9 +1,10 @@
 ---
-sidebar_position: 1
-title: Props
+sidebar_position: 3
+title: "Normal viewer props"
+description: "Properties of ImageViewer..."
 ---
 
-# Props
+# Props - ImageViewer
 
 ```ts
 interface ImageViewerProps {
