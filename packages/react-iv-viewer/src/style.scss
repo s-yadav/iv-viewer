@@ -1,7 +1,7 @@
-@import '../../iv-viewer/src/scss/build.scss';
+@import '~iv-viewer/src/scss/build.scss';
 $react-container-max-height: 300px;
 .iv {
-    &-container {
-        max-height: $react-container-max-height;
-    }
+  &-container {
+    max-height: $react-container-max-height;
+  }
 }
