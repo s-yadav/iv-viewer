@@ -1,4 +1,4 @@
-import React, { useRef, useEffect} from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ImageViewer as BaseImageViewer } from 'iv-viewer';
 import 'iv-viewer/dist/iv-viewer.css';
 import { ImageViewerProps } from './types';
@@ -15,7 +15,7 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
   refreshOnResize = true,
   zoomOnMouseWheel = true,
   hasZoomButtons = true,
-  zoomStep=50,
+  zoomStep = 50,
   onZoomChange,
   onLoad,
   ...rest
@@ -91,7 +91,7 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
       {...rest}
       ref={containerRef}
       style={{
-        background: "black",
+        background: 'black',
         ...rest.style,
         width: width,
         height: height,
