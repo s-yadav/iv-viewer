@@ -31,6 +31,14 @@ using `yarn`
 yarn add react-iv-viewer
 ```
 
+#### Import its style
+
+```js
+// Import css
+import 'react-iv-viewer/dist/react-iv-viewer.css';
+```
+You can choose to import css file inside your scss/less files.
+
 #### ES6
 
 Image Viewer
