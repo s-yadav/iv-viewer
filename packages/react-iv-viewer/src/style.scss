@@ -3,5 +3,6 @@ $react-container-max-height: 300px;
 .iv {
   &-container {
     max-height: $react-container-max-height;
+    background-color: black;
   }
 }

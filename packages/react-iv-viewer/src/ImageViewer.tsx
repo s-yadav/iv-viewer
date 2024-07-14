@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { ImageViewer as BaseImageViewer } from 'iv-viewer';
-import 'iv-viewer/dist/iv-viewer.css';
 import { ImageViewerProps } from './types';
 
 export const ImageViewer: React.FC<ImageViewerProps> = ({
@@ -91,7 +90,6 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
       {...rest}
       ref={containerRef}
       style={{
-        background: 'black',
         ...rest.style,
         width: width,
         height: height,

@@ -98,27 +98,11 @@ const viewer = new FullScreenViewer(options);
 viewer.show('images/low-res-img', 'images/hi-res-img');
 ```
 
-[See full documentation of iv-viewer](https://github.com/s-yadav/iv-viewer/tree/master/packages/iv-viewer#readme) 
+### Documentation
+[See full documentation of iv-viewer and react-iv-viewer](https://s-yadav.github.io/iv-viewer/docs/intro) 
 
 ### Like this
 [:star: this repo](https://github.com/s-yadav/iv-viewer)
-
-### Major updates
-
-#### v2.2.0
-
-- Includes TypeScript type declarations
-- Bugfixing
-
-#### v2.1.0
-
-- It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.
-- While the options and instance method are same the way you use a ImageViewer and FullScreenView is changed. The v1 API will no longer be supported.
-- Published on the npm. V1 was not available on npm.
-- Changed the package name to iv-viewer. image-viewer name was not available on npm. 
-- Added some listeners
-- Added zoom in/out buttons
-- Some SCSS variable for easier overrides.
 
 ## Contributors ✨
 

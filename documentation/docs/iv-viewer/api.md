@@ -243,23 +243,6 @@ codesandbox link: [https://codesandbox.io/s/8ypwzryom0](https://codesandbox.io/s
 - Added zoom in/out buttons
 - Some SCSS variable for easier overrides.
 
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://twitter.com/_syadav"><img src="https://avatars1.githubusercontent.com/u/3096766?v=4" width="100px;" alt="Sudhanshu Yadav"/><br /><sub><b>Sudhanshu Yadav</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=s-yadav" title="Author">📖🙎‍♂️</a></td>
-    <td align="center"><a href="https://github.com/manav-gopal"><img src="https://avatars.githubusercontent.com/u/62497595?v=4" width="100px;" alt="Manav Gopal"/><br /><sub><b>Manav Gopal</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=manav-gopal" title="Maintainer">📖🛠️</a></td>
-    <td align="center"><a href="http://mozillians.org/en-US/u/ruchikabgosain/"><img src="https://avatars2.githubusercontent.com/u/30324532?v=4" width="100px;" alt="Ruchika"/><br /><sub><b>Ruchika</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=ruchikabgosain" title="Contributor">📖</a></td>
-    <td align="center"><a href="https://hockeycommunity.com"><img src="https://avatars0.githubusercontent.com/u/2039539?v=4" width="100px;" alt="Amrit Kahlon"/><br /><sub><b>Amrit Kahlon</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=amritk" title="Contributor">📖</a></td>
-    <td align="center"><a href="https://github.com/10000"><img src="https://avatars2.githubusercontent.com/u/3347256?v=4" width="100px;" alt="10000"/><br /><sub><b>10000</b></sub></a><br /><a href="https://github.com/s-yadav/iv-viewer/commits?author=10000" title="Contributor">📖</a></td>
-  </tr>
-</table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

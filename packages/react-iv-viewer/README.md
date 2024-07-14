@@ -50,3 +50,6 @@ Fullscreen Viewer
 ```jsx
 import { FullScreenImageViewer } from 'react-iv-viewer';
 ```
+
+### Documentation
+[See full documentation of react-iv-viewer](https://s-yadav.github.io/iv-viewer/docs/category/react-iv-viewer) 

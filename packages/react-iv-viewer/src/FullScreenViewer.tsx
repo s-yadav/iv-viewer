@@ -69,7 +69,7 @@ export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
       {...rest}
       src={img}
       onClick={handleOnClick}
-      style={{ ...rest.style, cursor: 'pointer' }}
+      style={{ cursor: 'pointer', ...rest.style }}
       alt={alt}
     />
   );

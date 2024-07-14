@@ -17,7 +17,7 @@ import DocCard from '@theme/DocCard';
 A zooming and panning plugin inspired by Google Photos for your web images. It comes in two different variants. First, a react-based zooming and panning component and 2nd vanilla JS-based zooming and panning library.
 
 <div style={{display: "flex", gap:"12px", width:"100%",flexWrap: "wrap"}}>
-<div style={{width:"48%"}}>
+<div style={{minWidth: "300px", flex: "1"}}>
 <DocCard item={{
       type:"link",
       label: 'react-iv-viewer',
@@ -25,7 +25,7 @@ A zooming and panning plugin inspired by Google Photos for your web images. It c
       href: "./category/react-iv-viewer",
       }}/>
 </div>
-<div  style={{width:"48%"}}>
+<div  style={{minWidth: "300px", flex: "1"}}>
 <DocCard item={{
       type:"link",
       label: 'iv-viewer',
