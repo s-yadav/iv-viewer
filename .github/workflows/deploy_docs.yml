@@ -20,11 +20,11 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies for documentation
-        run: npm ci
+        run: yarn install
         working-directory: documentation
 
       - name: Build Docusaurus site
-        run: npm run build
+        run: yarn build
         working-directory: documentation
 
       - name: Deploy to GitHub Pages
