@@ -1,9 +1,9 @@
 name: Deploy Docusaurus site to GitHub Pages
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build-deploy:
