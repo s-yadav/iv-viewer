@@ -1,28 +1,12 @@
-# iv-viewer
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-A zooming and panning plugin inspired by google photos for your web images.
+---
+sidebar_position: 2
+title: "API"
+description: "api configuretions..."
+---
 
-### Features
-<ul>
-    <li>Smooth dragging and panning of images.</li>
-    <li>Support touch devices.</li>
-    <li>Double tap to zoom in/zoom out.</li>
-    <li>Pinch in/out to control zoom.</li>
-    <li>Snap view for better panning and zooming experience.</li>
-    <li>Allow quick display of loaded image then loading of high quality image progressively.</li>
-    <li>Exposed API to control zoom programmatically.</li>
-    <li>Custom Events to listen for the state changes.</li>
-</ul>
+# API
 
-![alt tag](assets/imageviewer.jpg)
-
-### Install
-Through npm
-```
-npm install iv-viewer --save
-```
-
-Or get compiled development and production version (css and js) from ./dist
+---
 
 ### Usage
 Import ImageViewer and it's style.
@@ -155,7 +139,7 @@ Note that this is just required for the container mode, as in image mode you can
 
 zoomValue: A percentage value to which you want to zoom the image.
 
-point(optional): Point {x, y} is the coordinate of the container which would act as the center for the zoom. If not defined, it will take the center of the container as the zooming point.
+**point(optional)**: Point x and y is the coordinate of the container which would act as the center for the zoom. If not defined, it will take the center of the container as the zooming point.
 
 ```js
 viewer.zoom(300, { x: 500, y: 500 });
@@ -245,5 +229,22 @@ codesandbox preview link: [https://8ypwzryom0.codesandbox.io/](https://8ypwzryom
 
 codesandbox link: [https://codesandbox.io/s/8ypwzryom0](https://codesandbox.io/s/8ypwzryom0)
 
+### Like this
+[:star: this repo](https://github.com/s-yadav/iv-viewer)
 
-[See full documentation of iv-viewer](https://s-yadav.github.io/iv-viewer/docs/category/iv-viewer) 
+### Major updates
+#### v2.1.0
+
+- It's a complete rewrite of ImageViewer with no jQuery requirement in ES6.
+- While the options and instance method are same the way you use a ImageViewer and FullScreenView is changed. The v1 API will no longer be supported.
+- Published on the npm. V1 was not available on npm.
+- Changed the package name to iv-viewer. image-viewer name was not available on npm. 
+- Added some listeners
+- Added zoom in/out buttons
+- Some SCSS variable for easier overrides.
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

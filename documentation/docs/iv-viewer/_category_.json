@@ -1,0 +1,8 @@
+{
+  "label": "iv-viewer",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "iv-viewer is a zooming and panning plugin inspired by Google Photos for your web images. It provides a smooth and intuitive way to view images with features like full-screen mode, touch device support, and high-resolution image loading."
+  }
+}

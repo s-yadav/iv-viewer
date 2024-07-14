@@ -11,7 +11,7 @@ export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
   refreshOnResize = true,
   zoomOnMouseWheel = true,
   hasZoomButtons = true,
-  zoomStep,
+  zoomStep = 50,
   onLoad,
   alt = 'Zoomable Image',
   ...rest
@@ -69,7 +69,7 @@ export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
       {...rest}
       src={img}
       onClick={handleOnClick}
-      style={{ ...rest.style, cursor: 'pointer' }}
+      style={{ cursor: 'pointer', ...rest.style }}
       alt={alt}
     />
   );
