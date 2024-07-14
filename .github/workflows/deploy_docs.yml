@@ -3,7 +3,8 @@ name: Deploy Docusaurus site to GitHub Pages
 on:
   push:
     tags:
-      - 'v*'
+      - 'iv-viewer@*'
+      - 'react-iv-viewer@*'
 
 jobs:
   build-deploy:
