@@ -2,7 +2,8 @@
   "name": "iv-viewer",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "documentation/"
   ],
   "scripts": {
     "storybook": "yarn workspace react-iv-viewer storybook",
