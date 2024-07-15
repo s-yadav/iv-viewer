@@ -8,7 +8,6 @@ on:
 
 jobs:
   build-deploy:
-    if: github.event.pull_request.merged && github.event.pull_request.base.ref == 'master' && github.repository == 's-yadav/iv-viewer'
     runs-on: ubuntu-latest
 
     steps:
