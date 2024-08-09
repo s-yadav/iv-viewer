@@ -1,70 +1,52 @@
-import clsx from 'clsx';
-import Heading from '@theme/Heading';
-import styles from './styles.module.css';
-
-type FeatureItem = {
-  title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
-};
-
-const FeatureList: FeatureItem[] = [
-  {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
-  },
-  {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
-  },
-  {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
-  },
-];
-
-function Feature({title, Svg, description}: FeatureItem) {
-  return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
-}
+import Link from "@docusaurus/Link";
+import styles from "./styles.module.css";
 
 export default function HomepageFeatures(): JSX.Element {
   return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
+    <>
+      <section className={styles.intro}>
+        <div className={styles.container}>
+          <div style={{ maxWidth: "70%" }}>
+            <p><span><strong>iv-viewer</strong></span>
+              {' : A zooming and panning plugin inspired by Google Photos for your web images. It comes in two different variants. First, a react-based zooming and panning component and 2nd vanilla JS-based zooming and panning library.'}
+            </p>
+          </div>
+          <div className={styles.box}>
+            <Link to="docs/iv-viewer/intro-iv">
+              <h1>iv-viewer</h1>
+              <p className="para">
+                A zooming and panning plugin inspired by Google Photos for your
+                web images ....
+              </p>
+            </Link>
+          </div>
+          <div className={styles.box}>
+            <Link to="docs/react-iv-viewer/intro-riv">
+              <h1>react-iv-viewer</h1>
+              <p className="para">
+                react-iv-viewer is a React-based library for viewing images with
+                advanced features like zooming ....
+              </p>
+            </Link>
+          </div>
+          <div className={styles.features}>
+            <h3>Features :-</h3>
+            <ul>
+              <li>Smooth dragging and panning of images</li>
+              <li>Support for touch devices</li>
+              <li>Double tap to zoom in/zoom out</li>
+              <li>Pinch in/out to control zoom</li>
+              <li>Snap view for better panning and zooming experience</li>
+              <li>
+                Quick display of loaded images with progressive loading of
+                high-quality images
+              </li>
+              <li>Exposed API to control zoom programmatically</li>
+              <li>Custom events to listen for state changes</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

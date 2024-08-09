@@ -1,11 +1,58 @@
-.features {
+.intro {
   display: flex;
   align-items: center;
   padding: 2rem 0;
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.box {
+  flex: 1 1 calc(50% - 1.5rem);
+  max-width: 600px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 0 1.5rem;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+  border-color: #1a8870;
+}
+
+.button {
+  text-decoration: none;
+  color: inherit; 
+  display: block;
+}
+
+h1 {
+  font-size: 1.25rem; /* Slightly smaller font size */
+  margin-bottom: 0.5rem;
+}
+
+.box p {
+  font-size: 1rem;
+  color: #777; 
+  line-height: 1.6; 
+  margin-bottom: 1.5rem; 
+}
+
+@media (max-width: 768px) {
+  .box {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+.features{
+  width: 70%;
 }
