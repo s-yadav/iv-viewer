@@ -1,6 +1,6 @@
 {
   "name": "react-iv-viewer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "manav",
   "module": "dist/react-iv-viewer.esm.js",
   "size-limit": [
@@ -29,7 +29,7 @@
     "build-css": "node build-css.cjs",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "yarn build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev -p 6006",
