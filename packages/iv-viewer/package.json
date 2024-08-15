@@ -1,6 +1,6 @@
 {
   "name": "iv-viewer",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A zooming and panning plugin inspired by google photos for your web images.",
   "main": "lib/index.js",
   "repository": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/s-yadav/iv-viewer#readme",
   "scripts": {
-    "start": "yarn copy-assets & parcel example/index.html --out-dir temp",
+    "start": "yarn copy-assets & parcel example/index.html",
     "copy-assets": "cp -R example/ temp",
     "bundle": "cross-env yarn compile && yarn build-css && yarn bundle-dist",
     "bundle-dist": "cross-env rollup -c rollup.config.mjs",

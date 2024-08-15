@@ -87,7 +87,7 @@
 .iv-snap-handle {
   box-sizing: border-box;
   position: absolute;
-  border: 1px solid #fff;
+  border: 1px solid #aaa;
   transform: translate3d(0, 0, 0);
   box-shadow: 0 0 0 200px rgba(0, 0, 0, 0.5);
   cursor: pointer;
@@ -103,7 +103,7 @@
   top: 150px;
   left: -1px;
   height: 20px;
-  border: 1px solid #fff;
+  border: 1px solid #aaa;
   border-top: 0;
   background: rgba(0, 0, 0, 0.3);
 }

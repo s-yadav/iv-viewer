@@ -1,17 +1,26 @@
 import ImageViewer from '../../src/ImageViewer';
+import image1 from '../images/1.jpg';
+import image1Big from '../images/1_big.jpg';
+import image2 from '../images/2.jpg';
+import image2Big from '../images/2_big.jpg';
+import image3 from '../images/3.jpg';
+import image3Big from '../images/3_big.jpg';
+import image4 from '../images/4.jpg';
+import image4Big from '../images/4_big.jpg';
+
 
 const images = [{
-  small: '../images/1.jpg',
-  big: '../images/1_big.jpg',
+  small: image1,
+  big: image1Big,
 }, {
-  small: '../images/2.jpg',
-  big: '../images/2_big.jpg',
+  small: image2,
+  big: image2Big,
 }, {
-  small: '../images/3.jpg',
-  big: '../images/3_big.jpg',
+  small: image3,
+  big: image3Big,
 }, {
-  small: '../images/4.jpg',
-  big: '../images/4_big.jpg',
+  small: image4,
+  big: image4Big,
 }];
 
 let curImageIdx = 1;

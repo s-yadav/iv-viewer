@@ -1,6 +1,6 @@
 {
   "name": "react-iv-viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "manav",
   "module": "dist/react-iv-viewer.esm.js",
   "size-limit": [

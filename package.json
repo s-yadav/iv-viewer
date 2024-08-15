@@ -13,6 +13,7 @@
     "build": "yarn build-core && yarn build-react"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "2.12.0",
     "all-contributors-cli": "^6.26.1"
   }
 }

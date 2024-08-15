@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ImageViewer } from '../ImageViewer';
+import '../../dist/react-iv-viewer.css';
 import image1 from './assets/img.jpg';
 import image2 from './assets/hiResImg.jpg';
 
