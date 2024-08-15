@@ -60,14 +60,14 @@
 
   /***** snap view css *****/
   &-snap-view {
-    width: $iv-snap-view-width;
-    height: $iv-snap-view-height;
+    width: calc($iv-snap-view-width + 2px);
+    height: calc($iv-snap-view-height + 2px);
     position: absolute;
     top: $iv-boundary-space;
     border: 1px solid $iv-snap-view-border-color;
     background: $iv-black;
     z-index: 100;
-    box-sizing: content-box;
+    box-sizing: border-box;
     transition: opacity ease 400ms;
     opacity: 0;
 
