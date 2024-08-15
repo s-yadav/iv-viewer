@@ -17,16 +17,18 @@
 
 ### Demos
 
-See the many DEMO sections in the documentation.
+See the demo of react-iv-viewer. [Demo](https://s-yadav.github.io/iv-viewer/docs/react-iv-viewer/demo)
 
 ### Install
 
 using `npm`
+
 ```bash
 npm install react-iv-viewer
 ```
 
 using `yarn`
+
 ```bash
 yarn add react-iv-viewer
 ```
@@ -37,19 +39,23 @@ yarn add react-iv-viewer
 // Import css
 import 'react-iv-viewer/dist/react-iv-viewer.css';
 ```
+
 You can choose to import css file inside your scss/less files.
 
 #### ES6
 
 Image Viewer
+
 ```jsx
 import { ImageViewer } from 'react-iv-viewer';
 ```
 
 Fullscreen Viewer
+
 ```jsx
 import { FullScreenImageViewer } from 'react-iv-viewer';
 ```
 
 ### Documentation
-[See full documentation of react-iv-viewer](https://s-yadav.github.io/iv-viewer/docs/category/react-iv-viewer) 
+
+[See full documentation of react-iv-viewer](https://s-yadav.github.io/iv-viewer/docs/category/react-iv-viewer)
