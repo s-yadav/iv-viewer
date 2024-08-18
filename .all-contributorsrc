@@ -16,7 +16,28 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/3096766?v=4",
       "profile": "https://twitter.com/_syadav",
       "contributions": [
+        "author"
+      ]
+    },
+    {
+      "login": "manav-gopal",
+      "name": "Manav Gopal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62497595?v=4",
+      "profile": "https://github.com/manav-gopal",
+      "contributions": [
+        "maintain",
+        "code",
         "doc"
+      ]
+    },
+    {
+      "login": "d--j",
+      "name": "Daniel Jagszent",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100674?v=4",
+      "profile": "https://github.com/d--j",
+      "contributions": [
+        "code",
+        "tool"
       ]
     },
     {
