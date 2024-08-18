@@ -21,9 +21,9 @@ A zooming and panning plugin inspired by Google Photos for your web images. It c
 - Customizable viewer dimensions
 - TypeScript support
 
-### Demos
+### Demo
 
-See the many DEMO sections in the documentation.
+Codesandbox Demo: https://cc5q8h.csb.app/
 
 ### Install
 
