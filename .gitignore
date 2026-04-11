@@ -5,3 +5,4 @@ temp
 .idea
 *.tgz
 .parcel-cache
+packages/iv-viewer/dist
