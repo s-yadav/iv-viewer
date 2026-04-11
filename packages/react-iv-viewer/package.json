@@ -25,11 +25,11 @@
   },
   "scripts": {
     "start": "tsup --watch",
-    "build": "tsup && yarn build-css",
+    "build": "tsup && npm run build-css",
     "build-css": "node build-css.cjs",
     "test": "echo \"No tests\"",
     "lint": "tsc --noEmit",
-    "prepare": "yarn build",
+    "prepare": "npm run build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev -p 6006",
@@ -41,7 +41,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format && yarn lint"
+      "pre-commit": "npm run format && npm run lint"
     }
   },
   "prettier": {
@@ -52,27 +52,24 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^12.0.1",
-    "@storybook/addon-essentials": "^8.6.18",
-    "@storybook/addon-interactions": "^8.6.18",
-    "@storybook/addon-links": "^8.6.18",
-    "@storybook/addon-onboarding": "^8.6.18",
-    "@storybook/addon-webpack5-compiler-swc": "^2.1.0",
-    "@storybook/blocks": "^8.6.18",
-    "@storybook/react": "^8.6.18",
-    "@storybook/react-webpack5": "^8.6.18",
-    "@storybook/test": "^8.6.18",
+    "@storybook/addon-links": "^10.3.5",
+    "@storybook/addon-onboarding": "^10.3.5",
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
+    "@storybook/react": "^10.3.5",
+    "@storybook/react-webpack5": "^10.3.5",
     "@types/iv-viewer": "^2.0.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "husky": "^9.1.7",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.0",
     "sass": "^1.99.0",
     "size-limit": "^12.0.1",
-    "storybook": "^8.6.18",
+    "storybook": "^10.3.5",
     "tslib": "^2.8.1",
     "tsup": "^8.5.1",
-    "typescript": "^5.8.3"
+    "typescript": "^6.0.2"
   },
   "dependencies": {
     "iv-viewer": "^2.2.1"

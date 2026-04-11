@@ -50,7 +50,7 @@ export function addClass (el, className) {
   } else if (el.classList) {
     el.classList.add(className);
   } else {
-    el.className += ` ${className}`; // eslint-disable-line no-param-reassign
+    el.className += ` ${className}`;  
   }
 }
 
@@ -62,7 +62,7 @@ export function removeClass (el, className) {
   } else if (el.classList) {
     el.classList.remove(className);
   } else {
-    el.className = el.className.replace(new RegExp(`(^|\\b)${className.split(' ').join('|')}(\\b|$)`, 'gi'), ' '); // eslint-disable-line no-param-reassign
+    el.className = el.className.replace(new RegExp(`(^|\\b)${className.split(' ').join('|')}(\\b|$)`, 'gi'), ' ');  
   }
 }
 
@@ -95,7 +95,7 @@ export function css (elements, properties) {
   elmArray.forEach((element) => {
     Object.keys(properties).forEach((key) => {
       const value = properties[key];
-      element.style[key] = value; // eslint-disable-line no-param-reassign
+      element.style[key] = value;  
     });
   });
 

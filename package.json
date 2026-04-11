@@ -6,11 +6,11 @@
     "documentation/"
   ],
   "scripts": {
-    "storybook": "yarn workspace react-iv-viewer storybook",
-    "build-react": "yarn workspace react-iv-viewer build",
-    "build-core": "yarn workspace iv-viewer bundle",
-    "start-core": "yarn workspace iv-viewer start",
-    "build": "yarn build-core && yarn build-react"
+    "storybook": "npm run storybook -w react-iv-viewer",
+    "build-react": "npm run build -w react-iv-viewer",
+    "build-core": "npm run bundle -w iv-viewer",
+    "start-core": "npm run start -w iv-viewer",
+    "build": "npm run build-core && npm run build-react"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.16.4",

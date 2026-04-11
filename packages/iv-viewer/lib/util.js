@@ -72,7 +72,7 @@ function addClass(el, className) {
   } else if (el.classList) {
     el.classList.add(className);
   } else {
-    el.className += " ".concat(className); // eslint-disable-line no-param-reassign
+    el.className += " ".concat(className);
   }
 }
 
@@ -86,7 +86,7 @@ function removeClass(el, className) {
   } else if (el.classList) {
     el.classList.remove(className);
   } else {
-    el.className = el.className.replace(new RegExp("(^|\\b)".concat(className.split(' ').join('|'), "(\\b|$)"), 'gi'), ' '); // eslint-disable-line no-param-reassign
+    el.className = el.className.replace(new RegExp("(^|\\b)".concat(className.split(' ').join('|'), "(\\b|$)"), 'gi'), ' ');
   }
 }
 
@@ -117,7 +117,7 @@ function css(elements, properties) {
   elmArray.forEach(function (element) {
     Object.keys(properties).forEach(function (key) {
       var value = properties[key];
-      element.style[key] = value; // eslint-disable-line no-param-reassign
+      element.style[key] = value;
     });
   });
   return undefined;

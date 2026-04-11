@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { MemoryRouter, Switch, Route, Link } from 'react-router-dom';
+import { MemoryRouter, Routes, Route, Link } from 'react-router-dom';
 import { FullScreenViewer } from '../FullScreenViewer';
 import '../../dist/react-iv-viewer.css';
 import image1 from './assets/img.jpg';
@@ -68,19 +68,19 @@ const RouterExample = () => (
       <Link to="/viewer" style={{ color: '#fff' }}>Viewer page</Link>
       <Link to="/other" style={{ color: '#fff' }}>Other page</Link>
     </nav>
-    <Switch>
-      <Route path="/viewer">
+    <Routes>
+      <Route path="/viewer" element={
         <div style={{ height: '300vh', padding: '2rem', paddingBottom: '5rem' }}>
           <p>Open the image, then click "Other page" to navigate away. The page should scroll normally afterwards.</p>
           <FullScreenViewer {...viewerArgs} />
         </div>
-      </Route>
-      <Route path="/other">
+      } />
+      <Route path="/other" element={
         <div style={{ padding: '2rem', paddingBottom: '5rem' }}>
-          <p>You navigated away. Page scroll should work here — scroll the &lt;html&gt; element should have no inline overflow style.</p>
+          <p>You navigated away. Page scroll should work here — the &lt;html&gt; element should have no inline overflow style.</p>
         </div>
-      </Route>
-    </Switch>
+      } />
+    </Routes>
   </MemoryRouter>
 );
 
