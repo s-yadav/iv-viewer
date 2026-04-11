@@ -1,4 +1,6 @@
+import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { MemoryRouter, Switch, Route, Link } from 'react-router-dom';
 import { FullScreenViewer } from '../FullScreenViewer';
 import '../../dist/react-iv-viewer.css';
 import image1 from './assets/img.jpg';
@@ -8,8 +10,16 @@ const meta: Meta<typeof FullScreenViewer> = {
   title: 'Example/FullScreenViewer',
   component: FullScreenViewer,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '300vh', padding: '2rem' }}>
+        <p style={{ marginBottom: '1rem' }}>Scroll down to see page overflow. Open the image, then check if &lt;html&gt; overflow is cleared after closing.</p>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     img: { control: 'text' },
     hiResImg: { control: 'text' },
@@ -26,6 +36,59 @@ const meta: Meta<typeof FullScreenViewer> = {
 
 export default meta;
 type Story = StoryObj<typeof FullScreenViewer>;
+
+const viewerArgs = {
+  img: image1,
+  hiResImg: image2,
+  defaultZoom: 100,
+  maxZoom: 500,
+  snapView: true,
+  refreshOnResize: true,
+  zoomOnMouseWheel: true,
+  hasZoomButtons: true,
+  zoomStep: 10,
+};
+
+const nav: React.CSSProperties = {
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  display: 'flex',
+  gap: '1rem',
+  padding: '1rem',
+  background: '#333',
+  color: '#fff',
+  zIndex: 1001,
+};
+
+const RouterExample = () => (
+  <MemoryRouter initialEntries={['/viewer']}>
+    <nav style={nav}>
+      <Link to="/viewer" style={{ color: '#fff' }}>Viewer page</Link>
+      <Link to="/other" style={{ color: '#fff' }}>Other page</Link>
+    </nav>
+    <Switch>
+      <Route path="/viewer">
+        <div style={{ height: '300vh', padding: '2rem', paddingBottom: '5rem' }}>
+          <p>Open the image, then click "Other page" to navigate away. The page should scroll normally afterwards.</p>
+          <FullScreenViewer {...viewerArgs} />
+        </div>
+      </Route>
+      <Route path="/other">
+        <div style={{ padding: '2rem', paddingBottom: '5rem' }}>
+          <p>You navigated away. Page scroll should work here — scroll the &lt;html&gt; element should have no inline overflow style.</p>
+        </div>
+      </Route>
+    </Switch>
+  </MemoryRouter>
+);
+
+export const WithRouter: Story = {
+  render: () => <RouterExample />,
+  parameters: { layout: 'fullscreen' },
+  decorators: [],
+};
 
 export const Default: Story = {
   args: {

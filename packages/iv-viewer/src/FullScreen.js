@@ -60,6 +60,9 @@ class FullScreenViewer extends ImageViewer {
   destroy () {
     const { fullScreen } = this._elements;
 
+    // restore scroll before removing elements
+    this.hide();
+
     // destroy image viewer
     super.destroy();
 

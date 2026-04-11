@@ -43,6 +43,7 @@ export const FullScreenViewer: React.FC<FullScreenViewerProps> = ({
     viewerRef.current = new BaseFullScreenViewer(viewerOptions);
     return () => {
       if (viewerRef.current) {
+        document.documentElement.style.overflow = '';
         viewerRef.current.destroy();
       }
     };

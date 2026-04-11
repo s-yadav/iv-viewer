@@ -58,14 +58,14 @@
   transform-origin: 50% 50%;
 }
 .iv-snap-view {
-  width: 150px;
-  height: 150px;
+  width: 152px;
+  height: 152px;
   position: absolute;
   top: 20px;
   border: 1px solid #aaa;
   background: black;
   z-index: 100;
-  box-sizing: content-box;
+  box-sizing: border-box;
   transition: opacity ease 400ms;
   opacity: 0;
   left: 20px;
