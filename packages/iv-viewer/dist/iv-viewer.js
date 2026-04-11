@@ -602,12 +602,12 @@
     return _createClass(ImageViewer, [{
       key: "zoomInButton",
       get: function get() {
-        return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--in\" role=\"button\"></div>" : '';
+        return this._options.hasZoomButtons ? '<div class="iv-button-zoom--in" role="button"></div>' : '';
       }
     }, {
       key: "zoomOutButton",
       get: function get() {
-        return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--out\" role=\"button\"></div>" : '';
+        return this._options.hasZoomButtons ? '<div class="iv-button-zoom--out" role="button"></div>' : '';
       }
     }, {
       key: "imageViewHtml",
@@ -1154,7 +1154,7 @@
         if (imageLoaded(image)) {
           onImageLoad();
         } else {
-          if (typeof this._events.imageLoad == 'function') {
+          if (typeof this._events.imageLoad === 'function') {
             this._events.imageLoad();
           }
           this._events.imageLoad = assignEvent(image, 'load', onImageLoad);
@@ -1188,7 +1188,7 @@
         if (imageLoaded(hiResImage)) {
           onHighResImageLoad();
         } else {
-          if (typeof this._events.hiResImageLoad == 'function') {
+          if (typeof this._events.hiResImageLoad === 'function') {
             this._events.hiResImageLoad();
           }
           this._events.hiResImageLoad = assignEvent(hiResImage, 'load', onHighResImageLoad);
@@ -1219,11 +1219,9 @@
         };
 
         // set the image dimension
-        var imgWidth;
-        var imgHeight;
         var ratio = imageWidth / imageHeight;
-        imgWidth = imageWidth > imageHeight && contHeight >= contWidth || ratio * contHeight > contWidth ? contWidth : ratio * contHeight;
-        imgHeight = imgWidth / ratio;
+        var imgWidth = imageWidth > imageHeight && contHeight >= contWidth || ratio * contHeight > contWidth ? contWidth : ratio * contHeight;
+        var imgHeight = imgWidth / ratio;
         this._state.imageDim = {
           w: imgWidth,
           h: imgHeight
@@ -1281,17 +1279,15 @@
           domElement = _this$_elements8.domElement;
         // destroy all the sliders
         Object.entries(this._sliders).forEach(function (_ref) {
-          var _ref2 = _slicedToArray(_ref, 2);
-            _ref2[0];
-            var slider = _ref2[1];
+          var _ref2 = _slicedToArray(_ref, 2),
+            slider = _ref2[1];
           slider.destroy();
         });
 
         // unbind all events
         Object.entries(this._events).forEach(function (_ref3) {
-          var _ref4 = _slicedToArray(_ref3, 2);
-            _ref4[0];
-            var unbindEvent = _ref4[1];
+          var _ref4 = _slicedToArray(_ref3, 2),
+            unbindEvent = _ref4[1];
           unbindEvent();
         });
 

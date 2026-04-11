@@ -1,4 +1,5 @@
-@import '~iv-viewer/src/scss/build.scss';
+@use '../../iv-viewer/src/scss/build';
+
 $react-container-min-height: 300px;
 .iv {
   &-container {

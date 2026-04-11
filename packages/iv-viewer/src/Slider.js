@@ -43,7 +43,7 @@ class Slider {
       https://bugs.chromium.org/p/chromium/issues/detail?id=506801
     */
     document.addEventListener('contextmenu', endHandler);
-  }
+  };
 
   moveHandler = (eMove) => {
     if (!this.isSliderEnabled()) return;
@@ -63,13 +63,13 @@ class Slider {
       mx,
       my,
     });
-  }
+  };
 
   endHandler = () => {
     if (!this.isSliderEnabled()) return;
     this.removeListeners();
     this.onEnd();
-  }
+  };
 
   // remove previous events if it's not removed
   // - Case when while sliding mouse moved out of document and released there

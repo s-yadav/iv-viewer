@@ -213,12 +213,12 @@ var ImageViewer = /*#__PURE__*/function () {
   return _createClass(ImageViewer, [{
     key: "zoomInButton",
     get: function get() {
-      return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--in\" role=\"button\"></div>" : '';
+      return this._options.hasZoomButtons ? '<div class="iv-button-zoom--in" role="button"></div>' : '';
     }
   }, {
     key: "zoomOutButton",
     get: function get() {
-      return this._options.hasZoomButtons ? "<div class=\"iv-button-zoom--out\" role=\"button\"></div>" : '';
+      return this._options.hasZoomButtons ? '<div class="iv-button-zoom--out" role="button"></div>' : '';
     }
   }, {
     key: "imageViewHtml",
@@ -765,7 +765,7 @@ var ImageViewer = /*#__PURE__*/function () {
       if ((0, _util.imageLoaded)(image)) {
         onImageLoad();
       } else {
-        if (typeof this._events.imageLoad == 'function') {
+        if (typeof this._events.imageLoad === 'function') {
           this._events.imageLoad();
         }
         this._events.imageLoad = (0, _util.assignEvent)(image, 'load', onImageLoad);
@@ -799,7 +799,7 @@ var ImageViewer = /*#__PURE__*/function () {
       if ((0, _util.imageLoaded)(hiResImage)) {
         onHighResImageLoad();
       } else {
-        if (typeof this._events.hiResImageLoad == 'function') {
+        if (typeof this._events.hiResImageLoad === 'function') {
           this._events.hiResImageLoad();
         }
         this._events.hiResImageLoad = (0, _util.assignEvent)(hiResImage, 'load', onHighResImageLoad);
@@ -830,11 +830,9 @@ var ImageViewer = /*#__PURE__*/function () {
       };
 
       // set the image dimension
-      var imgWidth;
-      var imgHeight;
       var ratio = imageWidth / imageHeight;
-      imgWidth = imageWidth > imageHeight && contHeight >= contWidth || ratio * contHeight > contWidth ? contWidth : ratio * contHeight;
-      imgHeight = imgWidth / ratio;
+      var imgWidth = imageWidth > imageHeight && contHeight >= contWidth || ratio * contHeight > contWidth ? contWidth : ratio * contHeight;
+      var imgHeight = imgWidth / ratio;
       this._state.imageDim = {
         w: imgWidth,
         h: imgHeight
@@ -893,7 +891,6 @@ var ImageViewer = /*#__PURE__*/function () {
       // destroy all the sliders
       Object.entries(this._sliders).forEach(function (_ref) {
         var _ref2 = _slicedToArray(_ref, 2),
-          key = _ref2[0],
           slider = _ref2[1];
         slider.destroy();
       });
@@ -901,7 +898,6 @@ var ImageViewer = /*#__PURE__*/function () {
       // unbind all events
       Object.entries(this._events).forEach(function (_ref3) {
         var _ref4 = _slicedToArray(_ref3, 2),
-          key = _ref4[0],
           unbindEvent = _ref4[1];
         unbindEvent();
       });

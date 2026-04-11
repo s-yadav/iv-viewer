@@ -4,7 +4,7 @@ export const MOUSE_WHEEL_COUNT = 5; // A mouse delta after which it should stop 
 
 export function noop () {}
 export function preventDefault (e) {
-  e.preventDefault()
+  e.preventDefault();
 }
 
 // ease out method
@@ -46,7 +46,7 @@ export function addClass (el, className) {
   const classNameAry = className.split(' ');
 
   if (classNameAry.length > 1) {
-    classNameAry.forEach(classItem => addClass(el, classItem));
+    classNameAry.forEach((classItem) => addClass(el, classItem));
   } else if (el.classList) {
     el.classList.add(className);
   } else {
@@ -58,7 +58,7 @@ export function addClass (el, className) {
 export function removeClass (el, className) {
   const classNameAry = className.split(' ');
   if (classNameAry.length > 1) {
-    classNameAry.forEach(classItem => removeClass(el, classItem));
+    classNameAry.forEach((classItem) => removeClass(el, classItem));
   } else if (el.classList) {
     el.classList.remove(className);
   } else {
@@ -118,7 +118,7 @@ export function wrap (element, { tag = 'div', className, id, style }) {
 }
 
 export function unwrap (element) {
-  let parent = element.parentNode;
+  const parent = element.parentNode;
 
   if (parent !== document.body) {
     parent.parentNode.insertBefore(element, parent);
@@ -154,5 +154,5 @@ export function assignEvent (element, events, handler) {
 export function getTouchPointsDistance (touches) {
   const touch0 = touches[0];
   const touch1 = touches[1];
-  return Math.sqrt(Math.pow(touch1.pageX - touch0.pageX, 2) + Math.pow(touch1.pageY - touch0.pageY, 2));
+  return Math.sqrt((touch1.pageX - touch0.pageX) ** 2 + (touch1.pageY - touch0.pageY) ** 2);
 }
