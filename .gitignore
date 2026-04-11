@@ -6,3 +6,4 @@ temp
 *.tgz
 .parcel-cache
 packages/iv-viewer/dist
+packages/react-iv-viewer/dist
