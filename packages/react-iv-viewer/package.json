@@ -2,14 +2,14 @@
   "name": "react-iv-viewer",
   "version": "1.0.3",
   "author": "manav",
-  "module": "dist/react-iv-viewer.esm.js",
+  "module": "dist/index.mjs",
   "size-limit": [
     {
-      "path": "dist/react-iv-viewer.cjs.production.min.js",
+      "path": "dist/index.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/react-iv-viewer.esm.js",
+      "path": "dist/index.mjs",
       "limit": "10 KB"
     }
   ],
@@ -24,11 +24,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build && yarn build-css",
+    "start": "tsup --watch",
+    "build": "tsup && yarn build-css",
     "build-css": "node build-css.cjs",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "test": "echo \"No tests\"",
+    "lint": "tsc --noEmit",
     "prepare": "yarn build",
     "size": "size-limit",
     "analyze": "size-limit --why",
@@ -41,7 +41,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format && tsdx lint"
+      "pre-commit": "yarn format && yarn lint"
     }
   },
   "prettier": {
@@ -51,31 +51,30 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^11.1.4",
-    "@storybook/addon-essentials": "^8.1.10",
-    "@storybook/addon-interactions": "^8.1.10",
-    "@storybook/addon-links": "^8.1.10",
-    "@storybook/addon-onboarding": "^8.1.10",
-    "@storybook/addon-webpack5-compiler-swc": "1.0.3",
-    "@storybook/blocks": "^8.1.10",
-    "@storybook/react": "^8.1.10",
-    "@storybook/react-webpack5": "^8.1.10",
-    "@storybook/test": "^8.1.10",
+    "@size-limit/preset-small-lib": "^12.0.1",
+    "@storybook/addon-essentials": "^8.6.18",
+    "@storybook/addon-interactions": "^8.6.18",
+    "@storybook/addon-links": "^8.6.18",
+    "@storybook/addon-onboarding": "^8.6.18",
+    "@storybook/addon-webpack5-compiler-swc": "^2.1.0",
+    "@storybook/blocks": "^8.6.18",
+    "@storybook/react": "^8.6.18",
+    "@storybook/react-webpack5": "^8.6.18",
+    "@storybook/test": "^8.6.18",
     "@types/iv-viewer": "^2.0.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "husky": "^9.0.11",
+    "husky": "^9.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sass": "^1.77.6",
-    "size-limit": "^11.1.4",
-    "storybook": "^8.1.10",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.6.3",
-    "typescript": "^3.7.3"
+    "sass": "^1.99.0",
+    "size-limit": "^12.0.1",
+    "storybook": "^8.6.18",
+    "tslib": "^2.8.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "iv-viewer": "^2.2.1",
-    "sass": "^1.77.6"
+    "iv-viewer": "^2.2.1"
   }
 }

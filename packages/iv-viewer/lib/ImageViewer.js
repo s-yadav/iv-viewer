@@ -54,10 +54,10 @@ var ImageViewer = /*#__PURE__*/function () {
       var baseTop = (containerDim.h - imageDim.h) / 2;
       var baseRight = containerDim.w - baseLeft;
       var baseBottom = containerDim.h - baseTop;
-      var zoom = function zoom() {
+      var _zoom = function zoom() {
         step++;
         if (step < 16) {
-          _this._frames.zoomFrame = requestAnimationFrame(zoom);
+          _this._frames.zoomFrame = requestAnimationFrame(_zoom);
         }
         var tickZoom = (0, _util.easeOutQuart)(step, curPerc, perc - curPerc, 16);
         // snap in at the last percent to more often land at the exact value
@@ -101,7 +101,7 @@ var ImageViewer = /*#__PURE__*/function () {
           _this._listeners.onZoomChange(_this._callbackData);
         }
       };
-      zoom();
+      _zoom();
     });
     _defineProperty(this, "_clearFrames", function () {
       var _this$_frames = _this._frames,
@@ -385,9 +385,9 @@ var ImageViewer = /*#__PURE__*/function () {
           var step, positionX, positionY;
           var xDiff = positions[1].x - positions[0].x;
           var yDiff = positions[1].y - positions[0].y;
-          var momentum = function momentum() {
+          var _momentum = function momentum() {
             if (step <= 60) {
-              _this2._frames.sliderMomentumFrame = requestAnimationFrame(momentum);
+              _this2._frames.sliderMomentumFrame = requestAnimationFrame(_momentum);
             }
             positionX += (0, _util.easeOutQuart)(step, xDiff / 3, -xDiff / 3, 60);
             positionY += (0, _util.easeOutQuart)(step, yDiff / 3, -yDiff / 3, 60);
@@ -401,7 +401,7 @@ var ImageViewer = /*#__PURE__*/function () {
             step = 1;
             positionX = currentPos.dx;
             positionY = currentPos.dy;
-            momentum();
+            _momentum();
           }
         }
       });
@@ -774,7 +774,7 @@ var ImageViewer = /*#__PURE__*/function () {
   }, {
     key: "_loadHighResImage",
     value: function _loadHighResImage(hiResImageSrc) {
-      var _this10 = this;
+      var _this0 = this;
       var _this$_elements6 = this._elements,
         imageWrap = _this$_elements6.imageWrap,
         container = _this$_elements6.container;
@@ -793,7 +793,7 @@ var ImageViewer = /*#__PURE__*/function () {
       var onHighResImageLoad = function onHighResImageLoad() {
         // remove the low size image and set this image as default image
         (0, _util.remove)(lowResImg);
-        _this10._elements.image = hiResImage;
+        _this0._elements.image = hiResImage;
         // this._calculateDimensions();
       };
       if ((0, _util.imageLoaded)(hiResImage)) {

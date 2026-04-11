@@ -26,20 +26,20 @@ function _classCallCheck(a, n) {
 function _defineProperties(e, r) {
   for (var t = 0; t < r.length; t++) {
     var o = r[t];
-    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o);
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey(o.key), o);
   }
 }
 function _createClass(e, r, t) {
   return r && _defineProperties(e.prototype, r), Object.defineProperty(e, "prototype", {
-    writable: !1
+    writable: false
   }), e;
 }
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
     value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
+    enumerable: true,
+    configurable: true,
+    writable: true
   }) : e[r] = t, e;
 }
 function _get() {
@@ -61,11 +61,11 @@ function _inherits(t, e) {
   t.prototype = Object.create(e && e.prototype, {
     constructor: {
       value: t,
-      writable: !0,
-      configurable: !0
+      writable: true,
+      configurable: true
     }
   }), Object.defineProperty(t, "prototype", {
-    writable: !1
+    writable: false
   }), e && _setPrototypeOf(t, e);
 }
 function _isNativeReflectConstruct() {
@@ -84,12 +84,12 @@ function _iterableToArrayLimit(r, l) {
       i,
       u,
       a = [],
-      f = !0,
-      o = !1;
+      f = true,
+      o = false;
     try {
       if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
     } catch (r) {
-      o = !0, n = r;
+      o = true, n = r;
     } finally {
       try {
         if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
@@ -116,7 +116,7 @@ function ownKeys(e, r) {
 function _objectSpread2(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
+    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
       _defineProperty(e, r, t[r]);
     }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
       Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
@@ -141,11 +141,17 @@ function _superPropBase(t, o) {
   for (; !{}.hasOwnProperty.call(t, o) && null !== (t = _getPrototypeOf(t)););
   return t;
 }
+function _superPropGet(t, o, e, r) {
+  var p = _get(_getPrototypeOf(t.prototype ), o, e);
+  return "function" == typeof p ? function (t) {
+    return p.apply(e, t);
+  } : p;
+}
 function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
-    var i = e.call(t, r );
+    var i = e.call(t, r);
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
@@ -431,10 +437,10 @@ var ImageViewer = /*#__PURE__*/function () {
       var baseTop = (containerDim.h - imageDim.h) / 2;
       var baseRight = containerDim.w - baseLeft;
       var baseBottom = containerDim.h - baseTop;
-      var zoom = function zoom() {
+      var _zoom = function zoom() {
         step++;
         if (step < 16) {
-          _this._frames.zoomFrame = requestAnimationFrame(zoom);
+          _this._frames.zoomFrame = requestAnimationFrame(_zoom);
         }
         var tickZoom = easeOutQuart(step, curPerc, perc - curPerc, 16);
         // snap in at the last percent to more often land at the exact value
@@ -478,7 +484,7 @@ var ImageViewer = /*#__PURE__*/function () {
           _this._listeners.onZoomChange(_this._callbackData);
         }
       };
-      zoom();
+      _zoom();
     });
     _defineProperty(this, "_clearFrames", function () {
       var _this$_frames = _this._frames,
@@ -762,9 +768,9 @@ var ImageViewer = /*#__PURE__*/function () {
           var step, positionX, positionY;
           var xDiff = positions[1].x - positions[0].x;
           var yDiff = positions[1].y - positions[0].y;
-          var momentum = function momentum() {
+          var _momentum = function momentum() {
             if (step <= 60) {
-              _this2._frames.sliderMomentumFrame = requestAnimationFrame(momentum);
+              _this2._frames.sliderMomentumFrame = requestAnimationFrame(_momentum);
             }
             positionX += easeOutQuart(step, xDiff / 3, -xDiff / 3, 60);
             positionY += easeOutQuart(step, yDiff / 3, -yDiff / 3, 60);
@@ -778,7 +784,7 @@ var ImageViewer = /*#__PURE__*/function () {
             step = 1;
             positionX = currentPos.dx;
             positionY = currentPos.dy;
-            momentum();
+            _momentum();
           }
         }
       });
@@ -1151,7 +1157,7 @@ var ImageViewer = /*#__PURE__*/function () {
   }, {
     key: "_loadHighResImage",
     value: function _loadHighResImage(hiResImageSrc) {
-      var _this10 = this;
+      var _this0 = this;
       var _this$_elements6 = this._elements,
         imageWrap = _this$_elements6.imageWrap,
         container = _this$_elements6.container;
@@ -1170,7 +1176,7 @@ var ImageViewer = /*#__PURE__*/function () {
       var onHighResImageLoad = function onHighResImageLoad() {
         // remove the low size image and set this image as default image
         remove(lowResImg);
-        _this10._elements.image = hiResImage;
+        _this0._elements.image = hiResImage;
         // this._calculateDimensions();
       };
       if (imageLoaded(hiResImage)) {
@@ -1413,8 +1419,11 @@ var FullScreenViewer = /*#__PURE__*/function (_ImageViewer) {
     value: function destroy() {
       var fullScreen = this._elements.fullScreen;
 
+      // restore scroll before removing elements
+      this.hide();
+
       // destroy image viewer
-      _get(_getPrototypeOf(FullScreenViewer.prototype), "destroy", this).call(this);
+      _superPropGet(FullScreenViewer, "destroy", this)([]);
 
       // remove the element
       remove(fullScreen);

@@ -1,10 +1,10 @@
 import fs from 'fs';
-import babel from 'rollup-plugin-babel';
-import { uglify } from 'rollup-plugin-uglify';
+import babel from '@rollup/plugin-babel';
+import terser from '@rollup/plugin-terser';
 import fileSize from 'rollup-plugin-filesize';
 import license from 'rollup-plugin-license';
 
-import PACKAGE from './package.json' assert { type: 'json' };
+import PACKAGE from './package.json' with { type: 'json' };
 const fullYear = new Date().getFullYear();
 
 const banner = `${PACKAGE.name} - ${PACKAGE.version}
@@ -25,6 +25,7 @@ const defaultConfig = {
   plugins: [
     babel({
       babelrc: false,
+      babelHelpers: 'bundled',
       ...babelConfig,
     }),
     fileSize(),
@@ -42,7 +43,7 @@ const minConfig = {
   },
   plugins: [
     ...defaultConfig.plugins,
-    uglify(),
+    terser(),
   ],
 };
 
